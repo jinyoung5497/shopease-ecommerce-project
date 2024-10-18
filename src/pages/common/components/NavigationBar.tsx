@@ -9,7 +9,7 @@ const NavigationBar = () => {
   const navigate = useNavigate();
 
   const isLogin = useAuthStore((state) => state.isLogin);
-  const user = useAuthStore((state) => state.user);
+  // const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const checkLoginStatus = useAuthStore((state) => state.checkLoginStatus);
   const isSeller = useAuthStore((state) => state.isSeller);
