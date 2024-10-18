@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { authStore } from "./types";
 import Cookies from "js-cookie";
 import { IUser } from "@/lib/auth";
-import { auth } from "@/config/firebase";
+import { auth, db } from "@/config/firebase";
+import { doc, getDoc } from "@firebase/firestore";
 
 export const useAuthStore = create<authStore>()((set) => ({
   isSeller: false,
@@ -21,8 +22,14 @@ export const useAuthStore = create<authStore>()((set) => ({
     const token = Cookies.get("accessToken");
     if (token) {
       try {
-        auth.onAuthStateChanged((currentUser) => {
+        auth.onAuthStateChanged(async (currentUser) => {
           if (currentUser) {
+            const userDocRef = doc(db, "users", currentUser.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            const userData = userDoc.data();
+            const isSeller = userData?.isSeller || false;
+
             set({
               user: {
                 uid: currentUser.uid,
@@ -30,6 +37,7 @@ export const useAuthStore = create<authStore>()((set) => ({
                 displayName: currentUser.displayName ?? "",
               },
               isLogin: true,
+              isSeller: isSeller,
             });
           } else {
             set({

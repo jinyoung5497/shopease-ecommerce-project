@@ -1,7 +1,9 @@
 import { Layout } from "@/pages/common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
+import { useNavigation } from "@/hooks/useNavigation";
 
 const Home = () => {
+  const { navToCategoryProduct } = useNavigation();
   return (
     <Layout>
       <NavigationBar />
@@ -14,7 +16,10 @@ const Home = () => {
           만나보세요. 어디서나 간편하게 쇼핑하고, 원하는 스타일을 집까지 바로
           받아보세요.
         </p>
-        <button className="rounded-full text-white bg-primary w-52 p-2 text-sm">
+        <button
+          onClick={navToCategoryProduct}
+          className="rounded-full text-white bg-primary w-52 p-2 text-sm hover:bg-sky-700"
+        >
           All Products
         </button>
       </div>

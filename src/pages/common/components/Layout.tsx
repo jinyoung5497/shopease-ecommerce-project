@@ -1,16 +1,8 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-
-// import { useAuthStore } from "@/store/auth/useAuthStore";
-
 import { pageRoutes } from "@/apiRoutes";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-
-// export const authStatusType = {
-//   NEED_LOGIN: "NEED_LOGIN",
-//   NEED_NOT_LOGIN: "NEED_NOT_LOGIN",
-//   COMMON: "COMMON",
-// };
+import Footer from "./Footer";
 
 export const authStatusType = {
   NEED_LOGIN: "NEED_LOGIN",
@@ -51,11 +43,8 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div>
-      <div className="">
-        <main className="">
-          <div className="">{children}</div>
-        </main>
-      </div>
+      <div className="">{children}</div>
+      {/* <Footer /> */}
     </div>
   );
 };
