@@ -6,6 +6,7 @@ import { useRegister } from "@/lib/auth";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
 
 const schema = z.object({
   name: z.string().min(1, "이름은 필수입니다."),
@@ -19,6 +20,7 @@ const SignUp = () => {
   const { navToHome, navToLogin } = useNavigation();
   const { mutate: registerUser, isPending: isLoading } = useRegister();
   const { isSeller, setIsSeller } = useAuthStore();
+  const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
 
   const {
     register,
@@ -44,6 +46,11 @@ const SignUp = () => {
     },
     [registerUser]
   );
+
+  const handleGoogleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    googleLogin(isSeller);
+  };
 
   return (
     <div className="h-screen flex items-center justify-center">
@@ -118,7 +125,11 @@ const SignUp = () => {
         </button>
         <div className="text-[12px] text-slate-400">or continue with</div>
 
-        <button className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4">
+        <button
+          onClick={handleGoogleLogin}
+          disabled={isGoogleLoading}
+          className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4"
+        >
           <img src={google} alt="google" className="w-4 h-4" />
           Sign up with Google
         </button>

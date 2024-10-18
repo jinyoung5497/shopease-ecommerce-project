@@ -5,6 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCallback } from "react";
+import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
+import { useAuthStore } from "@/store/auth/useAuthStore";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),
@@ -16,6 +18,13 @@ type FormFields = z.infer<typeof schema>;
 const Login = () => {
   const { navToHome, navToSignUp } = useNavigation();
   const { mutate: login, isPending: isLoading } = useLogin();
+  const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
+  const { isSeller } = useAuthStore();
+
+  const handleGoogleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    googleLogin(isSeller);
+  };
 
   const {
     register,
@@ -85,7 +94,11 @@ const Login = () => {
         </button>
         <div className="text-[12px] text-slate-400">or continue with</div>
 
-        <button className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4">
+        <button
+          onClick={handleGoogleLogin}
+          disabled={isGoogleLoading}
+          className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4"
+        >
           <img src={google} alt="google" className="w-4 h-4" />
           Google Login
         </button>

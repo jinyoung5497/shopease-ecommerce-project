@@ -1,6 +1,6 @@
 export interface IUser {
   uid: string;
-  email: string;
+  email: string | null;
   displayName: string;
 }
 
@@ -21,4 +21,11 @@ export interface LoginResponseDto {
   email: string;
   displayName?: string;
   accessToken: string;
+}
+
+export interface IgoogleUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  isSeller: boolean;
 }

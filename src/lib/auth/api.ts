@@ -1,10 +1,16 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   updateProfile,
 } from "@firebase/auth";
-import { LoginRequestDto, LoginResponseDto, RegisterUserReqDTO } from ".";
-import { auth, db } from "@/config/firebase";
+import {
+  IgoogleUser,
+  LoginRequestDto,
+  LoginResponseDto,
+  RegisterUserReqDTO,
+} from ".";
+import { auth, db, googleProvider } from "@/config/firebase";
 import { doc, serverTimestamp, setDoc } from "@firebase/firestore";
 import Cookies from "js-cookie";
 
@@ -60,4 +66,29 @@ export const loginAPI = async (
   } catch (error) {
     throw new Error("로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.");
   }
+};
+
+export const googleLoginAPI = async (
+  isSeller: boolean
+): Promise<IgoogleUser> => {
+  const userCredential = await signInWithPopup(auth, googleProvider);
+  const user = userCredential.user;
+
+  const token = await user.getIdToken();
+  Cookies.set("accessToken", token, { expires: 7 });
+
+  await setDoc(doc(db, "users", user.uid), {
+    name: user.displayName,
+    email: user.email,
+    isSeller,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return {
+    displayName: user.displayName,
+    email: user.email,
+    uid: user.uid,
+    isSeller,
+  };
 };
