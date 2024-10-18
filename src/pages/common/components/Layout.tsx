@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { pageRoutes } from "@/apiRoutes";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import Footer from "./Footer";
 
 export const authStatusType = {
   NEED_LOGIN: "NEED_LOGIN",
