@@ -1,7 +1,6 @@
 export const pageRoutes = {
   home: "/",
   login: "/login",
-  cart: "/cart",
   administration: "/administration",
   categoryProduct: "/category-product",
   checkout: "/checkout",

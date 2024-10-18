@@ -1,8 +1,10 @@
 import { Layout } from "@/pages/common/components/Layout";
+import NavigationBar from "../common/components/NavigationBar";
 
 const Home = () => {
   return (
     <Layout>
+      <NavigationBar />
       <div className="w-full flex items-center justify-center flex-col h-[450px] gap-5 border-b-[1px] border-gray-light">
         <h1 className="text-primary font-semibold text-[50px]">
           Style Made Easy.

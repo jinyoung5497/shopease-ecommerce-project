@@ -13,7 +13,8 @@ export const useAuthStore = create<authStore>()((set) => ({
   setIsLogin: (isLogin: boolean) => set({ isLogin }),
   setUser: (user: IUser) => set({ user, isLogin: true }),
   logout: () => {
-    set({ isLogin: false, user: null }), Cookies.remove("accessToken");
+    set({ isLogin: false, user: null, isSeller: false }),
+      Cookies.remove("accessToken");
   },
 
   checkLoginStatus: async () => {

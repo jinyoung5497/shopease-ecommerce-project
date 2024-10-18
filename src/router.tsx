@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
 import { pageRoutes } from "@/apiRoutes";
-import Cart from "@/pages/cart";
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Administration from "./pages/administration";
@@ -32,11 +31,6 @@ const router = createBrowserRouter([
       {
         path: pageRoutes.login,
         element: <Login />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: pageRoutes.cart,
-        element: <Cart />,
         errorElement: <ErrorPage />,
       },
       {

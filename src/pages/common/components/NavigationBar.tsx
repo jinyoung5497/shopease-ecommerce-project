@@ -1,22 +1,21 @@
-import { pageRoutes } from "@/apiRoutes";
+import { useNavigation } from "@/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
 
 const NavigationBar = () => {
   //TODO initCart when logged in
 
-  const navigate = useNavigate();
-
   const isLogin = useAuthStore((state) => state.isLogin);
-  // const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const checkLoginStatus = useAuthStore((state) => state.checkLoginStatus);
   const isSeller = useAuthStore((state) => state.isSeller);
-
-  const navLogin = () => {
-    navigate(pageRoutes.login);
-  };
+  const {
+    navToLogin,
+    navToAdmin,
+    navToMyProducts,
+    navToPurchaseHistory,
+    navToHome,
+  } = useNavigation();
 
   useEffect(() => {
     checkLoginStatus();
@@ -24,31 +23,34 @@ const NavigationBar = () => {
 
   const handleLogout = () => {
     logout();
-  };
-
-  const handleLogoClick = () => {
-    navigate(pageRoutes.home);
+    navToHome();
   };
 
   return (
     <div className="flex items-center justify-between p-7 w-full border-b-[1px] border-slate-400 text-primary">
       <button
         className="flex gap-2 text-[26px] items-center justify-center"
-        onClick={handleLogoClick}
+        onClick={navToHome}
       >
         <i className="fi fi-rs-basket-shopping-simple translate-y-[2px]"></i>
         <h1 className="font-medium text-primary">ShopEase</h1>
       </button>
 
       <div className="flex gap-7 items-center justify-center text-[16px]">
-        {isSeller && (
+        {isSeller && isLogin && (
           <>
-            <button className="flex gap-1 items-center justify-center">
+            <button
+              onClick={navToMyProducts}
+              className="flex gap-1 items-center justify-center"
+            >
               <i className="fi fi-rs-supplier-alt translate-y-[1px]"></i>
               <p>My Products</p>
             </button>
 
-            <button className="flex gap-1 items-center justify-center">
+            <button
+              onClick={navToAdmin}
+              className="flex gap-1 items-center justify-center"
+            >
               <i className="fi fi fi-rs-admin-alt translate-y-[1px]"></i>
               <p>Admin</p>
             </button>
@@ -56,7 +58,10 @@ const NavigationBar = () => {
         )}
 
         {!isSeller && isLogin && (
-          <button className="flex gap-1 items-center justify-center">
+          <button
+            onClick={navToPurchaseHistory}
+            className="flex gap-1 items-center justify-center"
+          >
             <i className="fi fi fi-rs-time-past translate-y-[1px]"></i>
             <p>Purchase History</p>
           </button>
@@ -73,7 +78,7 @@ const NavigationBar = () => {
         ) : (
           <button
             className="flex gap-1 items-center justify-center"
-            onClick={navLogin}
+            onClick={navToLogin}
           >
             <i className="fi fi-rs-user translate-y-[1px]"></i>
             <p>Login</p>
