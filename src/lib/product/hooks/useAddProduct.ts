@@ -1,10 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
-import { pageRoutes } from "@/apiRoutes";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IProduct, addProductAPI } from "..";
 
 export const useAddProduct = () => {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
@@ -21,7 +19,7 @@ export const useAddProduct = () => {
     },
     onSuccess: () => {
       console.log("Product added successfully");
-      navigate(pageRoutes.myProducts);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: Error) => {
       console.error("Error adding product:", error.message);

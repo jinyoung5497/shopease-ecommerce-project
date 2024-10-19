@@ -7,6 +7,7 @@ export interface IProduct {
   productDescription: string;
   productCategory: string;
   productImage: string;
+  productImageName: string;
   createdAt: any;
   updatedAt: any;
 }
