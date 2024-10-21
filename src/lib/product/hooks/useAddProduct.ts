@@ -7,15 +7,15 @@ export const useAddProduct = () => {
   return useMutation({
     mutationFn: async ({
       product,
-      imageFile,
+      imageFiles,
     }: {
       product: Omit<
         IProduct,
-        "id" | "createdAt" | "updatedAt" | "productImage"
+        "id" | "createdAt" | "updatedAt" | "productImages"
       >;
-      imageFile: File;
+      imageFiles: File[];
     }) => {
-      return addProductAPI(product, imageFile);
+      return addProductAPI(product, imageFiles);
     },
     onSuccess: () => {
       console.log("Product added successfully");

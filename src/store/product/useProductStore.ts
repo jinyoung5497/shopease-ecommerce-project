@@ -3,19 +3,24 @@ import { create } from "zustand";
 
 interface ProductState {
   products: IProduct[];
-  imageName: string;
+  imageNameList: string[];
   addProductState: (product: IProduct) => void;
   setProducts: (products: IProduct[]) => void;
-  setImageName: (imageName: string) => void;
+  setImageNameList: (imageName: string) => void;
+  resetImageNameList: () => void;
 }
 
 export const useProductStore = create<ProductState>((set) => ({
   products: [],
-  imageName: "",
+  imageNameList: [],
   addProductState: (product: IProduct) =>
     set((state) => ({
       products: [...state.products, product],
     })),
   setProducts: (products: IProduct[]) => set({ products }),
-  setImageName: (imageName: string) => set({ imageName }),
+  setImageNameList: (imageName: string) =>
+    set((state) => ({
+      imageNameList: [...state.imageNameList, imageName],
+    })),
+  resetImageNameList: () => set({ imageNameList: [] }),
 }));

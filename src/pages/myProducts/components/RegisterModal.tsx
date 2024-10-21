@@ -24,8 +24,10 @@ const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
   const { user } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { imageName, setImageName } = useProductStore();
+  const { imageNameList, setImageNameList, resetImageNameList } =
+    useProductStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageList, setImageList] = useState<File[]>([]);
 
   const schema = z.object({
     title: z.string().min(1, "이름은 필수입니다"),
@@ -67,22 +69,23 @@ const RegisterModal = () => {
           productQuantity: remainder,
           productDescription: description,
           productCategory: selectedCategory,
-          productImageName: imageName,
+          productImageName: imageNameList,
         };
         addProduct({
           product: productData,
-          imageFile: data.image[0],
+          imageFiles: imageList,
         });
         setValue("title", "");
         setValue("price", 0);
         setValue("remainder", 0);
         setValue("description", "");
         setSelectedCategory("");
-        setImageName("");
+        resetImageNameList();
+        setImageList([]);
         setIsModalOpen(false);
       }
     },
-    [addProduct, selectedCategory]
+    [addProduct, selectedCategory, user, setValue, imageNameList, imageList]
   );
 
   const handleCategory = (
@@ -95,11 +98,16 @@ const RegisterModal = () => {
 
   const handleImageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const file = event.target.files?.[0];
-    if (file) {
-      setImageName(file.name);
+    const files = event.target.files;
+    console.log(files?.length);
+    if (files && files.length > 0) {
+      setImageList((prev) => [...prev, ...Array.from(files)]);
+      const fileNames = Array.from(files)
+        .map((file) => file.name)
+        .join(", ");
+      setImageNameList(fileNames);
     } else {
-      setImageName("파일을 선택해주세요");
+      setImageNameList("파일을 선택해주세요");
     }
   };
 
@@ -222,9 +230,16 @@ const RegisterModal = () => {
             <input
               {...register("image")}
               type="file"
+              name="image"
+              multiple
               className="w-full p-3 border-primary rounded-[7px] border-[1px]"
               onChange={handleImageName}
             />
+            <div className="flex gap-2 flex-wrap">
+              {imageNameList.map((value, index) => (
+                <div key={index}>{value}</div>
+              ))}
+            </div>
             {errors.image && (
               <div className="text-red-600 text-sm">
                 {/* {errors.image.message} */}

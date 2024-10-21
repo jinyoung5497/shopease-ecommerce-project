@@ -11,7 +11,7 @@ import {
   RegisterUserReqDTO,
 } from ".";
 import { auth, db, googleProvider } from "@/config/firebase";
-import { doc, serverTimestamp, setDoc } from "@firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "@firebase/firestore";
 import Cookies from "js-cookie";
 
 export const registerAPI = async ({
@@ -74,21 +74,35 @@ export const googleLoginAPI = async (
   const userCredential = await signInWithPopup(auth, googleProvider);
   const user = userCredential.user;
 
+  // Firebase Authentication에서 ID 토큰 가져오기
   const token = await user.getIdToken();
   Cookies.set("accessToken", token, { expires: 7 });
 
-  await setDoc(doc(db, "users", user.uid), {
-    name: user.displayName,
-    email: user.email,
-    isSeller,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
+  // Firestore에서 현재 로그인한 유저의 데이터 가져오기
+  const userDocRef = doc(db, "users", user.uid);
+  const userSnapshot = await getDoc(userDocRef);
 
+  // Firestore에 해당 유저 데이터가 있는 경우
+  if (userSnapshot.exists()) {
+    const userData = userSnapshot.data();
+
+    isSeller = userData?.isSeller ?? isSeller; // Firestore에서 isSeller 값 가져오기, 없으면 기본값 사용
+  } else {
+    // Firestore에 데이터가 없으면 새로운 유저 정보로 저장
+    await setDoc(userDocRef, {
+      name: user.displayName,
+      email: user.email,
+      isSeller: isSeller, // 전달받은 isSeller 값 저장
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+  }
+
+  // 모든 경로에서 반환 값 처리
   return {
     displayName: user.displayName,
     email: user.email,
     uid: user.uid,
-    isSeller,
+    isSeller, // Firestore에서 가져온 혹은 전달받은 isSeller
   };
 };

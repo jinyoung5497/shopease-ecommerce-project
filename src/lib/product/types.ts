@@ -6,8 +6,8 @@ export interface IProduct {
   productQuantity: number;
   productDescription: string;
   productCategory: string;
-  productImage: string;
-  productImageName: string;
+  productImages: string[];
+  productImageName: string[];
   createdAt: any;
   updatedAt: any;
 }

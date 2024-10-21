@@ -9,37 +9,104 @@ import {
   orderBy,
   deleteDoc,
   updateDoc,
+  getDoc,
+  startAfter,
+  limit,
+  DocumentData,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { IProduct } from ".";
 
 export const addProductAPI = async (
-  product: Omit<IProduct, "id" | "createdAt" | "updatedAt" | "productImage">,
-  imageFile: File
+  product: Omit<IProduct, "id" | "createdAt" | "updatedAt" | "productImages">,
+  imageFiles: File[] = [] // 여러 장의 이미지를 받는 배열
 ): Promise<void> => {
-  const productId = uuidv4();
-  const imageRef = ref(storage, `products/${productId}/${imageFile.name}`);
+  try {
+    // imageFiles가 배열이 맞는지 확인
+    if (!Array.isArray(imageFiles)) {
+      throw new Error("imageFiles must be an array");
+    }
 
-  await uploadBytes(imageRef, imageFile);
-  const imageUrl = await getDownloadURL(imageRef);
+    const productId = uuidv4();
+    const imageUrls: string[] = [];
 
-  // Firestore에 제품 데이터 저장
-  await setDoc(doc(db, "products", productId), {
-    ...product,
-    id: productId,
-    productImage: imageUrl,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
+    for (const imageFile of imageFiles) {
+      const imageRef = ref(storage, `products/${productId}/${imageFile.name}`);
+      await uploadBytes(imageRef, imageFile);
+
+      const imageUrl = await getDownloadURL(imageRef);
+      imageUrls.push(imageUrl);
+    }
+
+    await setDoc(doc(db, "products", productId), {
+      ...product,
+      id: productId,
+      productImages: imageUrls,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+
+    console.log("Product successfully added to Firestore with images");
+  } catch (error) {
+    console.error("Error adding product and images:", error);
+    throw new Error("Failed to add product and upload images");
+  }
 };
 
-export const getProductsAPI = async (): Promise<IProduct[]> => {
+const PAGE_SIZE = 10;
+
+// pageParam에 해당하는 마지막 문서를 가져오는 헬퍼 함수
+const getLastVisibleDocument = async (
+  pageParam: number
+): Promise<DocumentData> => {
+  const productsRef = collection(db, "products");
+  const q = query(
+    productsRef,
+    orderBy("createdAt", "desc"),
+    limit(pageParam) // pageParam 만큼의 문서를 가져와서 마지막 문서를 찾음
+  );
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs[querySnapshot.docs.length - 1]; // 마지막 문서를 반환
+};
+
+// 제품 API를 가져오는 비동기 함수
+export const getProductsAPI = async ({
+  pageParam,
+}: {
+  pageParam: number;
+}): Promise<{
+  products: IProduct[];
+  currentPage: number;
+  nextPage: number | null;
+}> => {
   try {
     const productsRef = collection(db, "products");
-    const q = query(productsRef, orderBy("createdAt", "desc"));
+    let q;
+
+    if (pageParam) {
+      // pageParam이 있을 경우, 이전 페이지의 마지막 문서 이후의 데이터를 가져옴
+      const lastVisible = await getLastVisibleDocument(pageParam); // 마지막 문서를 가져옴
+      q = query(
+        productsRef,
+        orderBy("createdAt", "desc"),
+        startAfter(lastVisible), // 마지막 문서 이후로 시작
+        limit(PAGE_SIZE)
+      );
+    } else {
+      // 처음에는 첫 페이지 데이터를 가져옴
+      q = query(productsRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
+    }
+
     const querySnapshot = await getDocs(q);
 
+    // 가져온 문서들을 IProduct 타입으로 변환
     const products: IProduct[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       return {
@@ -50,7 +117,14 @@ export const getProductsAPI = async (): Promise<IProduct[]> => {
       } as IProduct;
     });
 
-    return products;
+    // 현재 페이지 이후에 더 많은 제품이 있는지 확인
+    const hasMoreProducts = querySnapshot.docs.length === PAGE_SIZE;
+
+    return {
+      products,
+      currentPage: pageParam,
+      nextPage: hasMoreProducts ? pageParam + PAGE_SIZE : null,
+    };
   } catch (error) {
     console.error("Error fetching products: ", error);
     throw error;
@@ -74,28 +148,45 @@ export const updateProductAPI = async (
 ): Promise<void> => {
   try {
     const productDocRef = doc(db, "products", productId);
+    const productSnapshot = await getDoc(productDocRef);
 
-    // productImage가 File 타입일 경우에만 업로드
-    if (updatedData.productImage && isFile(updatedData.productImage)) {
-      const imageRef = ref(
-        storage,
-        `products/${productId}/${updatedData.productImage.name}`
-      );
+    if (productSnapshot.exists()) {
+      const existingProductData = productSnapshot.data();
 
-      // Firebase Storage에 파일 업로드
-      await uploadBytes(imageRef, updatedData.productImage);
+      // 기존 이미지 URL 가져오기
+      const existingImageUrl = existingProductData.productImage;
 
-      // 업로드된 이미지의 다운로드 URL 가져오기
-      const downloadURL = await getDownloadURL(imageRef);
+      // 새로운 이미지가 있고 기존에 이미지가 존재할 경우
+      if (updatedData.productImages && isFile(updatedData.productImages)) {
+        // 기존 이미지가 있을 경우 삭제
+        if (existingImageUrl) {
+          const imageRef = ref(storage, existingImageUrl);
+          await deleteObject(imageRef); // 기존 이미지 삭제
+          console.log("Old image deleted from Storage.");
+        }
 
-      // Firestore에 이미지 URL 저장
-      updatedData.productImage = downloadURL as any; // 이미지 URL을 string으로 저장
+        // 새로운 이미지를 Firebase Storage에 업로드
+        const newImageRef = ref(
+          storage,
+          `products/${productId}/${updatedData.productImages.name}`
+        );
+
+        await uploadBytes(newImageRef, updatedData.productImages);
+
+        // 업로드된 이미지의 다운로드 URL 가져오기
+        const downloadURL = await getDownloadURL(newImageRef);
+
+        // Firestore에 새로운 이미지 URL 저장
+        updatedData.productImages = downloadURL as any; // 이미지 URL을 string으로 저장
+      }
+
+      // Firestore에 나머지 데이터 업데이트
+      await updateDoc(productDocRef, updatedData);
+
+      console.log("Product updated successfully");
+    } else {
+      console.error("Product does not exist");
     }
-
-    // Firestore에 나머지 데이터 업데이트
-    await updateDoc(productDocRef, updatedData);
-
-    console.log("Product updated successfully");
   } catch (error) {
     console.error("Error updating product: ", error);
     throw error;

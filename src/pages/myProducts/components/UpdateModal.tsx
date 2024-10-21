@@ -30,14 +30,14 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const { user } = useAuthStore();
   const { data } = useFetchProducts();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const { imageName, setImageName } = useProductStore();
+  const { imageNameList, setImageNameList } = useProductStore();
   const [toggle, setToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (data && data[index]) {
-      setSelectedCategory(data[index].productCategory);
-      setImageName(data[index].productImageName);
+    if (data && data.pages[0].products[index]) {
+      setSelectedCategory(data.pages[0].products[index].productCategory);
+      // setImageNameList(data[index].productImageName);
     }
   }, [data, index, toggle]);
 
@@ -68,19 +68,19 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: data?.[index]?.productName || "",
-      price: data?.[index]?.productPrice || 0,
-      remainder: data?.[index]?.productQuantity || 0,
-      description: data?.[index]?.productDescription || "",
+      title: data?.pages[0].products[index]?.productName || "",
+      price: data?.pages[0].products[index]?.productPrice || 0,
+      remainder: data?.pages[0].products[index]?.productQuantity || 0,
+      description: data?.pages[0].products[index]?.productDescription || "",
     },
   });
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setImageName(file.name);
+      setImageNameList(file.name);
     } else {
-      setImageName("파일을 선택해주세요");
+      setImageNameList("파일을 선택해주세요");
     }
   };
 
@@ -88,7 +88,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     async (formData) => {
       const { title, price, remainder, description } = formData;
       if (user && data) {
-        const productId = data[index].id;
+        const productId = data.pages[0].products[index].id;
         const productData = {
           sellerId: user.uid,
           productName: title,
@@ -96,7 +96,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
           productQuantity: remainder,
           productDescription: description,
           productCategory: selectedCategory,
-          productImageName: imageName,
+          productImageName: imageNameList,
           productImage: formData.image[0],
         };
         console.log(formData.image[0]);

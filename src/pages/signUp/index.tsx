@@ -32,10 +32,6 @@ const passwordSchema = z
         "비밀번호는 10자 이상일 경우, 영어 대문자, 소문자, 숫자, 특수문자 중 2종류 이상의 문자 조합이어야 합니다.",
     }
   )
-  .refine((value) => !/(\d{3,})|(\w{3,})/.test(value), {
-    message:
-      "비밀번호에 쉬운 일련번호나 나란히 있는 문자열을 포함할 수 없습니다.",
-  })
   .refine((value) => !/123|qwerty|password/.test(value), {
     message: "비밀번호에 쉬운 문자열 또는 잘 알려진 단어를 포함할 수 없습니다.",
   });
@@ -76,7 +72,7 @@ const SignUp = () => {
         isSeller: isSeller,
       });
     },
-    [registerUser]
+    [registerUser, isSeller]
   );
 
   const handleNavToLogin = (event: React.MouseEvent<HTMLButtonElement>) => {

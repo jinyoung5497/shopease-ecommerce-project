@@ -43,7 +43,7 @@ const Login = () => {
         password: data.password,
       });
     },
-    [login]
+    [login, isSeller]
   );
 
   const handleNavToSignUp = (event: React.MouseEvent<HTMLButtonElement>) => {
