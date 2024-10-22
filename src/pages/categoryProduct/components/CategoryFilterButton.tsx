@@ -1,28 +1,75 @@
+import { useFilterStore } from "@/store/filter/useFilterStore";
+
 const CategoryFilterButton = () => {
+  const {
+    men,
+    women,
+    sneakers,
+    flats,
+    sandals,
+    isMen,
+    isWomen,
+    isSneakers,
+    isFlats,
+    isSandals,
+    isFilterTrue,
+    setIsFilterTrue,
+  } = useFilterStore();
+
   return (
     <div className="flex gap-4">
       <button
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center`}
+        onClick={() => {
+          setIsFilterTrue();
+          isMen();
+        }}
+        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
+          men && isFilterTrue && "bg-primary text-white"
+        }`}
       >
         Men's
       </button>
       <button
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center`}
+        onClick={() => {
+          setIsFilterTrue();
+          isWomen();
+        }}
+        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
+          women && isFilterTrue && "bg-primary text-white"
+        }`}
       >
         Women's
       </button>
       <button
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center`}
+        onClick={() => {
+          setIsFilterTrue();
+          isSneakers();
+        }}
+        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
+          sneakers && isFilterTrue && "bg-primary text-white"
+        }`}
       >
         Sneakers
       </button>
       <button
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center`}
+        onClick={() => {
+          setIsFilterTrue();
+          isFlats();
+        }}
+        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
+          flats && isFilterTrue && "bg-primary text-white"
+        }`}
       >
         Flats
       </button>
       <button
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center`}
+        onClick={() => {
+          setIsFilterTrue();
+          isSandals();
+        }}
+        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
+          sandals && isFilterTrue && "bg-primary text-white"
+        }`}
       >
         Sandals
       </button>

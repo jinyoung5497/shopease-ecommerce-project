@@ -1,9 +1,11 @@
 import { Layout } from "@/pages/common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useNavigation } from "@/hooks/useNavigation";
+import HomeCategory from "./components/HomeCategory";
 
 const Home = () => {
   const { navToCategoryProduct } = useNavigation();
+
   return (
     <Layout>
       <NavigationBar />
@@ -23,6 +25,7 @@ const Home = () => {
           All Products
         </button>
       </div>
+      <HomeCategory />
     </Layout>
   );
 };
