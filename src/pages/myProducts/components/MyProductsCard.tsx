@@ -5,10 +5,12 @@ import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { IProduct } from "@/lib/product/types";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
   const { data, fetchNextPage, isFetchingNextPage } = useFetchProducts();
+  const { handleProductCardClick } = useDetailedProductInfo();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
@@ -30,6 +32,7 @@ const MyProductsCard = () => {
             return (
               <div
                 key={value.id} // id를 키로 사용합니다.
+                onClick={() => handleProductCardClick(value, index)}
                 className="flex flex-col gap-1 relative cursor-pointer"
               >
                 <UpdateModal index={index} />

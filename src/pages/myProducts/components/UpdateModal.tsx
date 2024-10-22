@@ -37,7 +37,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   useEffect(() => {
     if (data && data.pages[0].products[index]) {
       setSelectedCategory(data.pages[0].products[index].productCategory);
-      // setImageNameList(data[index].productImageName);
+      // setImageNameList(data.pages[0].products[index].productImageName);
     }
   }, [data, index, toggle]);
 

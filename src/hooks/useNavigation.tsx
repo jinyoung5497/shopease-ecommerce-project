@@ -10,7 +10,10 @@ export const useNavigation = () => {
   const navToAdmin = () => navigate(pageRoutes.administration);
   const navToCategoryProduct = () => navigate(pageRoutes.categoryProduct);
   const navToCheckout = () => navigate(pageRoutes.checkout);
-  const navToDetailedProduct = () => navigate(pageRoutes.detailedProduct);
+  const navToDetailedProduct = (index: string, id: string) =>
+    navigate(
+      pageRoutes.detailedProduct.replace(":id", id).replace(":index", index)
+    );
   const navToMyProducts = () => navigate(pageRoutes.myProducts);
   const navToPurchaseHistory = () => navigate(pageRoutes.purchaseHistory);
 

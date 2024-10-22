@@ -1,6 +1,14 @@
 import { useNavigation } from "@/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const NavigationBar = () => {
   //TODO initCart when logged in
@@ -85,12 +93,31 @@ const NavigationBar = () => {
           </button>
         )}
 
-        <button className="flex gap-1 items-center justify-center right-0 relative">
-          <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
-            <p className="text-white text-[12px]">2</p>
-          </div>
-          <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
-        </button>
+        <Sheet>
+          <SheetTrigger>
+            <div className="flex gap-1 items-center justify-center right-0 relative">
+              <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
+                <p className="text-white text-[12px]">2</p>
+              </div>
+              <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
+            </div>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <div className="w-full border-slate-200 border-b-[1px]">
+                <SheetTitle className="mb-3">Cart</SheetTitle>
+              </div>
+              <SheetDescription />
+            </SheetHeader>
+            {/* <div>
+              <img src={} alt="" />
+              <div>product Title</div>
+              <div>
+
+              </div>
+            </div> */}
+          </SheetContent>
+        </Sheet>
       </div>
     </div>
   );
