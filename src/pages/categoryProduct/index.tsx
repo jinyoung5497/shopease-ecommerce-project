@@ -28,6 +28,7 @@ const CartegoryProduct = () => {
         {!men && !women && sneakers && !flats && !sandals && "Sneakers"}
         {!men && !women && !sneakers && flats && !sandals && "Flats"}
         {men && !women && !sneakers && !flats && sandals && "Sandals"}
+        {!men && !women && !sneakers && !flats && sandals && "Sandals"}
         {[men, women, sneakers, flats, sandals].filter(Boolean).length >= 2 &&
           "Multi filtering"}
       </div>

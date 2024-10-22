@@ -1,6 +1,7 @@
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useFilterStore } from "@/store/filter/useFilterStore";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
@@ -13,6 +14,13 @@ const HomeCategory = () => {
     "Flats",
     "Sandals",
   ];
+  const {
+    setMenTrue,
+    setWomenTrue,
+    setSneakersTrue,
+    setFlatsTrue,
+    setSandalsTrue,
+  } = useFilterStore();
 
   const handleMoreClick = (category: string) => {
     navToCategoryProduct();
@@ -20,7 +28,18 @@ const HomeCategory = () => {
       top: 0, // 맨 위로 스크롤
       behavior: "smooth", // 부드러운 스크롤 효과
     });
-    console.log(category);
+
+    if (category === "Men's Clothing") {
+      setMenTrue();
+    } else if (category === "Women's Clothing") {
+      setWomenTrue();
+    } else if (category === "Sneakers") {
+      setSneakersTrue();
+    } else if (category === "Flats") {
+      setFlatsTrue();
+    } else if (category === "Sandals") {
+      setSandalsTrue();
+    }
   };
 
   return (
