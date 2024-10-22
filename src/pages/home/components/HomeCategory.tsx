@@ -20,6 +20,7 @@ const HomeCategory = () => {
       top: 0, // 맨 위로 스크롤
       behavior: "smooth", // 부드러운 스크롤 효과
     });
+    console.log(category);
   };
 
   return (
