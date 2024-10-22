@@ -32,7 +32,6 @@ const MyProductsCard = () => {
             return (
               <div
                 key={value.id} // id를 키로 사용합니다.
-                onClick={() => handleProductCardClick(value, index)}
                 className="flex flex-col gap-1 relative cursor-pointer"
               >
                 <UpdateModal index={index} />
@@ -42,6 +41,7 @@ const MyProductsCard = () => {
                     <img
                       src={value.productImages[0]}
                       alt="productImage"
+                      onClick={() => handleProductCardClick(value, index)}
                       className="w-32 h-32"
                     />
                   ) : (
@@ -50,11 +50,18 @@ const MyProductsCard = () => {
                     </div>
                   )}
                 </div>
-                <div className="text-gray text-[12px]">
+                <div
+                  onClick={() => handleProductCardClick(value, index)}
+                  className="text-gray text-[12px]"
+                >
                   {value.productCategory}
                 </div>
-                <div>{value.productName}</div>
-                <div>$ {value.productPrice}</div>
+                <div onClick={() => handleProductCardClick(value, index)}>
+                  {value.productName}
+                </div>
+                <div onClick={() => handleProductCardClick(value, index)}>
+                  $ {value.productPrice}
+                </div>
               </div>
             );
           }
