@@ -1,4 +1,3 @@
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import HomeButton from "../common/components/HomeButton";
 import { Layout } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
@@ -14,13 +13,38 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
+import { useAddCart } from "@/lib/cart/hooks/useAddCart";
+import { useCartStore } from "@/store/cart/useCartStore";
+import { useAuthStore } from "@/store/auth/useAuthStore";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 
 const DetailedProduct = () => {
   const { detailedProductInfo } = useProductStore();
   const { data } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
+  const { mutate: addCart } = useAddCart();
+  const { user } = useAuthStore();
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const { setCartList } = useCartStore();
+
+  const handleCartRegister = () => {
+    const newProductInCart = {
+      productId: detailedProductInfo.id || "",
+      sellerId: detailedProductInfo.sellerId || "",
+      buyerId: user?.uid || "",
+      productName: detailedProductInfo.productName || "",
+      productImage:
+        (detailedProductInfo.productImages &&
+          detailedProductInfo.productImages[0]) ||
+        "",
+      quantity: 1,
+      productPrice: detailedProductInfo.productPrice || 0,
+      totalPrice: detailedProductInfo.productPrice || 0,
+    };
+    addCart(newProductInCart);
+    setCartList(newProductInCart);
+  };
 
   return (
     <Layout>
@@ -61,7 +85,10 @@ const DetailedProduct = () => {
               {detailedProductInfo.productQuantity}개 남았습니다
             </div>
             <div className="">{detailedProductInfo.productDescription}</div>
-            <button className="bg-primary text-white p-3 px-5 rounded-sm">
+            <button
+              onClick={handleCartRegister}
+              className="bg-primary text-white p-3 px-5 rounded-sm"
+            >
               카트 등록
             </button>
           </div>
@@ -72,8 +99,8 @@ const DetailedProduct = () => {
           Recommended
         </div>
         <div className="flex gap-28 items-center justify-center m-10 mb-20">
-          {data?.pages[0].products
-            .filter(
+          {data
+            ?.filter(
               (value) =>
                 value.productCategory === detailedProductInfo.productCategory &&
                 value.id !== detailedProductInfo.id

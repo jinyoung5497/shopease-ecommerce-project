@@ -77,7 +77,7 @@ const getLastVisibleDocument = async (
 };
 
 // 제품 API를 가져오는 비동기 함수
-export const getProductsAPI = async ({
+export const getInfiniteProductsAPI = async ({
   pageParam,
 }: {
   pageParam: number;
@@ -197,3 +197,25 @@ export const updateProductAPI = async (
 function isFile(value: any): value is File {
   return value instanceof File;
 }
+export const getProductsAPI = async (): Promise<IProduct[]> => {
+  try {
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    const products: IProduct[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt.toDate(),
+        updatedAt: data.updatedAt.toDate(),
+      } as IProduct;
+    });
+
+    return products;
+  } catch (error) {
+    console.error("Error fetching products: ", error);
+    throw error;
+  }
+};

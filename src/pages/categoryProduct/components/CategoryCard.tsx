@@ -1,12 +1,13 @@
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
+import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
 import { IProduct } from "@/lib/product/types"; // IProduct 타입을 가져옵니다.
 import { useFilterStore } from "@/store/filter/useFilterStore";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 const CategoryCard = () => {
-  const { data, fetchNextPage, isFetchingNextPage } = useFetchProducts();
+  const { data, fetchNextPage, isFetchingNextPage } =
+    useFetchInfiniteProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
   const { men, women, sneakers, flats, sandals, isFilterTrue } =
     useFilterStore();

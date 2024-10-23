@@ -214,10 +214,9 @@ const RegisterModal = () => {
               </div>
             )}
             <p>상품 설명</p>
-            <input
+            <textarea
               {...register("description")}
               id="description"
-              type="text"
               placeholder="상품 설명"
               className="w-full p-3 border-primary rounded-[7px] border-[1px]"
             />
