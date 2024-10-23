@@ -170,7 +170,10 @@ const NavigationBar = () => {
                         ></i>
                       </div>
                       <div className="ml-4 text-gray text-sm">
-                        $ {value.productPrice}
+                        {value.productPrice.toLocaleString("ko-KR", {
+                          style: "currency",
+                          currency: "KRW",
+                        })}
                       </div>
                     </div>
                   </div>
@@ -180,17 +183,27 @@ const NavigationBar = () => {
                     onClick={() => deleteCartItem(value.productId)}
                     className="fi fi-rs-cross-small text-xl cursor-pointer"
                   ></i>
-                  <div>$ {value.totalPrice}</div>
+                  <div>
+                    {value.totalPrice.toLocaleString("ko-KR", {
+                      style: "currency",
+                      currency: "KRW",
+                    })}
+                  </div>
                 </div>
               </div>
             ))}
             <div className="flex flex-col absolute bottom-0 left-0 right-0 m-4 border-t-[1px] border-slate-200 gap-4">
               <div className="mt-5 flex items-center justify-between">
                 <div>
-                  Total: ${" "}
-                  {data?.reduce((total, product) => {
-                    return total + product.totalPrice;
-                  }, 0)}
+                  Total:{" "}
+                  {data
+                    ?.reduce((total, product) => {
+                      return total + product.totalPrice;
+                    }, 0)
+                    .toLocaleString("ko-KR", {
+                      style: "currency",
+                      currency: "KRW",
+                    })}
                 </div>
                 <i className="fi fi-rs-trash bg-red-600 flex items-center justify-center w-8 h-8 text-xl text-white"></i>
               </div>

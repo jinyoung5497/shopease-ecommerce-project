@@ -182,14 +182,14 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                   Sneakers
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Flats")}
+                  onClick={(event) => handleCategory(event, "Hat")}
                 >
-                  Flats
+                  Hat
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Sandals")}
+                  onClick={(event) => handleCategory(event, "Top")}
                 >
-                  Sandals
+                  Top
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

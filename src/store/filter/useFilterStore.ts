@@ -5,20 +5,20 @@ interface FilterStore {
   men: boolean;
   women: boolean;
   sneakers: boolean;
-  flats: boolean;
-  sandals: boolean;
+  hat: boolean;
+  top: boolean;
   isFilterTrue: boolean;
   isMen: () => void;
   isWomen: () => void;
   isSneakers: () => void;
-  isFlats: () => void;
-  isSandals: () => void;
+  isHat: () => void;
+  isTop: () => void;
   setIsFilterTrue: () => void;
   setMenTrue: () => void;
   setWomenTrue: () => void;
   setSneakersTrue: () => void;
-  setFlatsTrue: () => void;
-  setSandalsTrue: () => void;
+  setHatTrue: () => void;
+  setTopTrue: () => void;
 }
 
 export const useFilterStore = create<FilterStore>((set) => ({
@@ -26,16 +26,16 @@ export const useFilterStore = create<FilterStore>((set) => ({
   men: false,
   women: false,
   sneakers: false,
-  flats: false,
-  sandals: false,
+  hat: false,
+  top: false,
   isFilterTrue: false,
   isMen: () => {
     set((state) => ({ men: !state.men }));
   },
   isWomen: () => set((state) => ({ women: !state.women })),
   isSneakers: () => set((state) => ({ sneakers: !state.sneakers })),
-  isFlats: () => set((state) => ({ flats: !state.flats })),
-  isSandals: () => set((state) => ({ sandals: !state.sandals })),
+  isHat: () => set((state) => ({ hat: !state.hat })),
+  isTop: () => set((state) => ({ top: !state.top })),
   setIsFilterTrue: () =>
     set(() => ({
       isFilterTrue: true,
@@ -45,8 +45,8 @@ export const useFilterStore = create<FilterStore>((set) => ({
       men: true,
       women: false,
       sneakers: false,
-      flats: false,
-      sandals: false,
+      hat: false,
+      top: false,
       isFilterTrue: true,
     }));
   },
@@ -55,8 +55,8 @@ export const useFilterStore = create<FilterStore>((set) => ({
       men: false,
       women: true,
       sneakers: false,
-      flats: false,
-      sandals: false,
+      hat: false,
+      top: false,
       isFilterTrue: true,
     })),
   setSneakersTrue: () =>
@@ -64,26 +64,26 @@ export const useFilterStore = create<FilterStore>((set) => ({
       men: false,
       women: false,
       sneakers: true,
-      flats: false,
-      sandals: false,
+      hat: false,
+      top: false,
       isFilterTrue: true,
     })),
-  setFlatsTrue: () =>
+  setHatTrue: () =>
     set(() => ({
       men: false,
       women: false,
       sneakers: false,
-      flats: true,
-      sandals: false,
+      hat: true,
+      top: false,
       isFilterTrue: true,
     })),
-  setSandalsTrue: () =>
+  setTopTrue: () =>
     set(() => ({
       men: false,
       women: false,
       sneakers: false,
-      flats: false,
-      sandals: true,
+      hat: false,
+      top: true,
       isFilterTrue: true,
     })),
 }));

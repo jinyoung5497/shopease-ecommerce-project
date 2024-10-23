@@ -8,8 +8,7 @@ import React, { Suspense } from "react";
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 
 const CartegoryProduct = () => {
-  const { men, women, sneakers, flats, sandals, isFilterTrue } =
-    useFilterStore();
+  const { men, women, sneakers, hat, top, isFilterTrue } = useFilterStore();
   return (
     <Layout>
       <div>
@@ -20,16 +19,14 @@ const CartegoryProduct = () => {
         </div>
       </div>
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
-        {(!isFilterTrue ||
-          (!men && !women && !sneakers && !flats && !sandals)) &&
+        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !top)) &&
           "All products"}
-        {men && !women && !sneakers && !flats && !sandals && "Men's Clothing"}
-        {!men && women && !sneakers && !flats && !sandals && "Women's Clothing"}
-        {!men && !women && sneakers && !flats && !sandals && "Sneakers"}
-        {!men && !women && !sneakers && flats && !sandals && "Flats"}
-        {men && !women && !sneakers && !flats && sandals && "Sandals"}
-        {!men && !women && !sneakers && !flats && sandals && "Sandals"}
-        {[men, women, sneakers, flats, sandals].filter(Boolean).length >= 2 &&
+        {men && !women && !sneakers && !hat && !top && "Men's Clothing"}
+        {!men && women && !sneakers && !hat && !top && "Women's Clothing"}
+        {!men && !women && sneakers && !hat && !top && "Sneakers"}
+        {!men && !women && !sneakers && hat && !top && "Hat"}
+        {!men && !women && !sneakers && !hat && top && "Top"}
+        {[men, women, sneakers, hat, top].filter(Boolean).length >= 2 &&
           "Multi filtering"}
       </div>
       <FilterList />
