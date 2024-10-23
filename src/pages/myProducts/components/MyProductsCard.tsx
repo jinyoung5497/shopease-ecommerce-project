@@ -26,7 +26,7 @@ const MyProductsCard = () => {
   }, [fetchNextPage, inView]);
 
   return (
-    <div className="grid grid-cols-5 gap-20 items-center justify-items-center mx-40">
+    <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
       {data?.pages.map((page) =>
         page.products.map((value: IProduct, index: number) => {
           if (value.sellerId === user?.uid) {
@@ -37,13 +37,13 @@ const MyProductsCard = () => {
               >
                 <UpdateModal index={index} />
                 <DeleteModal id={value.id} />
-                <div className="border-[1px] border-gray-light rounded-[5px] w-44 h-60 flex items-center justify-center">
+                <div className=" w-70 flex items-center justify-center">
                   {value.productImages && value.productImages.length > 0 ? (
                     <img
                       src={value.productImages[0]}
                       alt="productImage"
                       onClick={() => handleProductCardClick(value, index)}
-                      className="w-32 h-32"
+                      className="w-70"
                     />
                   ) : (
                     <div className="text-center">
@@ -61,7 +61,10 @@ const MyProductsCard = () => {
                   {value.productName}
                 </div>
                 <div onClick={() => handleProductCardClick(value, index)}>
-                  $ {value.productPrice}
+                  {value.productPrice.toLocaleString("ko-KR", {
+                    style: "currency",
+                    currency: "KRW",
+                  })}
                 </div>
               </div>
             );

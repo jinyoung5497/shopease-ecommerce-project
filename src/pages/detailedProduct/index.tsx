@@ -17,6 +17,7 @@ import { useAddCart } from "@/lib/cart/hooks/useAddCart";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
+import { useNavigation } from "@/hooks/useNavigation";
 
 const DetailedProduct = () => {
   const { detailedProductInfo } = useProductStore();
@@ -27,6 +28,11 @@ const DetailedProduct = () => {
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const { setCartList } = useCartStore();
+  const { navToHome } = useNavigation();
+
+  if (!detailedProductInfo.id) {
+    navToHome();
+  }
 
   const handleCartRegister = () => {
     const newProductInCart = {
@@ -51,10 +57,10 @@ const DetailedProduct = () => {
       <NavigationBar />
       <HomeButton style="absolute top-32 left-10" />
       <div className="flex items-center justify-center">
-        <div className="flex items-center justify-center w-3/5 gap-28 m-40">
+        <div className="flex items-center justify-center gap-28 m-40 w-3/5  ">
           <Carousel
             plugins={[plugin.current]}
-            className="w-full max-w-xs"
+            className="w-full"
             onMouseEnter={plugin.current.stop}
             onMouseLeave={plugin.current.reset}
           >
@@ -74,22 +80,31 @@ const DetailedProduct = () => {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 w-4/5 h-full ">
             <div className="text-primary font-semibold text-3xl">
               {detailedProductInfo.productName}
             </div>
             <div className="font-semibold">
-              $ {detailedProductInfo.productPrice}
+              {detailedProductInfo.productPrice?.toLocaleString("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              })}
             </div>
-            <div className="">
-              {detailedProductInfo.productQuantity}개 남았습니다
+            <div>{detailedProductInfo.productQuantity}개 남았습니다</div>
+            <div className="overflow-y-scroll  h-[400px]">
+              {detailedProductInfo.productDescription}
             </div>
-            <div className="">{detailedProductInfo.productDescription}</div>
             <button
               onClick={handleCartRegister}
               className="bg-primary text-white p-3 px-5 rounded-sm"
             >
-              카트 등록
+              장바구니 추가
+            </button>
+            <button
+              onClick={handleCartRegister}
+              className="bg-primary text-white p-3 px-5 rounded-sm"
+            >
+              장바구니 보기
             </button>
           </div>
         </div>
@@ -98,7 +113,7 @@ const DetailedProduct = () => {
         <div className="text-primary font-semibold text-3xl text-center">
           Recommended
         </div>
-        <div className="flex gap-28 items-center justify-center m-10 mb-20">
+        <div className="flex gap-4 items-center justify-center m-10 mb-20">
           {data
             ?.filter(
               (value) =>
@@ -112,12 +127,12 @@ const DetailedProduct = () => {
                 onClick={() => handleProductCardClick(value, index)}
                 className="flex flex-col gap-1 relative cursor-pointer"
               >
-                <div className="border-[1px] border-gray-light rounded-[5px] w-44 h-60 flex items-center justify-center">
+                <div className="flex items-center justify-center">
                   {value.productImages && value.productImages.length > 0 ? (
                     <img
                       src={value.productImages[0]}
                       alt="productImage"
-                      className="w-32 h-32"
+                      className="w-80"
                     />
                   ) : (
                     <div className="text-center">
@@ -129,7 +144,12 @@ const DetailedProduct = () => {
                   {value.productCategory}
                 </div>
                 <div>{value.productName}</div>
-                <div>$ {value.productPrice}</div>
+                <div>
+                  {value.productPrice.toLocaleString("ko-KR", {
+                    style: "currency",
+                    currency: "KRW",
+                  })}
+                </div>
               </div>
             ))}
         </div>

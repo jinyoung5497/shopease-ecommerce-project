@@ -28,7 +28,7 @@ export const useAuthStore = create<authStore>()((set) => ({
             const userDoc = await getDoc(userDocRef);
 
             const userData = userDoc.data();
-            const isSeller = userData?.isSeller || false;
+            const isSeller = userData?.isSeller;
 
             set({
               user: {

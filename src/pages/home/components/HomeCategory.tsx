@@ -11,16 +11,11 @@ const HomeCategory = () => {
     "Men's Clothing",
     "Women's Clothing",
     "Sneakers",
-    "Flats",
-    "Sandals",
+    "Hat",
+    "Top",
   ];
-  const {
-    setMenTrue,
-    setWomenTrue,
-    setSneakersTrue,
-    setFlatsTrue,
-    setSandalsTrue,
-  } = useFilterStore();
+  const { setMenTrue, setWomenTrue, setSneakersTrue, setHatTrue, setTopTrue } =
+    useFilterStore();
 
   const handleMoreClick = (category: string) => {
     navToCategoryProduct();
@@ -35,25 +30,25 @@ const HomeCategory = () => {
       setWomenTrue();
     } else if (category === "Sneakers") {
       setSneakersTrue();
-    } else if (category === "Flats") {
-      setFlatsTrue();
-    } else if (category === "Sandals") {
-      setSandalsTrue();
+    } else if (category === "Hat") {
+      setHatTrue();
+    } else if (category === "Top") {
+      setTopTrue();
     }
   };
 
   return (
-    <div className="m-20">
+    <div className="m-20 mx-36">
       {categoryList.map((category, index) => (
         <div key={index}>
           <div className="flex items-center justify-between text-primary">
             <div>{category}</div>
             <button onClick={() => handleMoreClick(category)}>더보기</button>
           </div>
-          <div className="flex gap-28 items-center justify-start m-10 mb-20">
+          <div className="w-full flex gap-5 items-start justify-between mt-4 mb-20">
             {data
               ?.filter((value) => value.productCategory === category)
-              .slice(0, 4)
+              .slice(0, 5)
               .map(
                 (
                   value,
@@ -64,12 +59,12 @@ const HomeCategory = () => {
                     onClick={() => handleProductCardClick(value, idx)}
                     className="flex flex-col gap-1 relative cursor-pointer"
                   >
-                    <div className="border-[1px] border-gray-light rounded-[5px] w-44 h-60 flex items-center justify-center">
+                    <div className="w-72 flex items-center justify-center">
                       {value.productImages && value.productImages.length > 0 ? (
                         <img
                           src={value.productImages[0]} // 첫 번째 이미지 사용
                           alt="productImage"
-                          className="w-32 h-32"
+                          className=""
                         />
                       ) : (
                         <div className="text-center">
@@ -80,8 +75,13 @@ const HomeCategory = () => {
                     <div className="text-gray text-[12px]">
                       {value.productCategory}
                     </div>
-                    <div>{value.productName}</div>
-                    <div>$ {value.productPrice}</div>
+                    <div className="overflow-clip">{value.productName}</div>
+                    <div>
+                      {value.productPrice.toLocaleString("ko-KR", {
+                        style: "currency",
+                        currency: "KRW",
+                      })}
+                    </div>
                   </div>
                 )
               )}

@@ -9,8 +9,7 @@ const CategoryCard = () => {
   const { data, fetchNextPage, isFetchingNextPage } =
     useFetchInfiniteProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
-  const { men, women, sneakers, flats, sandals, isFilterTrue } =
-    useFilterStore();
+  const { men, women, sneakers, hat, top, isFilterTrue } = useFilterStore();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
@@ -25,22 +24,21 @@ const CategoryCard = () => {
   }, [fetchNextPage, inView]);
   return (
     <>
-      <div className="grid grid-cols-5 gap-20 items-center justify-items-center mx-40 mb-20">
-        {(!isFilterTrue ||
-          (!men && !women && !sneakers && !flats && !sandals)) &&
+      <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20 mb-20">
+        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !top)) &&
           data?.pages.map((page) =>
             page.products.map((value: IProduct, index) => (
               <div
                 key={value.id} // id를 키로 사용합니다.
                 onClick={() => handleProductCardClick(value, index)}
-                className="flex flex-col gap-1 relative cursor-pointer"
+                className="flex flex-col gap-1 relative cursor-pointer mb-10"
               >
-                <div className="border-[1px] border-gray-light rounded-[5px] w-44 h-60 flex items-center justify-center">
+                <div className="w-70flex items-center justify-center">
                   {value.productImages && value.productImages.length > 0 ? (
                     <img
                       src={value.productImages[0]}
                       alt="productImage"
-                      className="w-32 h-32"
+                      className="w-70"
                     />
                   ) : (
                     <div className="text-center">
@@ -52,7 +50,12 @@ const CategoryCard = () => {
                   {value.productCategory}
                 </div>
                 <div>{value.productName}</div>
-                <div>$ {value.productPrice}</div>
+                <div>
+                  {value.productPrice.toLocaleString("ko-KR", {
+                    style: "currency",
+                    currency: "KRW",
+                  })}
+                </div>
               </div>
             ))
           )}
@@ -64,22 +67,22 @@ const CategoryCard = () => {
                   (men && value.productCategory == "Men's Clothing") ||
                   (women && value.productCategory == "Women's Clothing") ||
                   (sneakers && value.productCategory == "Sneakers") ||
-                  (flats && value.productCategory == "Flats") ||
-                  (sandals && value.productCategory == "Sandals")
+                  (hat && value.productCategory == "Hat") ||
+                  (top && value.productCategory == "Top")
                 );
               })
               .map((value: IProduct, index) => (
                 <div
                   key={value.id} // id를 키로 사용합니다.
                   onClick={() => handleProductCardClick(value, index)}
-                  className="flex flex-col gap-1 relative cursor-pointer"
+                  className="flex flex-col gap-1 relative cursor-pointer mb-10"
                 >
-                  <div className="border-[1px] border-gray-light rounded-[5px] w-44 h-60 flex items-center justify-center">
+                  <div className=" w-70 flex items-center justify-center">
                     {value.productImages && value.productImages.length > 0 ? (
                       <img
                         src={value.productImages[0]}
                         alt="productImage"
-                        className="w-32 h-32"
+                        className="w-70"
                       />
                     ) : (
                       <div className="text-center">
@@ -91,7 +94,12 @@ const CategoryCard = () => {
                     {value.productCategory}
                   </div>
                   <div>{value.productName}</div>
-                  <div>$ {value.productPrice}</div>
+                  <div>
+                    {value.productPrice.toLocaleString("ko-KR", {
+                      style: "currency",
+                      currency: "KRW",
+                    })}
+                  </div>
                 </div>
               ))
           )}
