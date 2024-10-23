@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
+import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
 import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
 
@@ -28,7 +28,7 @@ interface UpdateModalProps {
 const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
-  const { data } = useFetchProducts();
+  const { data } = useFetchInfiniteProducts();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { imageNameList, setImageNameList } = useProductStore();
   const [toggle, setToggle] = useState(false);
@@ -223,10 +223,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
               </div>
             )}
             <p>상품 설명</p>
-            <input
+            <textarea
               {...register("description")}
               id="description"
-              type="text"
               placeholder="상품 설명"
               className="w-full p-3 border-primary rounded-[7px] border-[1px]"
             />

@@ -12,6 +12,7 @@ export const useDetailedProductInfo = () => {
     setIndex(index);
     const detailedProduct = {
       id: value.id,
+      sellerId: value.sellerId,
       productName: value.productName,
       productPrice: value.productPrice,
       productQuantity: value.productQuantity,

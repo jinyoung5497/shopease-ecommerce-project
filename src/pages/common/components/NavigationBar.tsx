@@ -9,14 +9,22 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
+import { useCartStore } from "@/store/cart/useCartStore";
+import { useUpdateCart } from "@/lib/cart/hooks/useUpdateCart";
+import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
 
 const NavigationBar = () => {
-  //TODO initCart when logged in
-
   const isLogin = useAuthStore((state) => state.isLogin);
   const logout = useAuthStore((state) => state.logout);
   const checkLoginStatus = useAuthStore((state) => state.checkLoginStatus);
   const isSeller = useAuthStore((state) => state.isSeller);
+  const { data } = useFetchCart();
+  const { navToCheckout } = useNavigation();
+  const { setFirstCartList, setIndex, setCartQuantity } = useCartStore();
+  const { mutate: updateCart } = useUpdateCart();
+  const { mutate: deleteCartItem } = useDeleteCart();
+
   const {
     navToLogin,
     navToAdmin,
@@ -29,9 +37,34 @@ const NavigationBar = () => {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
+  useEffect(() => {
+    if (data) setFirstCartList(data);
+  }, [setFirstCartList]);
+
   const handleLogout = () => {
     logout();
     navToHome();
+  };
+
+  const handleCheckout = () => {
+    navToCheckout();
+  };
+
+  const increaseQuantity = (index: number) => {
+    if (data) {
+      setCartQuantity(data[index].quantity + 1);
+      setIndex(index);
+    }
+
+    updateCart();
+  };
+
+  const decreaseQuantity = (index: number) => {
+    if (data && data[index].quantity > 1) {
+      setCartQuantity(data[index].quantity - 1);
+      setIndex(index);
+      updateCart();
+    }
   };
 
   return (
@@ -96,9 +129,11 @@ const NavigationBar = () => {
         <Sheet>
           <SheetTrigger>
             <div className="flex gap-1 items-center justify-center right-0 relative">
-              <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
-                <p className="text-white text-[12px]">2</p>
-              </div>
+              {data && data?.length > 0 && (
+                <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
+                  <p className="text-white text-[12px]">{data?.length}</p>
+                </div>
+              )}
               <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
             </div>
           </SheetTrigger>
@@ -109,13 +144,63 @@ const NavigationBar = () => {
               </div>
               <SheetDescription />
             </SheetHeader>
-            {/* <div>
-              <img src={} alt="" />
-              <div>product Title</div>
-              <div>
-
+            {data?.map((value, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between w-full h-28 border-slate-200 border-b-[1px]"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={value.productImage}
+                    alt="productImage"
+                    className="w-14 h-14 border-[1px] border-slate-200 p-2"
+                  />
+                  <div className="flex flex-col items-start gap-1">
+                    <div>{value.productName}</div>
+                    <div className="flex items-center">
+                      <div className="flex border-slate-200 border-[1px] p-1 px-3 gap-2 items-center justify-center">
+                        <i
+                          onClick={() => increaseQuantity(index)}
+                          className="fi fi-rs-plus-small translate-y-[2px] cursor-pointer"
+                        ></i>
+                        <div>{value.quantity}</div>
+                        <i
+                          onClick={() => decreaseQuantity(index)}
+                          className="fi fi-rs-minus-small translate-y-[2px] cursor-pointer"
+                        ></i>
+                      </div>
+                      <div className="ml-4 text-gray text-sm">
+                        $ {value.productPrice}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <i
+                    onClick={() => deleteCartItem(value.productId)}
+                    className="fi fi-rs-cross-small text-xl cursor-pointer"
+                  ></i>
+                  <div>$ {value.totalPrice}</div>
+                </div>
               </div>
-            </div> */}
+            ))}
+            <div className="flex flex-col absolute bottom-0 left-0 right-0 m-4 border-t-[1px] border-slate-200 gap-4">
+              <div className="mt-5 flex items-center justify-between">
+                <div>
+                  Total: ${" "}
+                  {data?.reduce((total, product) => {
+                    return total + product.totalPrice;
+                  }, 0)}
+                </div>
+                <i className="fi fi-rs-trash bg-red-600 flex items-center justify-center w-8 h-8 text-xl text-white"></i>
+              </div>
+              <button
+                onClick={handleCheckout}
+                className="text-white bg-primary w-full p-2"
+              >
+                Checkout
+              </button>
+            </div>
           </SheetContent>
         </Sheet>
       </div>

@@ -1,7 +1,7 @@
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
+import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
 import { IProduct } from "@/lib/product/types";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
@@ -9,7 +9,8 @@ import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
-  const { data, fetchNextPage, isFetchingNextPage } = useFetchProducts();
+  const { data, fetchNextPage, isFetchingNextPage } =
+    useFetchInfiniteProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
 
   // Intersection Observer 설정
