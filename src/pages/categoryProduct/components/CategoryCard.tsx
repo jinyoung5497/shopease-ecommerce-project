@@ -1,4 +1,5 @@
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
 import { IProduct } from "@/lib/product/types"; // IProduct 타입을 가져옵니다.
 import { useFilterStore } from "@/store/filter/useFilterStore";
@@ -8,6 +9,7 @@ import { useInView } from "react-intersection-observer";
 const CategoryCard = () => {
   const { data, fetchNextPage, isFetchingNextPage } =
     useFetchInfiniteProducts();
+  const { data: filteredData } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
   const { men, women, sneakers, hat, top, isFilterTrue } = useFilterStore();
 
@@ -60,49 +62,49 @@ const CategoryCard = () => {
             ))
           )}
         {isFilterTrue &&
-          data?.pages.map((page) =>
-            page.products
-              .filter((value) => {
-                return (
-                  (men && value.productCategory == "Men's Clothing") ||
-                  (women && value.productCategory == "Women's Clothing") ||
-                  (sneakers && value.productCategory == "Sneakers") ||
-                  (hat && value.productCategory == "Hat") ||
-                  (top && value.productCategory == "Top")
-                );
-              })
-              .map((value: IProduct, index) => (
-                <div
-                  key={value.id} // id를 키로 사용합니다.
-                  onClick={() => handleProductCardClick(value, index)}
-                  className="flex flex-col gap-1 relative cursor-pointer mb-10"
-                >
-                  <div className=" w-70 flex items-center justify-center">
-                    {value.productImages && value.productImages.length > 0 ? (
-                      <img
-                        src={value.productImages[0]}
-                        alt="productImage"
-                        className="w-70"
-                      />
-                    ) : (
-                      <div className="text-center">
-                        There are no images for this product
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-gray text-[12px]">
-                    {value.productCategory}
-                  </div>
-                  <div>{value.productName}</div>
-                  <div>
-                    {value.productPrice.toLocaleString("ko-KR", {
-                      style: "currency",
-                      currency: "KRW",
-                    })}
-                  </div>
+          filteredData
+            ?.filter((value) => {
+              return (
+                (men && value.productCategory === "Men's Clothing") ||
+                (women && value.productCategory === "Women's Clothing") ||
+                (sneakers && value.productCategory === "Sneakers") ||
+                (hat && value.productCategory === "Hat") ||
+                (top && value.productCategory === "Top")
+              );
+            })
+            .map((value: IProduct, index) => (
+              <div
+                key={value.id} // id를 키로 사용
+                onClick={() => handleProductCardClick(value, index)}
+                className="flex flex-col gap-1 relative cursor-pointer mb-10"
+              >
+                <div className="w-70 flex items-center justify-center">
+                  {value.productImages && value.productImages.length > 0 ? (
+                    <img
+                      src={value.productImages[0]}
+                      alt={`${value.productName} image`}
+                      className="w-70"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      상품 이미지를 찾을 수 없습니다.
+                    </div>
+                  )}
                 </div>
-              ))
-          )}
+
+                {/* 상품 정보 */}
+                <div className="text-gray text-[12px]">
+                  {value.productCategory}
+                </div>
+                <div>{value.productName}</div>
+                <div>
+                  {value.productPrice.toLocaleString("ko-KR", {
+                    style: "currency",
+                    currency: "KRW",
+                  })}
+                </div>
+              </div>
+            ))}
       </div>
       <div ref={ref} className="text-center mt-4 text-white bg-primary">
         {isFetchingNextPage ? "Loading more products..." : null}

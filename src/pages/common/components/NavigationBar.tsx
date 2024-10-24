@@ -12,7 +12,10 @@ import {
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useUpdateCart } from "@/lib/cart/hooks/useUpdateCart";
-import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
+import {
+  useDeleteAllCart,
+  useDeleteCart,
+} from "@/lib/cart/hooks/useDeleteCart";
 
 const NavigationBar = () => {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -24,6 +27,7 @@ const NavigationBar = () => {
   const { setFirstCartList, setIndex, setCartQuantity } = useCartStore();
   const { mutate: updateCart } = useUpdateCart();
   const { mutate: deleteCartItem } = useDeleteCart();
+  const { mutate: deleteAllCartItems } = useDeleteAllCart();
 
   const {
     navToLogin,
@@ -205,7 +209,10 @@ const NavigationBar = () => {
                       currency: "KRW",
                     })}
                 </div>
-                <i className="fi fi-rs-trash bg-red-600 flex items-center justify-center w-8 h-8 text-xl text-white"></i>
+                <i
+                  onClick={() => deleteAllCartItems()}
+                  className="fi fi-rs-trash bg-red-600 flex items-center justify-center w-8 h-8 text-xl text-white cursor-pointer"
+                ></i>
               </div>
               <button
                 onClick={handleCheckout}

@@ -35,21 +35,25 @@ const DetailedProduct = () => {
   }
 
   const handleCartRegister = () => {
-    const newProductInCart = {
-      productId: detailedProductInfo.id || "",
-      sellerId: detailedProductInfo.sellerId || "",
-      buyerId: user?.uid || "",
-      productName: detailedProductInfo.productName || "",
-      productImage:
-        (detailedProductInfo.productImages &&
-          detailedProductInfo.productImages[0]) ||
-        "",
-      quantity: 1,
-      productPrice: detailedProductInfo.productPrice || 0,
-      totalPrice: detailedProductInfo.productPrice || 0,
-    };
-    addCart(newProductInCart);
-    setCartList(newProductInCart);
+    if (user?.uid) {
+      const newProductInCart = {
+        productId: detailedProductInfo.id || "",
+        sellerId: detailedProductInfo.sellerId || "",
+        buyerId: user?.uid || "",
+        productName: detailedProductInfo.productName || "",
+        productImage:
+          (detailedProductInfo.productImages &&
+            detailedProductInfo.productImages[0]) ||
+          "",
+        quantity: 1,
+        productPrice: detailedProductInfo.productPrice || 0,
+        totalPrice: detailedProductInfo.productPrice || 0,
+      };
+      addCart(newProductInCart);
+      setCartList(newProductInCart);
+    } else {
+      console.log("toast");
+    }
   };
 
   return (
@@ -91,7 +95,10 @@ const DetailedProduct = () => {
               })}
             </div>
             <div>{detailedProductInfo.productQuantity}개 남았습니다</div>
-            <div className="overflow-y-scroll  h-[400px]">
+            <div
+              className="overflow-y-scroll  h-[400px]"
+              style={{ whiteSpace: "pre-wrap" }}
+            >
               {detailedProductInfo.productDescription}
             </div>
             <button
@@ -99,12 +106,6 @@ const DetailedProduct = () => {
               className="bg-primary text-white p-3 px-5 rounded-sm"
             >
               장바구니 추가
-            </button>
-            <button
-              onClick={handleCartRegister}
-              className="bg-primary text-white p-3 px-5 rounded-sm"
-            >
-              장바구니 보기
             </button>
           </div>
         </div>
