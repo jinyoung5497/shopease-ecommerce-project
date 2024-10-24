@@ -20,12 +20,12 @@ const MyProductsCard = () => {
   });
 
   useEffect(() => {
-    fetchNextPage();
-  }, [fetchNextPage]);
-
-  useEffect(() => {
     if (inView) {
-      fetchNextPage();
+      try {
+        fetchNextPage();
+      } catch (error) {
+        console.error("Error fetching next page: ", error);
+      }
     }
   }, [fetchNextPage, inView]);
 
@@ -78,7 +78,10 @@ const MyProductsCard = () => {
           })
         )}
       </div>
-      <div ref={ref} className="text-center mt-4 text-white bg-primary">
+      <div
+        ref={ref}
+        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
+      >
         {isFetchingNextPage ? "Loading more products..." : null}
       </div>
     </>

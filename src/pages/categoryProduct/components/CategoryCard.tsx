@@ -15,13 +15,18 @@ const CategoryCard = () => {
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
-    threshold: 0.2, // 10%가 보일 때 감지
+    threshold: 0.1, // 10%가 보일 때 감지
     triggerOnce: false, // 여러 번 트리거 가능
   });
 
   useEffect(() => {
+    console.log("inView: ", inView);
     if (inView) {
-      fetchNextPage();
+      try {
+        fetchNextPage();
+      } catch (error) {
+        console.error("Error fetching next page: ", error);
+      }
     }
   }, [fetchNextPage, inView]);
   return (
@@ -106,7 +111,10 @@ const CategoryCard = () => {
               </div>
             ))}
       </div>
-      <div ref={ref} className="text-center mt-4 text-white bg-primary">
+      <div
+        ref={ref}
+        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
+      >
         {isFetchingNextPage ? "Loading more products..." : null}
       </div>
     </>
