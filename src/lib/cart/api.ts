@@ -9,6 +9,7 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  writeBatch,
 } from "firebase/firestore";
 
 // 장바구니에 아이템을 추가하는 API 함수 (userId 기준)
@@ -121,5 +122,31 @@ export const deleteCartItemAPI = async (
   } catch (error) {
     console.error("Error deleting cart item: ", error);
     throw new Error("Failed to delete cart item");
+  }
+};
+
+export const deleteAllCartAPI = async (
+  userId: string | undefined
+): Promise<void> => {
+  try {
+    if (!userId) {
+      throw new Error("User ID is undefined");
+    }
+
+    const cartItemsCollectionRef = collection(db, "cart", userId, "items"); // 컬렉션 참조
+    const cartItemsQuery = query(cartItemsCollectionRef); // 컬렉션의 모든 문서를 쿼리
+
+    const querySnapshot = await getDocs(cartItemsQuery); // 문서 가져오기
+
+    const batch = writeBatch(db); // Firestore의 배치 생성
+
+    querySnapshot.forEach((docSnapshot) => {
+      const docRef = doc(db, "cart", userId, "items", docSnapshot.id); // 각 문서의 참조 가져오기
+      batch.delete(docRef); // 문서 삭제
+    });
+
+    await batch.commit(); // batch 커밋 (한번에 삭제)
+  } catch (error) {
+    throw new Error("Failed to empty cart: " + (error as Error).message);
   }
 };
