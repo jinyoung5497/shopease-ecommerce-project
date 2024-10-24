@@ -11,11 +11,11 @@ const CategoryCard = () => {
     useFetchInfiniteProducts();
   const { data: filteredData } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
-  const { men, women, sneakers, hat, top, isFilterTrue } = useFilterStore();
+  const { men, women, sneakers, hat, kids, isFilterTrue } = useFilterStore();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
-    threshold: 0.1, // 10%가 보일 때 감지
+    threshold: 0.2, // 10%가 보일 때 감지
     triggerOnce: false, // 여러 번 트리거 가능
   });
 
@@ -27,7 +27,7 @@ const CategoryCard = () => {
   return (
     <>
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20 mb-20">
-        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !top)) &&
+        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !kids)) &&
           data?.pages.map((page) =>
             page.products.map((value: IProduct, index) => (
               <div
@@ -69,7 +69,7 @@ const CategoryCard = () => {
                 (women && value.productCategory === "Women's Clothing") ||
                 (sneakers && value.productCategory === "Sneakers") ||
                 (hat && value.productCategory === "Hat") ||
-                (top && value.productCategory === "Top")
+                (kids && value.productCategory === "Kids")
               );
             })
             .map((value: IProduct, index) => (

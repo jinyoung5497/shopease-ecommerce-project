@@ -1,11 +1,14 @@
 import { create } from "zustand";
+import { ToastStore } from "./types";
 
-interface ToastState {
-  isToast: boolean;
-  setIsToast: () => void;
-}
-
-export const useToastStore = create<ToastState>((set) => ({
-  isToast: false,
-  setIsToast: () => set((state) => ({ isToast: !state.isToast })),
+export const useToastStore = create<ToastStore>((set) => ({
+  toasts: [],
+  addToast: (message, type) =>
+    set((state) => ({
+      toasts: [...state.toasts, { id: Date.now(), message, type }],
+    })),
+  removeToast: (id) =>
+    set((state) => ({
+      toasts: state.toasts.filter((toast) => toast.id !== id),
+    })),
 }));
