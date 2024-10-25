@@ -131,9 +131,12 @@ const Checkout = () => {
             <h1 className="text-primary text-xl w-full border-b-2 border-primary pb-2">
               주문상품 정보
             </h1>
-            <div className="p-5">
+            <div className="p-5 flex flex-col gap-5 border-slate-200 border-t-[1px]">
               {data?.map((value, index) => (
-                <div key={index} className="flex flex-col gap-5">
+                <div
+                  key={index}
+                  className="flex flex-col gap-5 pt-4 border-slate-200 border-t-[1px]"
+                >
                   <div className="flex gap-5">
                     <img
                       src={value.productImage}
@@ -151,19 +154,19 @@ const Checkout = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="text-sm text-slate-400 flex flex-col gap-2 border-slate-200 border-t-[1px] p-3">
-                    <p>사은품은 주문 상품과 별도로 배송될 수 있습니다.</p>
-                    <p>
-                      결제완료 이후 품절이 발생한 경우, 영업일 4일 이내 고객님께
-                      별도로 안내를 드립니다.
-                    </p>
-                    <p>
-                      품절 안내 이후 결제하신 금액은 자동취소 처리해 드리며,
-                      재결제가 필요한 경우 추가로 안내 드립니다.
-                    </p>
-                  </div>
                 </div>
               ))}
+              <div className="text-sm text-slate-400 flex flex-col gap-2 border-slate-200 border-t-[1px] p-3">
+                <p>사은품은 주문 상품과 별도로 배송될 수 있습니다.</p>
+                <p>
+                  결제완료 이후 품절이 발생한 경우, 영업일 4일 이내 고객님께
+                  별도로 안내를 드립니다.
+                </p>
+                <p>
+                  품절 안내 이후 결제하신 금액은 자동취소 처리해 드리며,
+                  재결제가 필요한 경우 추가로 안내 드립니다.
+                </p>
+              </div>
             </div>
             <h1 className="text-primary text-xl w-full border-b-2 border-primary">
               결제수단

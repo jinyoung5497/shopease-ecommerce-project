@@ -220,3 +220,30 @@ export const getProductsAPI = async (): Promise<IProduct[]> => {
     throw error;
   }
 };
+
+// 제품 수량 감소 API
+export const updateProductQuantity = async ({
+  productId,
+  quantity,
+}: {
+  productId: string;
+  quantity: number;
+}) => {
+  const productRef = doc(db, "products", productId);
+
+  const productSnapshot = await getDoc(productRef);
+  if (!productSnapshot.exists()) {
+    throw new Error("Product does not exist");
+  }
+
+  const currentQuantity = productSnapshot.data().productQuantity;
+
+  // 수량이 충분할 경우에만 업데이트
+  if (currentQuantity > 0) {
+    await updateDoc(productRef, {
+      productQuantity: currentQuantity - quantity,
+    });
+  } else {
+    console.warn("Insufficient quantity to update");
+  }
+};

@@ -51,8 +51,12 @@ const DetailedProduct = () => {
         productPrice: detailedProductInfo.productPrice || 0,
         totalPrice: detailedProductInfo.productPrice || 0,
       };
-      addCart(newProductInCart);
-      setCartList(newProductInCart);
+      if (detailedProductInfo.productQuantity! > 0) {
+        addCart(newProductInCart);
+        setCartList(newProductInCart);
+      } else {
+        addToast("제품 수량이 부족합니다", "error");
+      }
     } else {
       addToast("로그인이 필요한 기능입니다", "error");
     }

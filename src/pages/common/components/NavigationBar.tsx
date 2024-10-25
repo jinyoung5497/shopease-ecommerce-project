@@ -17,6 +17,7 @@ import {
   useDeleteCart,
 } from "@/lib/cart/hooks/useDeleteCart";
 import { useToastStore } from "@/store/toast/useToastStore";
+import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
 
 const NavigationBar = () => {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -29,6 +30,7 @@ const NavigationBar = () => {
   const { mutate: updateCart } = useUpdateCart();
   const { mutate: deleteCartItem } = useDeleteCart();
   const { mutate: deleteAllCartItems } = useDeleteAllCart();
+  const { mutate: updateQuantity } = useUpdateProductQuantity();
   const { addToast } = useToastStore();
 
   const {
@@ -52,14 +54,6 @@ const NavigationBar = () => {
     navToHome();
   };
 
-  const handleCheckout = () => {
-    if (!isLogin) {
-      addToast("로그인이 필요한 기능입니다", "error");
-    } else {
-      navToCheckout();
-    }
-  };
-
   const increaseQuantity = (index: number) => {
     if (data) {
       setCartQuantity(data[index].quantity + 1);
@@ -74,6 +68,17 @@ const NavigationBar = () => {
       setCartQuantity(data[index].quantity - 1);
       setIndex(index);
       updateCart();
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!isLogin) {
+      addToast("로그인이 필요한 기능입니다", "error");
+    } else {
+      data?.forEach((value) => {
+        updateQuantity({ productId: value.productId, quantity: 1 });
+      });
+      navToCheckout();
     }
   };
 

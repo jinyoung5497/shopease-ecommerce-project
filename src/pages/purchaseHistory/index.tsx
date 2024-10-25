@@ -3,15 +3,23 @@ import HomeButton from "../common/components/HomeButton";
 import { Layout, authStatusType } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useUpdateOrder } from "@/lib/order/hooks/useUpdateOrder";
+import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
 
 const PurchaseHistory = () => {
   const { data } = useFetchOrder();
   const { mutate: updateStatus } = useUpdateOrder();
+  const { mutate: updateQuantity } = useUpdateProductQuantity();
 
-  const updateOrder = (id: string | undefined) => {
+  const updateOrder = (
+    id: string | undefined,
+    productId: string | undefined
+  ) => {
     console.log(id);
     if (id) {
       updateStatus({ orderId: id, status: "주문 취소" });
+    }
+    if (productId) {
+      updateQuantity({ productId, quantity: -1 });
     }
   };
 
@@ -56,7 +64,7 @@ const PurchaseHistory = () => {
                 </div>
                 {value.status !== "주문 취소" ? (
                   <button
-                    onClick={() => updateOrder(value.id)}
+                    onClick={() => updateOrder(value.id, value.productId)}
                     className="bg-red-500 hover:bg-red-400 rounded-[5px] text-white p-3 px-7"
                   >
                     구매 취소
