@@ -45,7 +45,6 @@ export const getCartAPI = async (
 
     const cartItems: ICart[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
-      console.log(data);
 
       // Firestore 문서에서 가져온 데이터를 ICart 타입에 맞게 변환
       const cartItem: ICart = {
