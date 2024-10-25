@@ -187,9 +187,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                   Hat
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Top")}
+                  onClick={(event) => handleCategory(event, "Kids")}
                 >
-                  Top
+                  Kids
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

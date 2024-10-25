@@ -6,19 +6,19 @@ interface FilterStore {
   women: boolean;
   sneakers: boolean;
   hat: boolean;
-  top: boolean;
+  kids: boolean;
   isFilterTrue: boolean;
   isMen: () => void;
   isWomen: () => void;
   isSneakers: () => void;
   isHat: () => void;
-  isTop: () => void;
+  isKids: () => void;
   setIsFilterTrue: () => void;
   setMenTrue: () => void;
   setWomenTrue: () => void;
   setSneakersTrue: () => void;
   setHatTrue: () => void;
-  setTopTrue: () => void;
+  setKidsTrue: () => void;
 }
 
 export const useFilterStore = create<FilterStore>((set) => ({
@@ -27,7 +27,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   women: false,
   sneakers: false,
   hat: false,
-  top: false,
+  kids: false,
   isFilterTrue: false,
   isMen: () => {
     set((state) => ({ men: !state.men }));
@@ -35,7 +35,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   isWomen: () => set((state) => ({ women: !state.women })),
   isSneakers: () => set((state) => ({ sneakers: !state.sneakers })),
   isHat: () => set((state) => ({ hat: !state.hat })),
-  isTop: () => set((state) => ({ top: !state.top })),
+  isKids: () => set((state) => ({ kids: !state.kids })),
   setIsFilterTrue: () =>
     set(() => ({
       isFilterTrue: true,
@@ -46,7 +46,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
       women: false,
       sneakers: false,
       hat: false,
-      top: false,
+      kids: false,
       isFilterTrue: true,
     }));
   },
@@ -56,7 +56,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
       women: true,
       sneakers: false,
       hat: false,
-      top: false,
+      kids: false,
       isFilterTrue: true,
     })),
   setSneakersTrue: () =>
@@ -65,7 +65,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
       women: false,
       sneakers: true,
       hat: false,
-      top: false,
+      kids: false,
       isFilterTrue: true,
     })),
   setHatTrue: () =>
@@ -74,16 +74,16 @@ export const useFilterStore = create<FilterStore>((set) => ({
       women: false,
       sneakers: false,
       hat: true,
-      top: false,
+      kids: false,
       isFilterTrue: true,
     })),
-  setTopTrue: () =>
+  setKidsTrue: () =>
     set(() => ({
       men: false,
       women: false,
       sneakers: false,
       hat: false,
-      top: true,
+      kids: true,
       isFilterTrue: true,
     })),
 }));

@@ -6,12 +6,12 @@ const CategoryFilterButton = () => {
     women,
     sneakers,
     hat,
-    top,
+    kids,
     isMen,
     isWomen,
     isSneakers,
     isHat,
-    isTop,
+    isKids,
     isFilterTrue,
     setIsFilterTrue,
   } = useFilterStore();
@@ -65,13 +65,13 @@ const CategoryFilterButton = () => {
       <button
         onClick={() => {
           setIsFilterTrue();
-          isTop();
+          isKids();
         }}
         className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
-          top && isFilterTrue && "bg-primary text-white"
+          kids && isFilterTrue && "bg-primary text-white"
         }`}
       >
-        Top
+        Kids
       </button>
     </div>
   );

@@ -18,13 +18,15 @@ import { useCartStore } from "@/store/cart/useCartStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useToastStore } from "@/store/toast/useToastStore";
 
 const DetailedProduct = () => {
   const { detailedProductInfo } = useProductStore();
   const { data } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
   const { mutate: addCart } = useAddCart();
-  const { user } = useAuthStore();
+  const { user, isSeller } = useAuthStore();
+  const addToast = useToastStore((state) => state.addToast);
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const { setCartList } = useCartStore();
@@ -35,7 +37,7 @@ const DetailedProduct = () => {
   }
 
   const handleCartRegister = () => {
-    if (user?.uid) {
+    if (user?.uid && !isSeller) {
       const newProductInCart = {
         productId: detailedProductInfo.id || "",
         sellerId: detailedProductInfo.sellerId || "",
@@ -52,7 +54,10 @@ const DetailedProduct = () => {
       addCart(newProductInCart);
       setCartList(newProductInCart);
     } else {
-      console.log("toast");
+      addToast("로그인이 필요한 기능입니다", "error");
+    }
+    if (isSeller) {
+      addToast("구매자 아이디로 로그인 하세요", "error");
     }
   };
 

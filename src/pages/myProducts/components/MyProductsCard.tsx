@@ -21,61 +21,70 @@ const MyProductsCard = () => {
 
   useEffect(() => {
     if (inView) {
-      fetchNextPage();
+      try {
+        fetchNextPage();
+      } catch (error) {
+        console.error("Error fetching next page: ", error);
+      }
     }
   }, [fetchNextPage, inView]);
 
   return (
-    <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
-      {data?.pages.map((page) =>
-        page.products.map((value: IProduct, index: number) => {
-          if (value.sellerId === user?.uid) {
-            return (
-              <div
-                key={value.id} // id를 키로 사용합니다.
-                className="flex flex-col gap-1 relative cursor-pointer"
-              >
-                <UpdateModal index={index} />
-                <DeleteModal id={value.id} />
-                <div className=" w-70 flex items-center justify-center">
-                  {value.productImages && value.productImages.length > 0 ? (
-                    <img
-                      src={value.productImages[0]}
-                      alt="productImage"
-                      onClick={() => handleProductCardClick(value, index)}
-                      className="w-70"
-                    />
-                  ) : (
-                    <div className="text-center">
-                      There are no images for this product
-                    </div>
-                  )}
-                </div>
+    <>
+      <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
+        {data?.pages.map((page) =>
+          page.products.map((value: IProduct, index: number) => {
+            if (value.sellerId === user?.uid) {
+              return (
                 <div
-                  onClick={() => handleProductCardClick(value, index)}
-                  className="text-gray text-[12px]"
+                  key={value.id} // id를 키로 사용합니다.
+                  className="flex flex-col gap-1 relative cursor-pointer"
                 >
-                  {value.productCategory}
+                  <UpdateModal index={index} />
+                  <DeleteModal id={value.id} />
+                  <div className=" w-70 flex items-center justify-center">
+                    {value.productImages && value.productImages.length > 0 ? (
+                      <img
+                        src={value.productImages[0]}
+                        alt="productImage"
+                        onClick={() => handleProductCardClick(value, index)}
+                        className="w-70"
+                      />
+                    ) : (
+                      <div className="text-center">
+                        There are no images for this product
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    onClick={() => handleProductCardClick(value, index)}
+                    className="text-gray text-[12px]"
+                  >
+                    {value.productCategory}
+                  </div>
+                  <div onClick={() => handleProductCardClick(value, index)}>
+                    {value.productName}
+                  </div>
+                  <div onClick={() => handleProductCardClick(value, index)}>
+                    {value.productPrice.toLocaleString("ko-KR", {
+                      style: "currency",
+                      currency: "KRW",
+                    })}
+                  </div>
                 </div>
-                <div onClick={() => handleProductCardClick(value, index)}>
-                  {value.productName}
-                </div>
-                <div onClick={() => handleProductCardClick(value, index)}>
-                  {value.productPrice.toLocaleString("ko-KR", {
-                    style: "currency",
-                    currency: "KRW",
-                  })}
-                </div>
-              </div>
-            );
-          }
-          return null; // 조건이 만족하지 않을 경우 null 반환
-        })
-      )}
-      <div ref={ref} className="text-center mt-4 text-white bg-primary">
+              );
+            }
+            return null; // 조건이 만족하지 않을 경우 null 반환
+          })
+        )}
+      </div>
+      <div
+        ref={ref}
+        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
+      >
         {isFetchingNextPage ? "Loading more products..." : null}
       </div>
-    </div>
+    </>
   );
 };
 

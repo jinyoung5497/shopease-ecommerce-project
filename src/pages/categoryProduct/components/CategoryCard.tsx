@@ -11,7 +11,7 @@ const CategoryCard = () => {
     useFetchInfiniteProducts();
   const { data: filteredData } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
-  const { men, women, sneakers, hat, top, isFilterTrue } = useFilterStore();
+  const { men, women, sneakers, hat, kids, isFilterTrue } = useFilterStore();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
@@ -20,14 +20,19 @@ const CategoryCard = () => {
   });
 
   useEffect(() => {
+    console.log("inView: ", inView);
     if (inView) {
-      fetchNextPage();
+      try {
+        fetchNextPage();
+      } catch (error) {
+        console.error("Error fetching next page: ", error);
+      }
     }
   }, [fetchNextPage, inView]);
   return (
     <>
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20 mb-20">
-        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !top)) &&
+        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !kids)) &&
           data?.pages.map((page) =>
             page.products.map((value: IProduct, index) => (
               <div
@@ -69,7 +74,7 @@ const CategoryCard = () => {
                 (women && value.productCategory === "Women's Clothing") ||
                 (sneakers && value.productCategory === "Sneakers") ||
                 (hat && value.productCategory === "Hat") ||
-                (top && value.productCategory === "Top")
+                (kids && value.productCategory === "Kids")
               );
             })
             .map((value: IProduct, index) => (
@@ -106,7 +111,10 @@ const CategoryCard = () => {
               </div>
             ))}
       </div>
-      <div ref={ref} className="text-center mt-4 text-white bg-primary">
+      <div
+        ref={ref}
+        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
+      >
         {isFetchingNextPage ? "Loading more products..." : null}
       </div>
     </>

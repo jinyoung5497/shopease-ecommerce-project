@@ -12,9 +12,9 @@ const HomeCategory = () => {
     "Women's Clothing",
     "Sneakers",
     "Hat",
-    "Top",
+    "Kids",
   ];
-  const { setMenTrue, setWomenTrue, setSneakersTrue, setHatTrue, setTopTrue } =
+  const { setMenTrue, setWomenTrue, setSneakersTrue, setHatTrue, setKidsTrue } =
     useFilterStore();
 
   const handleMoreClick = (category: string) => {
@@ -32,8 +32,8 @@ const HomeCategory = () => {
       setSneakersTrue();
     } else if (category === "Hat") {
       setHatTrue();
-    } else if (category === "Top") {
-      setTopTrue();
+    } else if (category === "Kids") {
+      setKidsTrue();
     }
   };
 

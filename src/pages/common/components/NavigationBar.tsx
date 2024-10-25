@@ -16,6 +16,7 @@ import {
   useDeleteAllCart,
   useDeleteCart,
 } from "@/lib/cart/hooks/useDeleteCart";
+import { useToastStore } from "@/store/toast/useToastStore";
 
 const NavigationBar = () => {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -28,6 +29,7 @@ const NavigationBar = () => {
   const { mutate: updateCart } = useUpdateCart();
   const { mutate: deleteCartItem } = useDeleteCart();
   const { mutate: deleteAllCartItems } = useDeleteAllCart();
+  const { addToast } = useToastStore();
 
   const {
     navToLogin,
@@ -51,7 +53,11 @@ const NavigationBar = () => {
   };
 
   const handleCheckout = () => {
-    navToCheckout();
+    if (!isLogin) {
+      addToast("로그인이 필요한 기능입니다", "error");
+    } else {
+      navToCheckout();
+    }
   };
 
   const increaseQuantity = (index: number) => {

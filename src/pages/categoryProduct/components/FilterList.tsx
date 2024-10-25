@@ -8,12 +8,12 @@ const FilterList = () => {
     women,
     sneakers,
     hat,
-    top,
+    kids,
     isMen,
     isWomen,
     isSneakers,
     isHat,
-    isTop,
+    isKids,
   } = useFilterStore();
 
   return (
@@ -59,12 +59,12 @@ const FilterList = () => {
             <i className="fi fi-rs-cross-small translate-y-[3px]"></i>
           </button>
         )}
-        {top && (
+        {kids && (
           <button
-            onClick={isTop}
+            onClick={isKids}
             className="w-fit hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-full border-[1px] flex items-center justify-center"
           >
-            Top
+            Kids
             <i className="fi fi-rs-cross-small translate-y-[3px]"></i>
           </button>
         )}

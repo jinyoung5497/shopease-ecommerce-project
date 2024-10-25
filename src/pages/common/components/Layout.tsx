@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { pageRoutes } from "@/apiRoutes";
 import { useAuthStore } from "@/store/auth/useAuthStore";
+import { Toast } from "./Toast";
 
 export const authStatusType = {
   NEED_LOGIN: "NEED_LOGIN",
@@ -42,7 +43,10 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div>
-      <div className="">{children}</div>
+      <div className="">
+        <Toast />
+        {children}
+      </div>
       {/* <Footer /> */}
     </div>
   );

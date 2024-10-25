@@ -197,6 +197,7 @@ export const updateProductAPI = async (
 function isFile(value: any): value is File {
   return value instanceof File;
 }
+
 export const getProductsAPI = async (): Promise<IProduct[]> => {
   try {
     const productsRef = collection(db, "products");
