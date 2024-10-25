@@ -8,6 +8,7 @@ export interface IOrder {
   productDetails?: {
     name: string;
     price: number;
+    category: string;
     sellerName: string;
     image: string;
   };

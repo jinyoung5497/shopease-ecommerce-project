@@ -13,8 +13,7 @@ import { db } from "@/config/firebase";
 import { v4 as uuidv4 } from "uuid";
 
 export const addOrderAPI = async (order: IOrder) => {
-  const { buyerId } = order;
-  const ordersRef = collection(db, "orders", buyerId, "items"); // 'orders' 컬렉션 참조
+  const ordersRef = collection(db, "orders"); // 'orders' 컬렉션 참조
   const orderId = uuidv4(); // 고유한 주문 ID 생성
 
   // Firestore에 새로운 주문 추가
@@ -30,7 +29,7 @@ export const fetchOrderAPI = async (
   if (!userId) throw new Error("User ID is undefined");
 
   try {
-    const ordersRef = collection(db, "orders", userId, "items");
+    const ordersRef = collection(db, "orders");
     const q = query(ordersRef, where("buyerId", "==", userId));
     const querySnapshot = await getDocs(q);
 
@@ -72,6 +71,7 @@ export const fetchOrderAPI = async (
               name: productData.productName,
               price: productData.productPrice,
               sellerName: userData?.name,
+              category: productData.productCategory,
               image: productData.productImages[0],
             },
           };
@@ -99,7 +99,7 @@ export const updateOrderStatus = async (
 
   try {
     // Firestore에서 특정 주문 문서를 참조
-    const orderRef = doc(db, "orders", userId, "items", orderId);
+    const orderRef = doc(db, "orders", orderId);
 
     // status 필드를 업데이트
     await updateDoc(orderRef, { status: newStatus });
@@ -112,13 +112,13 @@ export const updateOrderStatus = async (
 };
 
 export const fetchAdminAPI = async (
-  buyerId: string | undefined
+  sellerId: string | undefined
 ): Promise<IOrder[]> => {
-  if (!buyerId) throw new Error("User ID is undefined");
+  if (!sellerId) throw new Error("User ID is undefined");
 
   try {
-    const ordersRef = collection(db, "orders", buyerId, "items");
-    const q = query(ordersRef, where("buyerId", "==", buyerId));
+    const ordersRef = collection(db, "orders");
+    const q = query(ordersRef, where("sellerId", "==", sellerId));
     const querySnapshot = await getDocs(q);
 
     const orderItems: IOrder[] = await Promise.all(
@@ -129,7 +129,7 @@ export const fetchAdminAPI = async (
           id: data.id,
           productId: data.productId || "",
           sellerId: data.sellerId || "",
-          buyerId: buyerId || "",
+          buyerId: data.buyerId || "",
           productQuantity: data.quantity || 1,
           status: data.status,
         };
@@ -158,12 +158,12 @@ export const fetchAdminAPI = async (
             productDetails: {
               name: productData.productName,
               price: productData.productPrice,
+              category: productData.productCategory,
               sellerName: userData?.name,
               image: productData.productImages[0],
             },
           };
         }
-        console.log(orderItem);
 
         return orderItem; // 제품 정보가 없을 경우 기본 주문 항목 반환
       })
