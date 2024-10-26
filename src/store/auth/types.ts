@@ -4,7 +4,8 @@ export type authStore = {
   isSeller: boolean;
   isLogin: boolean;
   user: IUser | null;
-  setIsSeller: () => void;
+  setIsSellerFalse: () => void;
+  setIsSellerTrue: () => void;
   setIsLogin: (isLogin: boolean) => void;
   setUser: (user: IUser) => void;
   logout: () => void;

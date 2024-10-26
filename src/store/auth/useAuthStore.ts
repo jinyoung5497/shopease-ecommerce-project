@@ -10,7 +10,8 @@ export const useAuthStore = create<authStore>()((set) => ({
   isLogin: !!Cookies.get("accessToken"),
   user: null,
 
-  setIsSeller: () => set((state) => ({ isSeller: !state.isSeller })),
+  setIsSellerFalse: () => set(() => ({ isSeller: false })),
+  setIsSellerTrue: () => set(() => ({ isSeller: true })),
   setIsLogin: (isLogin: boolean) => set({ isLogin }),
   setUser: (user: IUser) => set({ user, isLogin: true }),
   logout: () => {

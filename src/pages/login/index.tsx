@@ -46,6 +46,21 @@ const Login = () => {
     [login, isSeller]
   );
 
+  const handleBuyerLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    login({
+      email: "testBuyer@gmail.com",
+      password: "Qlalfqjsgh1!",
+    });
+  };
+  const handleSellerLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    login({
+      email: "testSeller@gmail.com",
+      password: "Qlalfqjsgh1!",
+    });
+  };
+
   const handleNavToSignUp = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     navToSignUp();
@@ -113,6 +128,20 @@ const Login = () => {
               onClick={handleNavToSignUp}
             >
               회원가입
+            </button>
+          </div>
+          <div className="flex gap-4 mt-5">
+            <button
+              onClick={(event) => handleBuyerLogin(event)}
+              className="bg-primary p-2 text-white rounded-[5px] text-[12px]"
+            >
+              구매자 로그인 Tester
+            </button>
+            <button
+              onClick={(event) => handleSellerLogin(event)}
+              className="bg-primary p-2 text-white rounded-[5px] text-[12px]"
+            >
+              판매자 로그인 Tester
             </button>
           </div>
         </form>
