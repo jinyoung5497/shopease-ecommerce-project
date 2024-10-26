@@ -10,11 +10,13 @@ export const useUpdateProduct = () => {
     mutationFn: async ({
       productId,
       updatedData,
+      imageFiles,
     }: {
       productId: string;
       updatedData: Partial<IProduct>;
+      imageFiles: File[];
     }) => {
-      return updateProductAPI(productId, updatedData);
+      return updateProductAPI(productId, updatedData, imageFiles);
     },
     onSuccess: () => {
       console.log("Product updated successfully");

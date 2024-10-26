@@ -19,15 +19,19 @@ import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useProductStore } from "@/store/product/useProductStore";
+import { IProduct } from "@/lib/product";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
   const { user } = useAuthStore();
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProductCategoryType>("Men's Clothing");
   const { imageNameList, setImageNameList, resetImageNameList } =
     useProductStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageList, setImageList] = useState<File[]>([]);
+
+  type ProductCategoryType = IProduct["productCategory"];
 
   const schema = z.object({
     title: z.string().min(1, "이름은 필수입니다"),
@@ -79,7 +83,7 @@ const RegisterModal = () => {
         setValue("price", 0);
         setValue("remainder", 0);
         setValue("description", "");
-        setSelectedCategory("");
+        setSelectedCategory("Men's Clothing");
         resetImageNameList();
         setImageList([]);
         setIsModalOpen(false);
@@ -90,7 +94,7 @@ const RegisterModal = () => {
 
   const handleCategory = (
     event: React.MouseEvent<HTMLDivElement>,
-    category: string
+    category: ProductCategoryType
   ) => {
     event.preventDefault();
     setSelectedCategory(category);

@@ -144,41 +144,42 @@ export const deleteProductAPI = async (productId: string): Promise<void> => {
 
 export const updateProductAPI = async (
   productId: string,
-  updatedData: Partial<IProduct>
+  updatedData: Partial<IProduct>,
+  imageFiles: File[] = []
 ): Promise<void> => {
   try {
     const productDocRef = doc(db, "products", productId);
     const productSnapshot = await getDoc(productDocRef);
 
+    // 이미지를 업데이트
     if (productSnapshot.exists()) {
       const existingProductData = productSnapshot.data();
 
       // 기존 이미지 URL 가져오기
-      const existingImageUrl = existingProductData.productImage;
+      const existingImageUrl = existingProductData.productImageName;
 
-      // 새로운 이미지가 있고 기존에 이미지가 존재할 경우
-      if (updatedData.productImages && isFile(updatedData.productImages)) {
-        // 기존 이미지가 있을 경우 삭제
-        if (existingImageUrl) {
-          const imageRef = ref(storage, existingImageUrl);
+      if (existingImageUrl && Array.isArray(existingImageUrl)) {
+        for (const imageURL of existingImageUrl) {
+          const imageRef = ref(storage, `products/${productId}/${imageURL}`);
           await deleteObject(imageRef); // 기존 이미지 삭제
-          console.log("Old image deleted from Storage.");
+          console.log(`Old image ${existingImageUrl} deleted from Storage.`);
         }
-
-        // 새로운 이미지를 Firebase Storage에 업로드
-        const newImageRef = ref(
-          storage,
-          `products/${productId}/${updatedData.productImages.name}`
-        );
-
-        await uploadBytes(newImageRef, updatedData.productImages);
-
-        // 업로드된 이미지의 다운로드 URL 가져오기
-        const downloadURL = await getDownloadURL(newImageRef);
-
-        // Firestore에 새로운 이미지 URL 저장
-        updatedData.productImages = downloadURL as any; // 이미지 URL을 string으로 저장
       }
+
+      const imageUrls: string[] = [];
+
+      for (const imageFile of imageFiles) {
+        const imageRef = ref(
+          storage,
+          `products/${productId}/${imageFile.name}`
+        );
+        await uploadBytes(imageRef, imageFile);
+
+        const imageUrl = await getDownloadURL(imageRef);
+        imageUrls.push(imageUrl);
+      }
+
+      updatedData.productImages = imageUrls as string[]; // 이미지 URL을 string으로 저장
 
       // Firestore에 나머지 데이터 업데이트
       await updateDoc(productDocRef, updatedData);
@@ -192,11 +193,6 @@ export const updateProductAPI = async (
     throw error;
   }
 };
-
-// 타입 가드 함수 생성
-function isFile(value: any): value is File {
-  return value instanceof File;
-}
 
 export const getProductsAPI = async (): Promise<IProduct[]> => {
   try {

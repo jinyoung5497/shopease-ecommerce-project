@@ -14,7 +14,6 @@ import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 import { useAddCart } from "@/lib/cart/hooks/useAddCart";
-import { useCartStore } from "@/store/cart/useCartStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useNavigation } from "@/hooks/useNavigation";
@@ -29,7 +28,6 @@ const DetailedProduct = () => {
   const addToast = useToastStore((state) => state.addToast);
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
-  const { setCartList } = useCartStore();
   const { navToHome } = useNavigation();
 
   if (!detailedProductInfo.id) {
@@ -53,7 +51,6 @@ const DetailedProduct = () => {
       };
       if (detailedProductInfo.productQuantity! > 0) {
         addCart(newProductInCart);
-        setCartList(newProductInCart);
       } else {
         addToast("제품 수량이 부족합니다", "error");
       }
