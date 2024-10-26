@@ -47,7 +47,7 @@ type FormFields = z.infer<typeof schema>;
 const SignUp = () => {
   const { navToLogin } = useNavigation();
   const { mutate: registerUser, isPending: isLoading } = useRegister();
-  const { isSeller, setIsSeller } = useAuthStore();
+  const { isSeller, setIsSellerTrue, setIsSellerFalse } = useAuthStore();
   const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
 
   const {
@@ -60,7 +60,11 @@ const SignUp = () => {
 
   const handleIsSeller = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setIsSeller();
+    if (isSeller) {
+      setIsSellerFalse();
+    } else {
+      setIsSellerTrue();
+    }
   };
 
   const onSubmit: SubmitHandler<FormFields> = useCallback(
