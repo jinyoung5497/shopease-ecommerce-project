@@ -1,14 +1,38 @@
-import { useFilterStore } from "@/store/filter/useFilterStore";
 import HomeButton from "../common/components/HomeButton";
 import { Layout } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
-import FilterList from "./components/FilterList";
+import FilterList from "./components/FilterButton";
 import React, { Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 
 const CartegoryProduct = () => {
-  const { men, women, sneakers, hat, kids, isFilterTrue } = useFilterStore();
+  const [searchParams] = useSearchParams();
+
+  const getTitle = () => {
+    const activeFilters = [
+      { label: "Men's Clothing", isActive: "men" },
+      { label: "Women's Clothing", isActive: "women" },
+      { label: "Sneakers", isActive: "sneakers" },
+      { label: "Hat", isActive: "hat" },
+      { label: "Kids", isActive: "kids" },
+    ];
+
+    const selectedFilters = searchParams.getAll("filter");
+
+    if (selectedFilters.length === 0) {
+      return "All products";
+    } else if (selectedFilters.length === 1) {
+      const matchedFilter = activeFilters.find(
+        (filter) => filter.isActive === selectedFilters[0]
+      );
+      return matchedFilter && matchedFilter.label;
+    } else {
+      return "Multi filtering";
+    }
+  };
+
   return (
     <Layout>
       <div>
@@ -19,15 +43,7 @@ const CartegoryProduct = () => {
         </div>
       </div>
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
-        {(!isFilterTrue || (!men && !women && !sneakers && !hat && !kids)) &&
-          "All products"}
-        {men && !women && !sneakers && !hat && !kids && "Men's Clothing"}
-        {!men && women && !sneakers && !hat && !kids && "Women's Clothing"}
-        {!men && !women && sneakers && !hat && !kids && "Sneakers"}
-        {!men && !women && !sneakers && hat && !kids && "Hat"}
-        {!men && !women && !sneakers && !hat && kids && "Kids"}
-        {[men, women, sneakers, hat, kids].filter(Boolean).length >= 2 &&
-          "Multi filtering"}
+        {getTitle()}
       </div>
       <FilterList />
       <Suspense fallback={<LoadingSkeleton />}>
