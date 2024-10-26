@@ -14,7 +14,7 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
@@ -29,17 +29,11 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
   const { data } = useFetchInfiniteProducts();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    data ? data.pages[0].products[index].productCategory : ""
+  );
   const { imageNameList, setImageNameList } = useProductStore();
-  const [toggle, setToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (data && data.pages[0].products[index]) {
-      setSelectedCategory(data.pages[0].products[index].productCategory);
-      // setImageNameList(data.pages[0].products[index].productImageName);
-    }
-  }, [data, index, toggle]);
 
   const schema = z.object({
     title: z.string().min(1, "이름은 필수입니다"),
@@ -122,10 +116,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     <div className="absolute top-2 left-2">
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
-          <button
-            onClick={() => setToggle((prev) => !prev)}
-            className="text-xl"
-          >
+          <button className="text-xl">
             <i className="fi fi-rs-edit"></i>
           </button>
         </DialogTrigger>

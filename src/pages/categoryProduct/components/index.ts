@@ -1,4 +1,3 @@
 export * from "./CategoryCard";
-export * from "./FilterList";
+export * from "./FilterButton";
 export * from "./SortByDropDown";
-export * from "./CategoryFilterButton";

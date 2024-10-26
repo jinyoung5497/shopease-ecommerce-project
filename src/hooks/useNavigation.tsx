@@ -9,6 +9,7 @@ export const useNavigation = () => {
   const navToSignUp = () => navigate(pageRoutes.signUp);
   const navToAdmin = () => navigate(pageRoutes.administration);
   const navToCategoryProduct = () => navigate(pageRoutes.categoryProduct);
+  const navToFilteredProduct = (path: string) => navigate(path);
   const navToCheckout = () => navigate(pageRoutes.checkout);
   const navToDetailedProduct = (index: string, id: string) =>
     navigate(
@@ -27,5 +28,6 @@ export const useNavigation = () => {
     navToDetailedProduct,
     navToMyProducts,
     navToPurchaseHistory,
+    navToFilteredProduct,
   };
 };

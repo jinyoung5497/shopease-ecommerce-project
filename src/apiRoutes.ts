@@ -2,7 +2,7 @@ export const pageRoutes = {
   home: "/",
   login: "/login",
   administration: "/administration",
-  categoryProduct: "/category-product",
+  categoryProduct: "/category-product/",
   checkout: "/checkout",
   detailedProduct: "/product/:id/:index",
   myProducts: "/my-products",

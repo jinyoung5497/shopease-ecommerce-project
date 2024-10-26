@@ -26,7 +26,7 @@ const NavigationBar = () => {
   const isSeller = useAuthStore((state) => state.isSeller);
   const { data } = useFetchCart();
   const { navToCheckout } = useNavigation();
-  const { setFirstCartList, setIndex, setCartQuantity } = useCartStore();
+  const { setIndex, setCartQuantity } = useCartStore();
   const { mutate: updateCart } = useUpdateCart();
   const { mutate: deleteCartItem } = useDeleteCart();
   const { mutate: deleteAllCartItems } = useDeleteAllCart();
@@ -44,10 +44,6 @@ const NavigationBar = () => {
   useEffect(() => {
     checkLoginStatus();
   }, [checkLoginStatus]);
-
-  useEffect(() => {
-    if (data) setFirstCartList(data);
-  }, [setFirstCartList]);
 
   const handleLogout = () => {
     logout();

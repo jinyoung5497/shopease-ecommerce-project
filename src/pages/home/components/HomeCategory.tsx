@@ -1,40 +1,43 @@
+import { pageRoutes } from "@/apiRoutes";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 import { useNavigation } from "@/hooks/useNavigation";
-import { useFilterStore } from "@/store/filter/useFilterStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
   const { handleProductCardClick } = useDetailedProductInfo();
-  const { navToCategoryProduct } = useNavigation();
+  const { navToFilteredProduct } = useNavigation();
+
   const categoryList = [
     "Men's Clothing",
     "Women's Clothing",
     "Sneakers",
     "Hat",
     "Kids",
-  ];
-  const { setMenTrue, setWomenTrue, setSneakersTrue, setHatTrue, setKidsTrue } =
-    useFilterStore();
+  ] as const;
 
-  const handleMoreClick = (category: string) => {
-    navToCategoryProduct();
+  const categoryMap = {
+    "Men's Clothing": "men",
+    "Women's Clothing": "women",
+    Sneakers: "sneakers",
+    Hat: "hat",
+    Kids: "kids",
+  };
+
+  const handleMoreClick = (
+    category:
+      | "Men's Clothing"
+      | "Women's Clothing"
+      | "Sneakers"
+      | "Hat"
+      | "Kids"
+  ) => {
+    const categoryKey = categoryMap[category];
+    navToFilteredProduct(`${pageRoutes.categoryProduct}?filter=${categoryKey}`);
     window.scrollTo({
       top: 0, // 맨 위로 스크롤
       behavior: "smooth", // 부드러운 스크롤 효과
     });
-
-    if (category === "Men's Clothing") {
-      setMenTrue();
-    } else if (category === "Women's Clothing") {
-      setWomenTrue();
-    } else if (category === "Sneakers") {
-      setSneakersTrue();
-    } else if (category === "Hat") {
-      setHatTrue();
-    } else if (category === "Kids") {
-      setKidsTrue();
-    }
   };
 
   return (
