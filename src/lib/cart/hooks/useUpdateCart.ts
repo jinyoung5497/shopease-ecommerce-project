@@ -23,9 +23,6 @@ export const useUpdateCart = () => {
     onSuccess: (data) => {
       console.log("Item updated successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["cart"] }); // userId 기반 쿼리 무효화
-
-      // 필요에 따라 카트 리스트를 업데이트하거나 쿼리 무효화
-      // setCartList(data); // 만약 API가 새로운 카트 리스트를 반환한다면
     },
     onError: (error) => {
       console.error("Error updating item in cart:", error);

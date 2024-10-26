@@ -20,19 +20,26 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
 import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
+import { IProduct } from "@/lib/product";
 
 interface UpdateModalProps {
   index: number;
 }
 
+type ProductCategoryType = IProduct["productCategory"];
+
 const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
   const { data } = useFetchInfiniteProducts();
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    data ? data.pages[0].products[index].productCategory : ""
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategoryType>(
+    data && data.pages[0]?.products[index]
+      ? data.pages[0].products[index].productCategory
+      : "Men's Clothing"
   );
-  const { imageNameList, setImageNameList } = useProductStore();
+  const { imageNameList, setImageNameList, resetImageNameList } =
+    useProductStore();
+  const [imageList, setImageList] = useState<File[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const schema = z.object({
@@ -66,13 +73,19 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       price: data?.pages[0].products[index]?.productPrice || 0,
       remainder: data?.pages[0].products[index]?.productQuantity || 0,
       description: data?.pages[0].products[index]?.productDescription || "",
+      image: data?.pages[0].products[index].productImages,
     },
   });
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImageNameList(file.name);
+    event.preventDefault();
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setImageList((prev) => [...prev, ...Array.from(files)]);
+      const fileNames = Array.from(files)
+        .map((file) => file.name)
+        .join(", ");
+      setImageNameList(fileNames);
     } else {
       setImageNameList("파일을 선택해주세요");
     }
@@ -91,22 +104,24 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
           productDescription: description,
           productCategory: selectedCategory,
           productImageName: imageNameList,
-          productImage: formData.image[0],
+          productImages: [],
         };
-        console.log(formData.image[0]);
         updateProduct({
           productId: productId,
           updatedData: productData,
+          imageFiles: imageList,
         });
         setIsModalOpen(false);
+        setImageList([]);
+        resetImageNameList();
       }
     },
-    [updateProduct, selectedCategory, user, index]
+    [updateProduct, selectedCategory, user, imageNameList, imageList]
   );
 
   const handleCategory = (
     event: React.MouseEvent<HTMLDivElement>,
-    category: string
+    category: ProductCategoryType
   ) => {
     event.preventDefault();
     setSelectedCategory(category);
@@ -226,20 +241,6 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
               </div>
             )}
             <p>상품 이미지</p>
-            {/* <label
-              htmlFor="image"
-              className="cursor-pointer w-full p-3 border-primary rounded-[7px] border-[1px] flex items-center justify-between"
-            >
-              <input
-                {...register("image")}
-                id="image"
-                onChange={handleImageChange}
-                type="file"
-                className="hidden"
-              />
-              {imageName}
-              <i className="fi fi-rs-folder-upload translate-y-1"></i>
-            </label> */}
             <input
               {...register("image")}
               id="image"
@@ -247,6 +248,11 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
               type="file"
               className=""
             />
+            <div className="flex gap-2 flex-wrap">
+              {imageNameList.map((value, index) => (
+                <div key={index}>{value}</div>
+              ))}
+            </div>
             {typeof errors.image?.message === "string" && (
               <div className="text-red-600 text-sm">{errors.image.message}</div>
             )}

@@ -5,9 +5,14 @@ export interface IProduct {
   productPrice: number;
   productQuantity: number;
   productDescription: string;
-  productCategory: string;
+  productCategory:
+    | "Men's Clothing"
+    | "Women's Clothing"
+    | "Sneakers"
+    | "Hat"
+    | "Kids";
   productImages: string[];
   productImageName: string[];
-  createdAt: any;
-  updatedAt: any;
+  createdAt: Date;
+  updatedAt: Date;
 }
