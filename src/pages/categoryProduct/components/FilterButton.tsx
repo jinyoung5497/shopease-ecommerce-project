@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-const FilterList = () => {
+const FilterButton = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedFilters = searchParams.getAll("filter");
@@ -74,4 +74,4 @@ const FilterList = () => {
   );
 };
 
-export default FilterList;
+export default FilterButton;

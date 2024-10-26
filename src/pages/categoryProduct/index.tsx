@@ -1,7 +1,7 @@
 import HomeButton from "../common/components/HomeButton";
 import { Layout } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
-import FilterList from "./components/FilterButton";
+import FilterButton from "./components/FilterButton";
 import React, { Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -45,7 +45,7 @@ const CartegoryProduct = () => {
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
         {getTitle()}
       </div>
-      <FilterList />
+      <FilterButton />
       <Suspense fallback={<LoadingSkeleton />}>
         <CategoryCard />
       </Suspense>
