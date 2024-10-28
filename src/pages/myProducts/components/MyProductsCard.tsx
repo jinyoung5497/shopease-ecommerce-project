@@ -2,7 +2,7 @@ import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
-import { IProduct } from "@/lib/product/IProduct";
+import { IProduct } from "@/lib/product";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
