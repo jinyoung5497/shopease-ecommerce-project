@@ -1,9 +1,4 @@
-type ProductCategoryType =
-  | "Men's Clothing"
-  | "Women's Clothing"
-  | "Sneakers"
-  | "Hat"
-  | "Kids";
+import { ProductCategoryType } from "./types";
 
 export interface IProduct {
   id: string;
