@@ -10,6 +10,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
 import { Button } from "@/packages/button/Button";
+import { Input } from "@/packages/Input/Input";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),
@@ -32,6 +33,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
@@ -67,6 +69,20 @@ const Login = () => {
     navToSignUp();
   };
 
+  const clearButton = (field: "email" | "password") => {
+    return (
+      <Button
+        onClick={(event) => {
+          event.preventDefault();
+          resetField(field);
+        }}
+        variant="link"
+      >
+        <i className="fi fi-rs-cross-small"></i>
+      </Button>
+    );
+  };
+
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
       <div className="h-screen flex items-center justify-center">
@@ -79,38 +95,39 @@ const Login = () => {
           <p className="text-primary mb-5">
             이메일 주소와 비밀번호를 입력하여 로그인하세요.
           </p>
-          <p className="w-full text-sm text-primary">이메일</p>
-          <input
+          <Input
             {...register("email")}
             id="email"
             type="text"
             placeholder="이메일을 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px] "
+            full
+            label="이메일"
+            radius="medium"
+            isError={errors.email}
+            errorMessage={errors.email?.message}
+            leftIcon={<i className="fi fi-rs-envelope"></i>}
+            rightIcon={clearButton("email")}
           />
-          {errors.email && (
-            <p className="w-full text-red-600 text-sm">
-              {errors.email?.message}
-            </p>
-          )}
-          <p className="w-full text-sm text-primary">비밀번호</p>
-          <input
+          <Input
             {...register("password")}
             id="password"
             type="password"
             placeholder="비밀번호를 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+            full
+            label="비밀번호"
+            isError={errors.password}
+            errorMessage={errors.password?.message}
+            radius="medium"
+            leftIcon={<i className="fi fi-rs-lock"></i>}
+            rightIcon={clearButton("password")}
           />
-          {errors.password && (
-            <p className="w-full text-red-600 text-sm">
-              {errors.password?.message}
-            </p>
-          )}
           <Button
             full
             radius="full"
             size="large"
             type="submit"
             loading={isLoading}
+            className="mt-5"
           >
             Login
           </Button>

@@ -10,6 +10,7 @@ import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
 import { Button } from "@/packages/button/Button";
+import { Input } from "@/packages/Input/Input";
 
 const passwordSchema = z
   .string()
@@ -54,6 +55,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
@@ -90,6 +92,20 @@ const SignUp = () => {
     googleLogin(isSeller);
   };
 
+  const clearButton = (field: "email" | "password" | "name") => {
+    return (
+      <Button
+        onClick={(event) => {
+          event.preventDefault();
+          resetField(field);
+        }}
+        variant="link"
+      >
+        <i className="fi fi-rs-cross-small"></i>
+      </Button>
+    );
+  };
+
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
       <div className="h-screen flex items-center justify-center">
@@ -101,44 +117,46 @@ const SignUp = () => {
           <div className="text-primary text-[35px] font-medium w-full text-center mb-4">
             Create your account
           </div>
-          <p className="w-full text-sm text-primary">이름</p>
-          <input
+          <Input
             {...register("name")}
             id="name"
             type="text"
             placeholder="이름을 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+            full
+            label="이름"
+            radius="medium"
+            isError={errors.name}
+            errorMessage={errors.name?.message}
+            leftIcon={<i className="fi fi-rs-user"></i>}
+            rightIcon={clearButton("name")}
           />
-          {errors.name && (
-            <div className="text-red-700 w-full mb-2">
-              {errors.name.message}
-            </div>
-          )}
-          <p className="w-full text-sm text-primary">이메일</p>
-          <input
+          <Input
             {...register("email")}
             id="email"
             type="text"
-            placeholder="이메일를 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+            placeholder="이메일을 입력하세요"
+            full
+            label="이메일"
+            radius="medium"
+            isError={errors.email}
+            errorMessage={errors.email?.message}
+            leftIcon={<i className="fi fi-rs-envelope"></i>}
+            rightIcon={clearButton("email")}
           />
-          {errors.email && (
-            <div className="text-red-700 w-full mb-2">
-              {errors.email.message}
-            </div>
-          )}
-          <p className="w-full text-sm text-primary">비밀번호</p>
-          <input
+          <Input
             {...register("password")}
             id="password"
             type="password"
             placeholder="비밀번호를 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+            full
+            label="비밀번호"
+            isError={errors.password}
+            errorMessage={errors.password?.message}
+            radius="medium"
+            leftIcon={<i className="fi fi-rs-lock"></i>}
+            rightIcon={clearButton("password")}
           />
-          {errors.password && (
-            <div className="text-red-700 w-full">{errors.password.message}</div>
-          )}
-          <div className="flex items-center justify-start gap-3 mb-7 w-full mt-2">
+          <div className="flex items-center justify-start gap-3 mb-7 w-full">
             <button
               className={`rounded-full border-primary border-[1px] w-10 h-6 p-[3px] flex ${
                 isSeller ? "justify-end" : "justify-start"

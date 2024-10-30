@@ -10,6 +10,7 @@ import { useAddOrder } from "@/lib/order/hooks/useAddOrder";
 import { useDeleteAllCart } from "@/lib/cart/hooks/useDeleteCart";
 import { useNavigation } from "@/hooks/useNavigation";
 import { Button } from "@/packages/button/Button";
+import { Input } from "@/packages/Input/Input";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),
@@ -78,56 +79,61 @@ const Checkout = () => {
               주문자 정보
             </h1>
             <div className="p-5 flex flex-col gap-3">
-              <p className="text-sm">주문자명</p>
-              <input
+              <Input
                 {...register("name")}
                 type="text"
-                className="border-slate-200 border-[1px] p-2 w-3/5 rounded-[4px] text-md"
+                placeholder="이름을 입력하세요"
+                full
+                label="주문자명"
+                isError={errors.name}
+                errorMessage={errors.name?.message}
+                radius="medium"
               />
-              {errors.name && (
-                <p className="text-red-500">{errors.name.message}</p>
-              )}
-              <p className="text-sm">연락처</p>
-              <input
+              <Input
                 {...register("phone")}
                 type="text"
-                className="border-slate-200 border-[1px] p-2 w-3/5 rounded-[4px] text-md"
+                placeholder="연락처를 입력하세요"
+                full
+                label="연락처"
+                isError={errors.phone}
+                errorMessage={errors.phone?.message}
+                radius="medium"
               />
-              {errors.phone && (
-                <p className="text-red-500">{errors.phone.message}</p>
-              )}
-              <p className="text-sm">이메일</p>
-              <input
+              <Input
                 {...register("email")}
-                type="email"
-                className="border-slate-200 border-[1px] p-2 w-3/5 rounded-[4px] text-md"
+                type="text"
+                placeholder="이메일을 입력하세요"
+                full
+                label="이메일"
+                isError={errors.email}
+                errorMessage={errors.email?.message}
+                radius="medium"
               />
-              {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
-              )}
             </div>
             <h1 className="text-primary text-xl w-full border-b-2 border-primary pb-2">
               배송지 정보
             </h1>
             <div className="p-5 flex flex-col gap-3">
-              <p className="text-sm">우편번호</p>
-              <input
+              <Input
                 {...register("postalCode")}
                 type="number"
-                className="border-slate-200 border-[1px] p-2 w-3/5 rounded-[4px] text-md"
+                placeholder="우편번호를 입력하세요"
+                full
+                label="우편번호"
+                isError={errors.postalCode}
+                errorMessage={errors.postalCode?.message}
+                radius="medium"
               />
-              {errors.postalCode && (
-                <p className="text-red-500">{errors.postalCode.message}</p>
-              )}
-              <p className="text-sm">주소</p>
-              <input
+              <Input
                 {...register("address")}
                 type="text"
-                className="border-slate-200 border-[1px] p-2 w-3/5 rounded-[4px] text-md"
+                placeholder="주소를 입력하세요"
+                full
+                label="주소"
+                isError={errors.address}
+                errorMessage={errors.address?.message}
+                radius="medium"
               />
-              {errors.address && (
-                <p className="text-red-500">{errors.address.message}</p>
-              )}
             </div>
             <h1 className="text-primary text-xl w-full border-b-2 border-primary pb-2">
               주문상품 정보
