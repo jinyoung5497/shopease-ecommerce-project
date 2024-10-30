@@ -9,6 +9,7 @@ import { useCallback } from "react";
 import { useAddOrder } from "@/lib/order/hooks/useAddOrder";
 import { useDeleteAllCart } from "@/lib/cart/hooks/useDeleteCart";
 import { useNavigation } from "@/hooks/useNavigation";
+import { Button } from "@/packages/button/Button";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),
@@ -172,9 +173,7 @@ const Checkout = () => {
               결제수단
             </h1>
             <div className="p-5">
-              <button className="text-white bg-primary p-3 px-6 text-md rounded-[5px]">
-                신용/체크카드
-              </button>
+              <Button size="xlarge">신용/체크카드</Button>
             </div>
           </div>
 
@@ -220,12 +219,14 @@ const Checkout = () => {
                 </p>
               </div>
             </div>
-            <button
+            <Button
               type="submit"
-              className="bg-primary text-white w-full p-3 rounded-b-[5px]"
+              full
+              radius="none"
+              className="rounded-b-[5px]"
             >
               결제하기
-            </button>
+            </Button>
           </div>
         </form>
       </div>

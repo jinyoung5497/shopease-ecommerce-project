@@ -9,6 +9,7 @@ import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
+import { Button } from "@/packages/button/Button";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),
@@ -104,23 +105,27 @@ const Login = () => {
               {errors.password?.message}
             </p>
           )}
-          <button
-            disabled={isLoading}
+          <Button
+            full
+            radius="full"
+            size="large"
             type="submit"
-            className="rounded-full text-white bg-primary w-full p-2 text-sm h-11 mt-4 hover:bg-sky-800"
+            loading={isLoading}
           >
-            Log In
-          </button>
+            Login
+          </Button>
           <div className="text-[12px] text-slate-400">or continue with</div>
-
-          <button
+          <Button
+            icon={<img src={google} alt="google" className="w-4 h-4" />}
+            full
+            radius="full"
+            loading={isGoogleLoading}
+            variant="outline"
             onClick={handleGoogleLogin}
-            disabled={isGoogleLoading}
-            className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4"
+            size="large"
           >
-            <img src={google} alt="google" className="w-4 h-4" />
             Google Login
-          </button>
+          </Button>
           <div className="text-slate-400 text-[12px] ">
             <span>회원이 아니신가요? </span>
             <button

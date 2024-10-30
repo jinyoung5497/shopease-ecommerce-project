@@ -1,3 +1,5 @@
+import { Toggle } from "@/packages/Toggle/Toggle";
+import { Button } from "@/packages/button/Button";
 import { useSearchParams } from "react-router-dom";
 
 const FilterButton = () => {
@@ -25,16 +27,16 @@ const FilterButton = () => {
     const isActive = selectedFilters.includes(filter);
 
     return (
-      <button
+      <Toggle
         onClick={() => {
           toggleFilter(filter);
         }}
-        className={`w-24 hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-[7px] border-[1px] flex items-center justify-center ${
-          isActive && "bg-primary text-white"
-        }`}
+        className=""
+        isActive={isActive}
+        size="medium"
       >
         {label}
-      </button>
+      </Toggle>
     );
   };
 
@@ -42,17 +44,18 @@ const FilterButton = () => {
     return (
       <>
         {selectedFilters.map((value, index) => (
-          <div key={index} className="flex">
-            <button
-              onClick={() => {
-                toggleFilter(value as NewFilterType);
-              }}
-              className="w-fit hover:bg-primary hover:text-white p-1 px-2 border-primary rounded-full border-[1px] flex items-center justify-center"
-            >
-              {value}
-              <i className="fi fi-rs-cross-small translate-y-[3px]"></i>
-            </button>
-          </div>
+          <Button
+            key={index}
+            onClick={() => {
+              toggleFilter(value as NewFilterType);
+            }}
+            variant="outline"
+            size="medium"
+            radius="full"
+          >
+            {value}
+            <i className="fi fi-rs-cross-small translate-y-[3px]"></i>
+          </Button>
         ))}
       </>
     );

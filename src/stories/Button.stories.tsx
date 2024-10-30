@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Button from "../packages/button/Button";
+import { Button } from "../packages/button/Button";
 import { ButtonProps } from "@/packages/button/ButtonProps";
 
 const meta: Meta<typeof Button> = {
@@ -68,6 +68,12 @@ export const radius = () => (
     <Button radius="medium">medium</Button>
     <Button radius="large">large</Button>
     <Button radius="full">full</Button>
+  </>
+);
+
+export const full = () => (
+  <>
+    <Button full={true}>full</Button>
   </>
 );
 

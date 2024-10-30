@@ -10,6 +10,7 @@ export interface ButtonProps
   radius?: ButtonRadius;
   icon?: React.ReactNode;
   loading?: boolean;
+  full?: boolean;
   className?: string;
   children: React.ReactNode;
 }

@@ -2,6 +2,7 @@ import { Layout } from "@/pages/common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useNavigation } from "@/hooks/useNavigation";
 import HomeCategory from "./components/HomeCategory";
+import { Button } from "@/packages/button/Button";
 
 const Home = () => {
   const { navToCategoryProduct } = useNavigation();
@@ -18,12 +19,13 @@ const Home = () => {
           만나보세요. 어디서나 간편하게 쇼핑하고, 원하는 스타일을 집까지 바로
           받아보세요.
         </p>
-        <button
+        <Button
           onClick={navToCategoryProduct}
-          className="rounded-full text-white bg-primary w-52 p-2 text-sm hover:bg-sky-700"
+          radius="full"
+          className="px-[60px]"
         >
           All Products
-        </button>
+        </Button>
       </div>
       <HomeCategory />
     </Layout>

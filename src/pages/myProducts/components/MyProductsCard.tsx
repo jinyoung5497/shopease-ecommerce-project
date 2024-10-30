@@ -30,7 +30,7 @@ const MyProductsCard = () => {
   }, [fetchNextPage, inView]);
 
   return (
-    <>
+    <div className="relative">
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
         {data?.pages.map((page) =>
           page.products.map((value: IProduct, index: number) => {
@@ -78,13 +78,17 @@ const MyProductsCard = () => {
           })
         )}
       </div>
-      <div
-        ref={ref}
-        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
-      >
-        {isFetchingNextPage ? "Loading more products..." : null}
-      </div>
-    </>
+      {!isFetchingNextPage ? (
+        <div
+          ref={ref}
+          className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary absolute bottom-0"
+        >
+          {isFetchingNextPage ? "Loading more products..." : null}
+        </div>
+      ) : (
+        <div className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary absolute bottom-0"></div>
+      )}
+    </div>
   );
 };
 

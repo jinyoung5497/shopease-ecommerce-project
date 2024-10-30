@@ -20,6 +20,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useProductStore } from "@/store/product/useProductStore";
 import { IProduct } from "@/lib/product";
+import { Button } from "@/packages/button/Button";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -116,13 +117,13 @@ const RegisterModal = () => {
   };
 
   return (
-    <div className="w-full  my-10 px-20 flex justify-end">
+    <div className="w-full  my-10 px-40 flex justify-end">
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
-          <button className="flex border-primary border-[1px] rounded-[7px] items-center justify-center px-2 pr-3 hover:text-white hover:bg-primary">
+          <Button variant="outline" size="medium">
             <i className="fi fi-rs-plus-small text-2xl translate-y-[3px]"></i>
             <div>상품 등록</div>
-          </button>
+          </Button>
         </DialogTrigger>
         <DialogContent
           aria-labelledby="dialog-title"

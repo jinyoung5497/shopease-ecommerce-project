@@ -6,16 +6,17 @@ export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
 export type ButtonColor = "primary" | "blue" | "black" | "red";
 export type ButtonRadius = "none" | "small" | "medium" | "large" | "full";
 
-const Button = React.forwardRef<HTMLElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLElement, ButtonProps>(
   (
     {
       asChild = false,
-      size = "medium",
+      size = "large",
       variant = "solid",
       color = "primary",
       radius = "small",
       icon,
       loading = false,
+      full = false,
       children,
       className,
       ...rest
@@ -26,11 +27,11 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
 
     // 각 스타일 옵션을 클래스명으로 매핑하여 확장성과 유지보수성을 높임
     const sizeClass = {
-      xsmall: "px-[7px] py-[3px] text-[10px]",
-      small: "px-[10px] py-[5px] text-[12px]",
-      medium: "px-[12px] py-[7px] text-[14px]",
-      large: "px-[14px] py-[9px] text-[16px]",
-      xlarge: "px-[16px] py-[12px] text-[18px]",
+      xsmall: "px-[7px] py-[1px] text-[12px]",
+      small: "px-[10px] py-[3px] text-[14px]",
+      medium: "px-[12px] py-[5px] text-[16px]",
+      large: "px-[14px] py-[7px] text-[16px]",
+      xlarge: "px-[16px] py-[7px] text-[18px]",
     }[size];
 
     const variantStyles = {
@@ -86,12 +87,13 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
 
     // 클래스 문자열을 결합하여 가독성 향상
     const classes = [
-      "flex items-center justify-center",
+      "flex items-center justify-center gap-1",
       sizeClass,
       variantClass,
       colorClass,
       radiusClass,
       className,
+      full && "w-full",
       loading && "opacity-50 cursor-not-allowed",
     ]
       .filter(Boolean)
@@ -119,5 +121,3 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
     );
   }
 );
-
-export default Button;

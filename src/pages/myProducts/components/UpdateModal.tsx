@@ -21,6 +21,7 @@ import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchPr
 import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
 import { IProduct } from "@/lib/product";
+import { Button } from "@/packages/button/Button";
 
 interface UpdateModalProps {
   index: number;
@@ -131,9 +132,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     <div className="absolute top-2 left-2">
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
-          <button className="text-xl">
-            <i className="fi fi-rs-edit"></i>
-          </button>
+          <Button variant="link" size="large" color="black">
+            <i className="fi fi-rs-edit text-xl"></i>
+          </Button>
         </DialogTrigger>
         <DialogContent
           aria-labelledby="dialog-title"

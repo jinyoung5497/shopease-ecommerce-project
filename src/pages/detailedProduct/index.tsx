@@ -18,6 +18,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useToastStore } from "@/store/toast/useToastStore";
+import { Button } from "@/packages/button/Button";
 
 const DetailedProduct = () => {
   const { detailedProductInfo } = useProductStore();
@@ -107,12 +108,13 @@ const DetailedProduct = () => {
             >
               {detailedProductInfo.productDescription}
             </div>
-            <button
+            <Button
               onClick={handleCartRegister}
-              className="bg-primary text-white p-3 px-5 rounded-sm"
+              radius="medium"
+              className="mt-2"
             >
               장바구니 추가
-            </button>
+            </Button>
           </div>
         </div>
       </div>

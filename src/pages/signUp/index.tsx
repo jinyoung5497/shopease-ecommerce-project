@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
+import { Button } from "@/packages/button/Button";
 
 const passwordSchema = z
   .string()
@@ -95,7 +96,7 @@ const SignUp = () => {
         <HomeButton style="absolute top-20 left-24" />
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col border-gray rounded-lg border-[1px] w-[450px] items-center justify-center gap-1 p-7 py-10"
+          className="flex flex-col border-gray rounded-lg border-[1px] w-[450px] items-center justify-center gap-2 p-7 py-10"
         >
           <div className="text-primary text-[35px] font-medium w-full text-center mb-4">
             Create your account
@@ -150,25 +151,22 @@ const SignUp = () => {
               {isSeller ? "판매자입니다 " : "구매자입니다"}
             </p>
           </div>
-          <button
-            type="submit"
-            className={`rounded-full text-white w-full p-2 text-sm h-11 hover:bg-sky-800 ${
-              isLoading ? "bg-sky-800" : "bg-primary"
-            }`}
-            disabled={isLoading}
-          >
+          <Button type="submit" full radius="full" loading={isLoading}>
             {isLoading ? "Submitting" : "Sign Up"}
-          </button>
+          </Button>
           <div className="text-[12px] text-slate-400">or continue with</div>
 
-          <button
+          <Button
+            icon={<img src={google} alt="google" className="w-4 h-4" />}
+            full
+            radius="full"
+            loading={isGoogleLoading}
+            variant="outline"
             onClick={handleGoogleLogin}
-            disabled={isGoogleLoading}
-            className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4"
+            size="large"
           >
-            <img src={google} alt="google" className="w-4 h-4" />
             Sign up with Google
-          </button>
+          </Button>
           <div className="text-slate-400 text-[12px] ">
             <span>이미 계정이 있으신가요? </span>
             <button
