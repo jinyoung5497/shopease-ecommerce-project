@@ -1,0 +1,48 @@
+import type { Meta } from "@storybook/react";
+import { Modal } from "@/packages/Modal/Modal";
+import { Input } from "@/packages/Input/Input";
+import { Button } from "@/packages/button/Button";
+const meta: Meta = {
+  title: "Components/Modal",
+  tags: ["autodocs"],
+  component: Modal.Root, // Modal.Root를 메타 데이터로 설정
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          height: "100%",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export default meta; // 메타 데이터 내보내기
+
+export const Basic = () => (
+  <Modal.Root>
+    <Modal.Trigger variant="outline">상품 추가</Modal.Trigger>
+    <Modal.Content>
+      <Modal.Header>
+        <Modal.Title title="상품 등록" />
+        <Modal.Description description="상품 상세 정보를 입력하여 상품을 등록하세요" />
+      </Modal.Header>
+      <Modal.Divider />
+      <Modal.Items>
+        <Input label="상품 이름" placeholder="상품 이름" full />
+        <Input label="상품 이름" placeholder="상품 이름" full />
+        <Input label="상품 이름" placeholder="상품 이름" full />
+        <Input label="상품 이름" placeholder="상품 이름" full />
+      </Modal.Items>
+      <Modal.Footer>
+        <Button full>등록하기</Button>
+      </Modal.Footer>
+    </Modal.Content>
+  </Modal.Root>
+);
