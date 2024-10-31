@@ -87,7 +87,6 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
 
     // 클래스 문자열을 결합하여 가독성 향상
     const classes = [
-      "flex items-center justify-center gap-1",
       sizeClass,
       variantClass,
       colorClass,
@@ -111,11 +110,10 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
             <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-blue-500 border-solid"></div>
           </div>
         ) : (
-          <>
-            {icon && <span className="mr-2">{icon}</span>}{" "}
-            {/* 아이콘이 있으면 표시 */}
+          <div className={`flex items-center justify-center gap-1`}>
+            {icon && icon}
             {children}
-          </>
+          </div>
         )}
       </Component>
     );
