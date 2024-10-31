@@ -32,9 +32,7 @@ export const DropdownRoot = ({ children }: RootProps) => {
         setLabel,
       }}
     >
-      <div className="relative flex items-center justify-center">
-        {children}
-      </div>
+      <div className="relative">{children}</div>
     </DropdownContext.Provider>
   );
 };
@@ -43,14 +41,16 @@ type DropdownTriggerType = {
   rightIcon?: ReactNode;
 } & ButtonProps;
 export const DropdownTrigger = ({
-  title,
   rightIcon,
   ...rest
 }: DropdownTriggerType) => {
   const context = useContext(DropdownContext);
   return (
     <Button
-      onClick={() => context?.setOpen((prev) => !prev)}
+      onClick={(event) => {
+        context?.setOpen((prev) => !prev);
+        event.preventDefault();
+      }}
       className="min-w-24 flex items-center justify-between"
       {...rest}
     >
@@ -114,8 +114,13 @@ export const DropdownMenuTitle = ({ title }: DropdownMenuTitleProps) => {
 type DropdownMenuItemProps = {
   children: ReactNode;
   icon?: ReactNode;
+  onClick?: () => void;
 };
-export const DropdownMenuItem = ({ children, icon }: DropdownMenuItemProps) => {
+export const DropdownMenuItem = ({
+  children,
+  icon,
+  onClick,
+}: DropdownMenuItemProps) => {
   const context = useContext(DropdownContext);
   return (
     <button
@@ -123,6 +128,7 @@ export const DropdownMenuItem = ({ children, icon }: DropdownMenuItemProps) => {
         const value = children?.toString() ?? "";
         context?.setLabel(value);
         context?.setOpen(false);
+        onClick && onClick();
       }}
       className="hover:bg-slate-100 rounded-[7px] min-h-8 text-sm w-full text-start px-2 flex items-center justify-start gap-1"
     >

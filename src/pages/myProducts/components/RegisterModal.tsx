@@ -5,12 +5,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +15,7 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { useProductStore } from "@/store/product/useProductStore";
 import { IProduct } from "@/lib/product";
 import { Button } from "@/packages/button/Button";
+import { Dropdown } from "@/packages/Dropdown/Dropdown";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -93,11 +88,7 @@ const RegisterModal = () => {
     [addProduct, selectedCategory, user, setValue, imageNameList, imageList]
   );
 
-  const handleCategory = (
-    event: React.MouseEvent<HTMLDivElement>,
-    category: ProductCategoryType
-  ) => {
-    event.preventDefault();
+  const handleCategory = (category: ProductCategoryType) => {
     setSelectedCategory(category);
   };
 
@@ -154,42 +145,33 @@ const RegisterModal = () => {
               <div className="text-red-600 text-sm">{errors.title.message}</div>
             )}
             <p>상품 카테고리</p>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="w-full p-3 border-primary rounded-[7px] border-[1px] flex">
-                  {selectedCategory ? selectedCategory : "상품 카테고리"}
-                </div>
-              </DropdownMenuTrigger>
-              {/* //TODO width change */}
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Men's Clothing")}
+            <Dropdown.Root>
+              <Dropdown.Trigger variant="outline" full size="large">
+                카테고리 선택
+              </Dropdown.Trigger>
+              <Dropdown.Menu>
+                <Dropdown.Title title="Category" />
+                <Dropdown.MenuItem
+                  onClick={() => handleCategory("Men's Clothing")}
                 >
                   Men's Clothing
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Women's Clothing")}
+                </Dropdown.MenuItem>
+                <Dropdown.MenuItem
+                  onClick={() => handleCategory("Women's Clothing")}
                 >
                   Women's Clothing
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Sneakers")}
-                >
+                </Dropdown.MenuItem>
+                <Dropdown.MenuItem onClick={() => handleCategory("Sneakers")}>
                   Sneakers
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Hat")}
-                >
+                </Dropdown.MenuItem>
+                <Dropdown.MenuItem onClick={() => handleCategory("Hat")}>
                   Hat
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Kids")}
-                >
+                </Dropdown.MenuItem>
+                <Dropdown.MenuItem onClick={() => handleCategory("Kids")}>
                   Kids
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            {/* //TODO dropdown error message */}
+                </Dropdown.MenuItem>
+              </Dropdown.Menu>
+            </Dropdown.Root>
             <p>상품 가격</p>
             <input
               {...register("price", {
