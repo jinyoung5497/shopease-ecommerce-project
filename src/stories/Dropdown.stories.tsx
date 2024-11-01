@@ -59,7 +59,9 @@ export const LongList = () => (
 export const ItemWithIcon = () => (
   <Dropdown.Root>
     <Dropdown.Trigger
-      rightIcon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
+      rightIcon={
+        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-1"></div>
+      }
     >
       카테고리 선택
     </Dropdown.Trigger>

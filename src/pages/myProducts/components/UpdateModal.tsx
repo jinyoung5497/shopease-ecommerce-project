@@ -143,6 +143,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
           <i className="fi fi-rs-edit text-xl"></i>
         </Modal.Trigger>
         <Modal.Content>
+          <Modal.Close topRight>
+            <i className="fi fi-rs-cross-small"></i>
+          </Modal.Close>
           <Modal.Header>
             <Modal.Title title="상품 편집" />
             <Modal.Description description="상품 상세 정보를 편집하세요" />

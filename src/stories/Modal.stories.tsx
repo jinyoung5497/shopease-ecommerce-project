@@ -2,6 +2,7 @@ import type { Meta } from "@storybook/react";
 import { Modal } from "@/packages/Modal/Modal";
 import { Input } from "@/packages/Input/Input";
 import { Button } from "@/packages/button/Button";
+import { X } from "lucide-react";
 const meta: Meta = {
   title: "Components/Modal",
   tags: ["autodocs"],
@@ -29,6 +30,9 @@ export const Basic = () => (
   <Modal.Root>
     <Modal.Trigger variant="outline">상품 추가</Modal.Trigger>
     <Modal.Content>
+      <Modal.Close topRight>
+        <X className="h-5 w-5" />
+      </Modal.Close>
       <Modal.Header>
         <Modal.Title title="상품 등록" />
         <Modal.Description description="상품 상세 정보를 입력하여 상품을 등록하세요" />

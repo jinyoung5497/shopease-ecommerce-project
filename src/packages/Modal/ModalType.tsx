@@ -25,3 +25,10 @@ export type ModalItemsProps = {
 export type ModalFooterProps = {
   children: ReactNode;
 };
+export type ModalCloseProps = {
+  topRight?: boolean;
+  topLeft?: boolean;
+  bottomRight?: boolean;
+  bottomLeft?: boolean;
+  children: ReactNode;
+};

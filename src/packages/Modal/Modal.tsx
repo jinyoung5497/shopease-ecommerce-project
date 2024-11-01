@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import {
   RootProps,
@@ -10,6 +10,9 @@ import {
   ModalItemsProps,
   ModalFooterProps,
 } from "./ModalType";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useDisableScroll } from "@/hooks/useDisableScroll";
+import { ModalCloseProps } from "./ModalType";
 
 const ModalContext = createContext<{
   open: boolean;
@@ -57,43 +60,12 @@ export const ModalContent = ({ children }: ModalContentProps) => {
   const ModalContentRef = useRef<HTMLDivElement>(null);
   const context = useContext(ModalContext);
 
-  useEffect(() => {
-    if (context?.open) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [context?.open]);
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (
-      ModalContentRef.current &&
-      !ModalContentRef.current.contains(e.target as Node)
-    ) {
-      context?.setOpen(false);
-    }
-  };
-
-  // context.open이 변경될 때마다 스크롤 비활성화/활성화 처리
-  useEffect(() => {
-    if (context?.open) {
-      document.body.style.overflow = "hidden"; // 스크롤 비활성화
-      document.body.style.paddingRight = "15px"; // 스크롤 바 너비만큼 오른쪽 패딩 추가
-    } else {
-      document.body.style.overflow = "auto"; // 스크롤 활성화
-      document.body.style.paddingRight = "0"; // 패딩 복구
-    }
-
-    // 컴포넌트 언마운트 시 원래 상태로 복구
-    return () => {
-      document.body.style.overflow = "auto";
-      document.body.style.paddingRight = "0";
-    };
-  }, [context?.open]);
+  if (context) {
+    useOutsideClick(ModalContentRef, context?.open, () =>
+      context?.setOpen(false)
+    );
+    useDisableScroll(context?.open);
+  }
 
   if (!context?.open) return null;
   return (
@@ -103,12 +75,6 @@ export const ModalContent = ({ children }: ModalContentProps) => {
         ref={ModalContentRef}
       >
         {children}
-        <button
-          onClick={() => context?.setOpen(false)}
-          className="absolute right-7"
-        >
-          <i className="fi fi-rs-cross-small"></i>
-        </button>
       </div>
     </div>
   );
@@ -116,6 +82,29 @@ export const ModalContent = ({ children }: ModalContentProps) => {
 
 export const ModalHeader = ({ children }: ModalHeaderProps) => {
   return <div className="flex flex-col gap-2 w-full">{children}</div>;
+};
+
+export const ModalClose = ({
+  topRight,
+  topLeft,
+  bottomRight,
+  bottomLeft,
+  children,
+}: ModalCloseProps) => {
+  const context = useContext(ModalContext);
+
+  const closeClass = [
+    topRight && "absolute right-7",
+    topLeft && "absolute left-7",
+    bottomRight && "absolute bottom-2 right-7",
+    bottomLeft && "absolute bottom-2 right-7",
+  ].join(" ");
+
+  return (
+    <button onClick={() => context?.setOpen(false)} className={closeClass}>
+      {children}
+    </button>
+  );
 };
 
 export const ModalDivider = () => {
@@ -142,6 +131,7 @@ export const Modal = {
   Root: ModalRoot,
   Trigger: ModalTrigger,
   Header: ModalHeader,
+  Close: ModalClose,
   Divider: ModalDivider,
   Title: ModalTitle,
   Description: ModalDescription,

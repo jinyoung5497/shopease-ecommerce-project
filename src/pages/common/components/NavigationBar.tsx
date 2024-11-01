@@ -1,14 +1,6 @@
 import { useNavigation } from "@/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useUpdateCart } from "@/lib/cart/hooks/useUpdateCart";
@@ -19,6 +11,8 @@ import {
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
 import { Button } from "@/packages/button/Button";
+import { Sheet } from "@/packages/Sheet/Sheet";
+import { X } from "lucide-react";
 
 const NavigationBar = () => {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -120,7 +114,7 @@ const NavigationBar = () => {
           </Button>
         )}
 
-        <Sheet>
+        {/* <Sheet>
           <SheetTrigger>
             <Button variant="link">
               <div className="flex gap-1 items-center justify-center right-0 relative">
@@ -216,7 +210,110 @@ const NavigationBar = () => {
               </Button>
             </div>
           </SheetContent>
-        </Sheet>
+        </Sheet> */}
+        <Sheet.Root>
+          <Sheet.Trigger variant="link">
+            <Button variant="link">
+              <div className="flex gap-1 items-center justify-center right-0 relative">
+                {data && data?.length > 0 && isLogin && (
+                  <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
+                    <p className="text-white text-[12px]">{data?.length}</p>
+                  </div>
+                )}
+                <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
+              </div>
+            </Button>
+          </Sheet.Trigger>
+          <Sheet.Content>
+            <Sheet.Close topRight>
+              <X className="h-5 w-5" />
+            </Sheet.Close>
+            <Sheet.Header>
+              <Sheet.Title title="Cart" />
+            </Sheet.Header>
+            <Sheet.Divider />
+            <Sheet.Items>
+              {isLogin &&
+                data?.map((value, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between w-full border-slate-200 border-b-[1px] py-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={value.productImage}
+                        alt="productImage"
+                        className="w-14 h-14 border-[1px] border-slate-200 p-2"
+                      />
+                      <div className="flex flex-col items-start gap-1">
+                        <div>{value.productName}</div>
+                        <div className="flex items-center">
+                          <div className="flex border-slate-200 border-[1px] p-1 px-3 gap-2 items-center justify-center">
+                            <i
+                              onClick={() => increaseQuantity(index)}
+                              className="fi fi-rs-plus-small translate-y-[2px] cursor-pointer"
+                            ></i>
+                            <div>{value.quantity}</div>
+                            <i
+                              onClick={() => decreaseQuantity(index)}
+                              className="fi fi-rs-minus-small translate-y-[2px] cursor-pointer"
+                            ></i>
+                          </div>
+                          <div className="ml-4 text-gray text-sm">
+                            {value.productPrice.toLocaleString("ko-KR", {
+                              style: "currency",
+                              currency: "KRW",
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center">
+                      <i
+                        onClick={() => deleteCartItem(value.productId)}
+                        className="fi fi-rs-cross-small text-xl cursor-pointer"
+                      ></i>
+                      <div>
+                        {value.totalPrice.toLocaleString("ko-KR", {
+                          style: "currency",
+                          currency: "KRW",
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </Sheet.Items>
+            <Sheet.Divider />
+            <Sheet.Footer>
+              <div className="flex flex-col mt-2 gap-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    Total:{" "}
+                    {isLogin &&
+                      data
+                        ?.reduce((total, product) => {
+                          return total + product.totalPrice;
+                        }, 0)
+                        .toLocaleString("ko-KR", {
+                          style: "currency",
+                          currency: "KRW",
+                        })}
+                  </div>
+                  <Button
+                    onClick={() => deleteAllCartItems()}
+                    color="red"
+                    radius="none"
+                  >
+                    <i className="fi fi-rs-trash"></i>
+                  </Button>
+                </div>
+                <Button onClick={handleCheckout} radius="none" size="large">
+                  Checkout
+                </Button>
+              </div>
+            </Sheet.Footer>
+          </Sheet.Content>
+        </Sheet.Root>
       </div>
     </div>
   );

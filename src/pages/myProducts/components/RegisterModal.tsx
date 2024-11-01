@@ -136,6 +136,9 @@ const RegisterModal = () => {
           상품 추가
         </Modal.Trigger>
         <Modal.Content>
+          <Modal.Close topRight>
+            <i className="fi fi-rs-cross-small"></i>
+          </Modal.Close>
           <Modal.Header>
             <Modal.Title title="상품 등록" />
             <Modal.Description description="상품 상세 정보를 입력하여 상품을 등록하세요" />

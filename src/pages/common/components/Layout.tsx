@@ -43,11 +43,8 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div>
-      <div className="">
-        <Toast />
-        {children}
-      </div>
-      {/* <Footer /> */}
+      <Toast />
+      {children}
     </div>
   );
 };
