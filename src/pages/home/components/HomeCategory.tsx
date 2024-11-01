@@ -2,6 +2,7 @@ import { pageRoutes } from "@/apiRoutes";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
+import { Button } from "@/packages/button/Button";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
@@ -46,7 +47,13 @@ const HomeCategory = () => {
         <div key={index}>
           <div className="flex items-center justify-between text-primary">
             <div>{category}</div>
-            <button onClick={() => handleMoreClick(category)}>더보기</button>
+            <Button
+              onClick={() => handleMoreClick(category)}
+              variant="link"
+              size="large"
+            >
+              더보기
+            </Button>
           </div>
           <div className="w-full flex gap-5 items-start justify-between mt-4 mb-20">
             {data

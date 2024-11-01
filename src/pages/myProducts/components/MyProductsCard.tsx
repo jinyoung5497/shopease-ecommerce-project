@@ -2,7 +2,7 @@ import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
-import { IProduct } from "@/lib/product/types";
+import { IProduct } from "@/lib/product";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
@@ -30,7 +30,7 @@ const MyProductsCard = () => {
   }, [fetchNextPage, inView]);
 
   return (
-    <>
+    <div className="relative">
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
         {data?.pages.map((page) =>
           page.products.map((value: IProduct, index: number) => {
@@ -78,13 +78,17 @@ const MyProductsCard = () => {
           })
         )}
       </div>
-      <div
-        ref={ref}
-        className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary"
-      >
-        {isFetchingNextPage ? "Loading more products..." : null}
-      </div>
-    </>
+      {!isFetchingNextPage ? (
+        <div
+          ref={ref}
+          className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary absolute bottom-0"
+        >
+          {isFetchingNextPage ? "Loading more products..." : null}
+        </div>
+      ) : (
+        <div className="text-center flex items-center justify-center h-10 mt-4 text-white bg-primary absolute bottom-0"></div>
+      )}
+    </div>
   );
 };
 

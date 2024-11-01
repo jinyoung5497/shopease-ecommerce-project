@@ -2,22 +2,15 @@ import HomeButton from "../common/components/HomeButton";
 import { Layout } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useProductStore } from "@/store/product/useProductStore";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
 import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
 import { useAddCart } from "@/lib/cart/hooks/useAddCart";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useToastStore } from "@/store/toast/useToastStore";
+import { Button } from "@/packages/button/Button";
+import { Carousel } from "@/packages/Carousel/Carousel";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 const DetailedProduct = () => {
   const { detailedProductInfo } = useProductStore();
@@ -26,8 +19,6 @@ const DetailedProduct = () => {
   const { mutate: addCart } = useAddCart();
   const { user, isSeller } = useAuthStore();
   const addToast = useToastStore((state) => state.addToast);
-
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   const { navToHome } = useNavigation();
 
   if (!detailedProductInfo.id) {
@@ -62,34 +53,25 @@ const DetailedProduct = () => {
     }
   };
 
+  if (!detailedProductInfo) throw new Error();
+
   return (
     <Layout>
       <NavigationBar />
       <HomeButton style="absolute top-32 left-10" />
       <div className="flex items-center justify-center">
         <div className="flex items-center justify-center gap-28 m-40 w-3/5  ">
-          <Carousel
-            plugins={[plugin.current]}
-            className="w-full"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
-          >
-            <CarouselContent>
-              {detailedProductInfo?.productImages?.map((value, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <img src={value} alt="productImage" />
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <Carousel.Root>
+            <Carousel.Previous images={detailedProductInfo?.productImages}>
+              <ArrowBigLeft />
+            </Carousel.Previous>
+            <Carousel.Content>
+              <Carousel.Items images={detailedProductInfo?.productImages} />
+            </Carousel.Content>
+            <Carousel.Next images={detailedProductInfo?.productImages}>
+              <ArrowBigRight />
+            </Carousel.Next>
+          </Carousel.Root>
           <div className="flex flex-col gap-5 w-4/5 h-full ">
             <div className="text-primary font-semibold text-3xl">
               {detailedProductInfo.productName}
@@ -107,12 +89,13 @@ const DetailedProduct = () => {
             >
               {detailedProductInfo.productDescription}
             </div>
-            <button
+            <Button
               onClick={handleCartRegister}
-              className="bg-primary text-white p-3 px-5 rounded-sm"
+              radius="medium"
+              className="mt-2"
             >
               장바구니 추가
-            </button>
+            </Button>
           </div>
         </div>
       </div>

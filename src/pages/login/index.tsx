@@ -9,6 +9,8 @@ import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
+import { Button } from "@/packages/button/Button";
+import { Input } from "@/packages/Input/Input";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),
@@ -31,6 +33,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
@@ -66,6 +69,20 @@ const Login = () => {
     navToSignUp();
   };
 
+  const clearButton = (field: "email" | "password") => {
+    return (
+      <Button
+        onClick={(event) => {
+          event.preventDefault();
+          resetField(field);
+        }}
+        variant="link"
+      >
+        <i className="fi fi-rs-cross-small"></i>
+      </Button>
+    );
+  };
+
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
       <div className="h-screen flex items-center justify-center">
@@ -78,49 +95,54 @@ const Login = () => {
           <p className="text-primary mb-5">
             이메일 주소와 비밀번호를 입력하여 로그인하세요.
           </p>
-          <p className="w-full text-sm text-primary">이메일</p>
-          <input
+          <Input
             {...register("email")}
             id="email"
             type="text"
             placeholder="이메일을 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px] "
+            full
+            label="이메일"
+            radius="medium"
+            isError={errors.email}
+            errorMessage={errors.email?.message}
+            leftIcon={<i className="fi fi-rs-envelope"></i>}
+            rightIcon={clearButton("email")}
           />
-          {errors.email && (
-            <p className="w-full text-red-600 text-sm">
-              {errors.email?.message}
-            </p>
-          )}
-          <p className="w-full text-sm text-primary">비밀번호</p>
-          <input
+          <Input
             {...register("password")}
             id="password"
             type="password"
             placeholder="비밀번호를 입력하세요"
-            className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+            full
+            label="비밀번호"
+            isError={errors.password}
+            errorMessage={errors.password?.message}
+            radius="medium"
+            leftIcon={<i className="fi fi-rs-lock"></i>}
+            rightIcon={clearButton("password")}
           />
-          {errors.password && (
-            <p className="w-full text-red-600 text-sm">
-              {errors.password?.message}
-            </p>
-          )}
-          <button
-            disabled={isLoading}
+          <Button
+            full
+            radius="full"
+            size="large"
             type="submit"
-            className="rounded-full text-white bg-primary w-full p-2 text-sm h-11 mt-4 hover:bg-sky-800"
+            loading={isLoading}
+            className="mt-5"
           >
-            Log In
-          </button>
+            Login
+          </Button>
           <div className="text-[12px] text-slate-400">or continue with</div>
-
-          <button
+          <Button
+            icon={<img src={google} alt="google" className="w-4 h-4" />}
+            full
+            radius="full"
+            loading={isGoogleLoading}
+            variant="outline"
             onClick={handleGoogleLogin}
-            disabled={isGoogleLoading}
-            className="rounded-full text-primary border-[1px] border-primary w-full p-2 text-sm h-11 flex items-center justify-center gap-4 mb-4"
+            size="large"
           >
-            <img src={google} alt="google" className="w-4 h-4" />
             Google Login
-          </button>
+          </Button>
           <div className="text-slate-400 text-[12px] ">
             <span>회원이 아니신가요? </span>
             <button

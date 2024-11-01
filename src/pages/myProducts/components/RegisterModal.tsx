@@ -1,25 +1,15 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
 import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { DialogDescription } from "@radix-ui/react-dialog";
 import { useProductStore } from "@/store/product/useProductStore";
 import { IProduct } from "@/lib/product";
+import { Button } from "@/packages/button/Button";
+import { Dropdown } from "@/packages/Dropdown/Dropdown";
+import { Modal } from "@/packages/Modal/Modal";
+import { Input } from "@/packages/Input/Input";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -28,7 +18,7 @@ const RegisterModal = () => {
     useState<ProductCategoryType>("Men's Clothing");
   const { imageNameList, setImageNameList, resetImageNameList } =
     useProductStore();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageList, setImageList] = useState<File[]>([]);
 
   type ProductCategoryType = IProduct["productCategory"];
@@ -57,6 +47,7 @@ const RegisterModal = () => {
     register,
     handleSubmit,
     setValue,
+    resetField,
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
@@ -86,17 +77,13 @@ const RegisterModal = () => {
         setSelectedCategory("Men's Clothing");
         resetImageNameList();
         setImageList([]);
-        setIsModalOpen(false);
+        // setIsModalOpen(false);
       }
     },
     [addProduct, selectedCategory, user, setValue, imageNameList, imageList]
   );
 
-  const handleCategory = (
-    event: React.MouseEvent<HTMLDivElement>,
-    category: ProductCategoryType
-  ) => {
-    event.preventDefault();
+  const handleCategory = (category: ProductCategoryType) => {
     setSelectedCategory(category);
   };
 
@@ -115,148 +102,169 @@ const RegisterModal = () => {
     }
   };
 
+  const clearButton = (
+    field:
+      | "title"
+      | "price"
+      | "remainder"
+      | "description"
+      | "remainder"
+      | "image"
+  ) => {
+    return (
+      <Button
+        onClick={(event) => {
+          event.preventDefault();
+          resetField(field);
+        }}
+        variant="link"
+      >
+        <i className="fi fi-rs-cross-small"></i>
+      </Button>
+    );
+  };
+
   return (
-    <div className="w-full  my-10 px-20 flex justify-end">
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogTrigger asChild>
-          <button className="flex border-primary border-[1px] rounded-[7px] items-center justify-center px-2 pr-3 hover:text-white hover:bg-primary">
-            <i className="fi fi-rs-plus-small text-2xl translate-y-[3px]"></i>
-            <div>상품 등록</div>
-          </button>
-        </DialogTrigger>
-        <DialogContent
-          aria-labelledby="dialog-title"
-          className="flex flex-col items-center justify-center text-primary"
+    <div className="w-full  my-10 px-40 flex justify-end">
+      <Modal.Root>
+        <Modal.Trigger
+          icon={
+            <i className="fi fi-rs-plus-small text-2xl translate-y-[2px]"></i>
+          }
+          variant="outline"
         >
-          <DialogHeader className="flex flex-col items-center justify-center">
-            <DialogTitle>
-              <div id="dialog-title" className="font-semibold text-[40px]">
-                상품 등록
-              </div>
-            </DialogTitle>
-            <DialogDescription />
-            <div>상품 상세 정보를 입력하여 상품을 등록하세요</div>
-          </DialogHeader>
+          상품 추가
+        </Modal.Trigger>
+        <Modal.Content>
+          <Modal.Close topRight>
+            <i className="fi fi-rs-cross-small"></i>
+          </Modal.Close>
+          <Modal.Header>
+            <Modal.Title title="상품 등록" />
+            <Modal.Description description="상품 상세 정보를 입력하여 상품을 등록하세요" />
+          </Modal.Header>
+          <Modal.Divider />
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-full flex flex-col gap-2"
           >
-            <p>상품 이름</p>
-            <input
-              {...register("title")}
-              id="title"
-              type="text"
-              placeholder="상품 이름"
-              className="w-full p-3 border-primary rounded-[7px] border-[1px]"
-            />
-            {errors.title && (
-              <div className="text-red-600 text-sm">{errors.title.message}</div>
-            )}
-            <p>상품 카테고리</p>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="w-full p-3 border-primary rounded-[7px] border-[1px] flex">
-                  {selectedCategory ? selectedCategory : "상품 카테고리"}
+            <Modal.Items>
+              <Input
+                {...register("title")}
+                id="title"
+                type="text"
+                placeholder="상품 이름"
+                full
+                label="상품 이름"
+                radius="medium"
+                isError={errors.title}
+                errorMessage={errors.title?.message}
+                rightIcon={clearButton("title")}
+              />
+              <p className="text-[15px] text-primary">상품 카테고리</p>
+              <Dropdown.Root>
+                <Dropdown.Trigger
+                  variant="outline"
+                  size="large"
+                  rightIcon={
+                    <i className="fi fi-rs-angle-small-down text-2xl"></i>
+                  }
+                >
+                  카테고리 선택
+                </Dropdown.Trigger>
+                <Dropdown.Menu>
+                  <Dropdown.Title title="Category" />
+                  <Dropdown.MenuItem
+                    onClick={() => handleCategory("Men's Clothing")}
+                  >
+                    Men's Clothing
+                  </Dropdown.MenuItem>
+                  <Dropdown.MenuItem
+                    onClick={() => handleCategory("Women's Clothing")}
+                  >
+                    Women's Clothing
+                  </Dropdown.MenuItem>
+                  <Dropdown.MenuItem onClick={() => handleCategory("Sneakers")}>
+                    Sneakers
+                  </Dropdown.MenuItem>
+                  <Dropdown.MenuItem onClick={() => handleCategory("Hat")}>
+                    Hat
+                  </Dropdown.MenuItem>
+                  <Dropdown.MenuItem onClick={() => handleCategory("Kids")}>
+                    Kids
+                  </Dropdown.MenuItem>
+                </Dropdown.Menu>
+              </Dropdown.Root>
+              <Input
+                {...register("price", {
+                  setValueAs: (value) => parseFloat(value),
+                })}
+                id="price"
+                type="number"
+                placeholder="상품 가격"
+                full
+                label="상품 가격"
+                radius="medium"
+                isError={errors.price}
+                errorMessage={errors.price?.message}
+                rightIcon={clearButton("price")}
+              />
+              <Input
+                {...register("remainder", {
+                  setValueAs: (value) => parseFloat(value),
+                })}
+                id="remainder"
+                type="number"
+                placeholder="상품 재고"
+                full
+                label="상품 재고"
+                radius="medium"
+                isError={errors.remainder}
+                errorMessage={errors.remainder?.message}
+                rightIcon={clearButton("remainder")}
+              />
+              <p>상품 설명</p>
+              <textarea
+                {...register("description")}
+                id="description"
+                placeholder="상품 설명"
+                className="w-full p-3 border-primary rounded-[7px] border-[1px]"
+              />
+              {errors.description && (
+                <div className="text-red-600 text-sm">
+                  {errors.description.message}
                 </div>
-              </DropdownMenuTrigger>
-              {/* //TODO width change */}
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Men's Clothing")}
-                >
-                  Men's Clothing
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Women's Clothing")}
-                >
-                  Women's Clothing
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Sneakers")}
-                >
-                  Sneakers
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Hat")}
-                >
-                  Hat
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => handleCategory(event, "Kids")}
-                >
-                  Kids
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            {/* //TODO dropdown error message */}
-            <p>상품 가격</p>
-            <input
-              {...register("price", {
-                setValueAs: (value) => parseFloat(value),
-              })}
-              id="price"
-              type="number"
-              placeholder="상품 가격"
-              className="w-full p-3 border-primary rounded-[7px] border-[1px]"
-            />
-            {errors.price && (
-              <div className="text-red-600 text-sm">{errors.price.message}</div>
-            )}
-            <p>상품 재고</p>
-            <input
-              {...register("remainder", {
-                setValueAs: (value) => parseFloat(value),
-              })}
-              id="remainder"
-              type="number"
-              placeholder="상품 재고"
-              className="w-full p-3 border-primary rounded-[7px] border-[1px]"
-            />
-            {errors.remainder && (
-              <div className="text-red-600 text-sm">
-                {errors.remainder.message}
+              )}
+              <Input
+                {...register("image")}
+                name="image"
+                type="file"
+                multiple
+                full
+                label="상품 이미지"
+                radius="medium"
+                onChange={handleImageName}
+                rightIcon={clearButton("image")}
+              />
+              <div className="flex gap-2 flex-wrap">
+                {imageNameList.map((value, index) => (
+                  <div key={index}>{value}</div>
+                ))}
               </div>
-            )}
-            <p>상품 설명</p>
-            <textarea
-              {...register("description")}
-              id="description"
-              placeholder="상품 설명"
-              className="w-full p-3 border-primary rounded-[7px] border-[1px]"
-            />
-            {errors.description && (
-              <div className="text-red-600 text-sm">
-                {errors.description.message}
-              </div>
-            )}
-            <p>상품 이미지</p>
-            <input
-              {...register("image")}
-              type="file"
-              name="image"
-              multiple
-              className="w-full p-3 border-primary rounded-[7px] border-[1px]"
-              onChange={handleImageName}
-            />
-            <div className="flex gap-2 flex-wrap">
-              {imageNameList.map((value, index) => (
-                <div key={index}>{value}</div>
-              ))}
-            </div>
-            {errors.image && (
-              <div className="text-red-600 text-sm">
-                {/* {errors.image.message} */}
-              </div>
-            )}
-            <button
-              type="submit"
-              className="rounded-full text-white w-full p-2 text-sm h-11 hover:bg-sky-800 bg-primary mt-6"
-            >
-              상품 등록
-            </button>
+            </Modal.Items>
+            <Modal.Footer>
+              <Button
+                type="submit"
+                radius="full"
+                full
+                className="flex items-center justify-center"
+              >
+                상품 등록
+              </Button>
+            </Modal.Footer>
           </form>
-        </DialogContent>
-      </Dialog>
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };

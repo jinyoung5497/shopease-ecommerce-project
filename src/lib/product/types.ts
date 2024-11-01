@@ -1,3 +1,10 @@
+type ProductCategoryType =
+  | "Men's Clothing"
+  | "Women's Clothing"
+  | "Sneakers"
+  | "Hat"
+  | "Kids";
+
 export interface IProduct {
   id: string;
   sellerId: string;
@@ -5,12 +12,7 @@ export interface IProduct {
   productPrice: number;
   productQuantity: number;
   productDescription: string;
-  productCategory:
-    | "Men's Clothing"
-    | "Women's Clothing"
-    | "Sneakers"
-    | "Hat"
-    | "Kids";
+  productCategory: ProductCategoryType;
   productImages: string[];
   productImageName: string[];
   createdAt: Date;

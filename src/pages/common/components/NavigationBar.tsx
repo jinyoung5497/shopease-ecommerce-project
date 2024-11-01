@@ -1,14 +1,6 @@
 import { useNavigation } from "@/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useUpdateCart } from "@/lib/cart/hooks/useUpdateCart";
@@ -18,6 +10,9 @@ import {
 } from "@/lib/cart/hooks/useDeleteCart";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
+import { Button } from "@/packages/button/Button";
+import { Sheet } from "@/packages/Sheet/Sheet";
+import { X } from "lucide-react";
 
 const NavigationBar = () => {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -80,73 +75,57 @@ const NavigationBar = () => {
 
   return (
     <div className="flex items-center justify-between p-7 w-full border-b-[1px] border-slate-400 text-primary">
-      <button
-        className="flex gap-2 text-[26px] items-center justify-center"
-        onClick={navToHome}
-      >
-        <i className="fi fi-rs-basket-shopping-simple translate-y-[2px]"></i>
-        <h1 className="font-medium text-primary">ShopEase</h1>
-      </button>
+      <Button variant="link" className="flex gap-2" onClick={navToHome}>
+        <i className="fi fi-rs-basket-shopping-simple translate-y-[2px] text-[26px]"></i>
+        <h1 className="font-medium text-[26px]">ShopEase</h1>
+      </Button>
 
-      <div className="flex gap-7 items-center justify-center text-[16px]">
+      <div className="flex items-center justify-center text-[16px]">
         {isSeller && isLogin && (
           <>
-            <button
-              onClick={navToMyProducts}
-              className="flex gap-1 items-center justify-center"
-            >
+            <Button onClick={navToMyProducts} variant="link" size="large">
               <i className="fi fi-rs-supplier-alt translate-y-[1px]"></i>
               <p>My Products</p>
-            </button>
+            </Button>
 
-            <button
-              onClick={navToAdmin}
-              className="flex gap-1 items-center justify-center"
-            >
+            <Button onClick={navToAdmin} variant="link" size="large">
               <i className="fi fi fi-rs-admin-alt translate-y-[1px]"></i>
               <p>Admin</p>
-            </button>
+            </Button>
           </>
         )}
 
         {!isSeller && isLogin && (
-          <button
-            onClick={navToPurchaseHistory}
-            className="flex gap-1 items-center justify-center"
-          >
+          <Button onClick={navToPurchaseHistory} variant="link" size="large">
             <i className="fi fi fi-rs-time-past translate-y-[1px]"></i>
             <p>Purchase History</p>
-          </button>
+          </Button>
         )}
 
         {isLogin ? (
-          <button
-            className="flex gap-1 items-center justify-center"
-            onClick={handleLogout}
-          >
+          <Button onClick={handleLogout} variant="link" size="large">
             <i className="fi fi-rs-user translate-y-[1px]"></i>
             <p>Logout</p>
-          </button>
+          </Button>
         ) : (
-          <button
-            className="flex gap-1 items-center justify-center"
-            onClick={navToLogin}
-          >
+          <Button onClick={navToLogin} variant="link" size="large">
             <i className="fi fi-rs-user translate-y-[1px]"></i>
             <p>Login</p>
-          </button>
+          </Button>
         )}
 
-        <Sheet>
+        {/* <Sheet>
           <SheetTrigger>
-            <div className="flex gap-1 items-center justify-center right-0 relative">
-              {data && data?.length > 0 && (
-                <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
-                  <p className="text-white text-[12px]">{data?.length}</p>
-                </div>
-              )}
-              <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
-            </div>
+            <Button variant="link">
+              <div className="flex gap-1 items-center justify-center right-0 relative">
+                {data && data?.length > 0 && isLogin && (
+                  <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
+                    <p className="text-white text-[12px]">{data?.length}</p>
+                  </div>
+                )}
+                <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
+              </div>
+            </Button>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
@@ -155,81 +134,186 @@ const NavigationBar = () => {
               </div>
               <SheetDescription />
             </SheetHeader>
-            {data?.map((value, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between w-full h-28 border-slate-200 border-b-[1px]"
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={value.productImage}
-                    alt="productImage"
-                    className="w-14 h-14 border-[1px] border-slate-200 p-2"
-                  />
-                  <div className="flex flex-col items-start gap-1">
-                    <div>{value.productName}</div>
-                    <div className="flex items-center">
-                      <div className="flex border-slate-200 border-[1px] p-1 px-3 gap-2 items-center justify-center">
-                        <i
-                          onClick={() => increaseQuantity(index)}
-                          className="fi fi-rs-plus-small translate-y-[2px] cursor-pointer"
-                        ></i>
-                        <div>{value.quantity}</div>
-                        <i
-                          onClick={() => decreaseQuantity(index)}
-                          className="fi fi-rs-minus-small translate-y-[2px] cursor-pointer"
-                        ></i>
+            {isLogin &&
+              data?.map((value, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between w-full h-28 border-slate-200 border-b-[1px]"
+                >
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={value.productImage}
+                      alt="productImage"
+                      className="w-14 h-14 border-[1px] border-slate-200 p-2"
+                    />
+                    <div className="flex flex-col items-start gap-1">
+                      <div>{value.productName}</div>
+                      <div className="flex items-center">
+                        <div className="flex border-slate-200 border-[1px] p-1 px-3 gap-2 items-center justify-center">
+                          <i
+                            onClick={() => increaseQuantity(index)}
+                            className="fi fi-rs-plus-small translate-y-[2px] cursor-pointer"
+                          ></i>
+                          <div>{value.quantity}</div>
+                          <i
+                            onClick={() => decreaseQuantity(index)}
+                            className="fi fi-rs-minus-small translate-y-[2px] cursor-pointer"
+                          ></i>
+                        </div>
+                        <div className="ml-4 text-gray text-sm">
+                          {value.productPrice.toLocaleString("ko-KR", {
+                            style: "currency",
+                            currency: "KRW",
+                          })}
+                        </div>
                       </div>
-                      <div className="ml-4 text-gray text-sm">
-                        {value.productPrice.toLocaleString("ko-KR", {
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <i
+                      onClick={() => deleteCartItem(value.productId)}
+                      className="fi fi-rs-cross-small text-xl cursor-pointer"
+                    ></i>
+                    <div>
+                      {value.totalPrice.toLocaleString("ko-KR", {
+                        style: "currency",
+                        currency: "KRW",
+                      })}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            <div className="flex flex-col absolute bottom-0 left-0 right-0 m-4 border-t-[1px] border-slate-200 gap-4">
+              <div className="mt-5 flex items-center justify-between">
+                <div>
+                  Total:{" "}
+                  {isLogin &&
+                    data
+                      ?.reduce((total, product) => {
+                        return total + product.totalPrice;
+                      }, 0)
+                      .toLocaleString("ko-KR", {
+                        style: "currency",
+                        currency: "KRW",
+                      })}
+                </div>
+                <Button
+                  onClick={() => deleteAllCartItems()}
+                  color="red"
+                  radius="none"
+                >
+                  <i className="fi fi-rs-trash"></i>
+                </Button>
+              </div>
+              <Button onClick={handleCheckout} radius="none" size="large">
+                Checkout
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet> */}
+        <Sheet.Root>
+          <Sheet.Trigger variant="link">
+            <Button variant="link">
+              <div className="flex gap-1 items-center justify-center right-0 relative">
+                {data && data?.length > 0 && isLogin && (
+                  <div className="rounded-full p-[10px] w-3 h-3 bg-primary flex items-center justify-center absolute z-10 left-3 bottom-4">
+                    <p className="text-white text-[12px]">{data?.length}</p>
+                  </div>
+                )}
+                <i className="fi fi-rs-shopping-cart translate-y-[3px] text-xl"></i>
+              </div>
+            </Button>
+          </Sheet.Trigger>
+          <Sheet.Content>
+            <Sheet.Close topRight>
+              <X className="h-5 w-5" />
+            </Sheet.Close>
+            <Sheet.Header>
+              <Sheet.Title title="Cart" />
+            </Sheet.Header>
+            <Sheet.Divider />
+            <Sheet.Items>
+              {isLogin &&
+                data?.map((value, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between w-full border-slate-200 border-b-[1px] py-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={value.productImage}
+                        alt="productImage"
+                        className="w-14 h-14 border-[1px] border-slate-200 p-2"
+                      />
+                      <div className="flex flex-col items-start gap-1">
+                        <div>{value.productName}</div>
+                        <div className="flex items-center">
+                          <div className="flex border-slate-200 border-[1px] p-1 px-3 gap-2 items-center justify-center">
+                            <i
+                              onClick={() => increaseQuantity(index)}
+                              className="fi fi-rs-plus-small translate-y-[2px] cursor-pointer"
+                            ></i>
+                            <div>{value.quantity}</div>
+                            <i
+                              onClick={() => decreaseQuantity(index)}
+                              className="fi fi-rs-minus-small translate-y-[2px] cursor-pointer"
+                            ></i>
+                          </div>
+                          <div className="ml-4 text-gray text-sm">
+                            {value.productPrice.toLocaleString("ko-KR", {
+                              style: "currency",
+                              currency: "KRW",
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center">
+                      <i
+                        onClick={() => deleteCartItem(value.productId)}
+                        className="fi fi-rs-cross-small text-xl cursor-pointer"
+                      ></i>
+                      <div>
+                        {value.totalPrice.toLocaleString("ko-KR", {
                           style: "currency",
                           currency: "KRW",
                         })}
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                  <i
-                    onClick={() => deleteCartItem(value.productId)}
-                    className="fi fi-rs-cross-small text-xl cursor-pointer"
-                  ></i>
+                ))}
+            </Sheet.Items>
+            <Sheet.Divider />
+            <Sheet.Footer>
+              <div className="flex flex-col mt-2 gap-4">
+                <div className="flex items-center justify-between">
                   <div>
-                    {value.totalPrice.toLocaleString("ko-KR", {
-                      style: "currency",
-                      currency: "KRW",
-                    })}
+                    Total:{" "}
+                    {isLogin &&
+                      data
+                        ?.reduce((total, product) => {
+                          return total + product.totalPrice;
+                        }, 0)
+                        .toLocaleString("ko-KR", {
+                          style: "currency",
+                          currency: "KRW",
+                        })}
                   </div>
+                  <Button
+                    onClick={() => deleteAllCartItems()}
+                    color="red"
+                    radius="none"
+                  >
+                    <i className="fi fi-rs-trash"></i>
+                  </Button>
                 </div>
+                <Button onClick={handleCheckout} radius="none" size="large">
+                  Checkout
+                </Button>
               </div>
-            ))}
-            <div className="flex flex-col absolute bottom-0 left-0 right-0 m-4 border-t-[1px] border-slate-200 gap-4">
-              <div className="mt-5 flex items-center justify-between">
-                <div>
-                  Total:{" "}
-                  {data
-                    ?.reduce((total, product) => {
-                      return total + product.totalPrice;
-                    }, 0)
-                    .toLocaleString("ko-KR", {
-                      style: "currency",
-                      currency: "KRW",
-                    })}
-                </div>
-                <i
-                  onClick={() => deleteAllCartItems()}
-                  className="fi fi-rs-trash bg-red-600 flex items-center justify-center w-8 h-8 text-xl text-white cursor-pointer"
-                ></i>
-              </div>
-              <button
-                onClick={handleCheckout}
-                className="text-white bg-primary w-full p-2"
-              >
-                Checkout
-              </button>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </Sheet.Footer>
+          </Sheet.Content>
+        </Sheet.Root>
       </div>
     </div>
   );

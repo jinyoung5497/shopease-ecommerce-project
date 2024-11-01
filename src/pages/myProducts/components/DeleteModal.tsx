@@ -6,6 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useDeleteProduct } from "@/lib/product/hooks/useDeleteProduct";
+import { Button } from "@/packages/button/Button";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useState } from "react";
 
@@ -25,7 +26,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
     <div className="absolute top-2 right-2">
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
-          <i className="fi fi-rs-trash text-2xl"></i>
+          <Button variant="link" color="black">
+            <i className="fi fi-rs-trash text-2xl"></i>
+          </Button>
         </DialogTrigger>
         <DialogContent
           aria-labelledby="dialog-title"
@@ -42,12 +45,14 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
               정말로 삭제하시겠습니까? 삭제 후에는 다시 되돌릴 수 없습니다.
             </div>
           </DialogHeader>
-          <button
+          <Button
+            full
+            radius="full"
             onClick={() => handleDelete(id)}
-            className="rounded-full text-white w-full p-2 text-sm h-11 hover:bg-sky-800 bg-primary"
+            size="large"
           >
             상품 삭제
-          </button>
+          </Button>
         </DialogContent>
       </Dialog>
     </div>

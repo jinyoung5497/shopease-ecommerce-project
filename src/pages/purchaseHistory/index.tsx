@@ -4,6 +4,7 @@ import { Layout, authStatusType } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useUpdateOrder } from "@/lib/order/hooks/useUpdateOrder";
 import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
+import { Button } from "@/packages/button/Button";
 
 const PurchaseHistory = () => {
   const { data } = useFetchOrder();
@@ -63,12 +64,13 @@ const PurchaseHistory = () => {
                   </div>
                 </div>
                 {value.status !== "주문 취소" ? (
-                  <button
+                  <Button
                     onClick={() => updateOrder(value.id, value.productId)}
-                    className="bg-red-500 hover:bg-red-400 rounded-[5px] text-white p-3 px-7"
+                    color="red"
+                    size="xlarge"
                   >
                     구매 취소
-                  </button>
+                  </Button>
                 ) : (
                   <div className="font-semibold text-red-500">
                     이 상품은 주문이 취소 되었습니다.
