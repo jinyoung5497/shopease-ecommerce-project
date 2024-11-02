@@ -1,7 +1,7 @@
-import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
-import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
-import { IProduct } from "@/lib/product";
+import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
+import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
+import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
+import { IProduct } from "@/features/product/api";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";

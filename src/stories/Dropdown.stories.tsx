@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Dropdown } from "@/packages/Dropdown/Dropdown";
+import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
 const meta: Meta = {
   title: "Components/Dropdown",
   tags: ["autodocs"],

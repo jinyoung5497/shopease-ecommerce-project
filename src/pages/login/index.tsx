@@ -1,16 +1,16 @@
-import { useLogin } from "@/lib/auth/hooks/useLogin";
-import google from "../../assets/google.svg";
-import { useNavigation } from "@/hooks/useNavigation";
+import { useLogin } from "@/features/auth/hooks/useLogin";
+import google from "../../shared/assets/google.svg";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCallback } from "react";
-import { useGoogleLogin } from "@/lib/auth/hooks/useGoogleLogin";
+import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Layout, authStatusType } from "../common/components/Layout";
 import HomeButton from "../common/components/HomeButton";
-import { Button } from "@/packages/button/Button";
-import { Input } from "@/packages/Input/Input";
+import { Button } from "@/shared/components/button/Button";
+import { Input } from "@/shared/components/Input/Input";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),

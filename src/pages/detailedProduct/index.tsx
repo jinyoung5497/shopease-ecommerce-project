@@ -2,14 +2,14 @@ import HomeButton from "../common/components/HomeButton";
 import { Layout } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
 import { useProductStore } from "@/store/product/useProductStore";
-import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
-import { useAddCart } from "@/lib/cart/hooks/useAddCart";
+import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
+import { useAddCart } from "@/features/cart/hooks/useAddCart";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
-import { useNavigation } from "@/hooks/useNavigation";
+import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useToastStore } from "@/store/toast/useToastStore";
-import { Button } from "@/packages/button/Button";
-import { Carousel } from "@/packages/Carousel/Carousel";
+import { Button } from "@/shared/components/button/Button";
+import { Carousel } from "@/shared/components/Carousel/Carousel";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 const DetailedProduct = () => {

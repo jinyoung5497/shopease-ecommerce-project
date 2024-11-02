@@ -3,14 +3,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchInfiniteProducts } from "@/lib/product/hooks/useInfiniteFetchProduct";
+import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useProductStore } from "@/store/product/useProductStore";
-import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
-import { IProduct } from "@/lib/product";
-import { Button } from "@/packages/button/Button";
-import { Dropdown } from "@/packages/Dropdown/Dropdown";
-import { Modal } from "@/packages/Modal/Modal";
-import { Input } from "@/packages/Input/Input";
+import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
+import { IProduct } from "@/features/product/api";
+import { Button } from "@/shared/components/button/Button";
+import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
+import { Modal } from "@/shared/components/Modal/Modal";
+import { Input } from "@/shared/components/Input/Input";
 
 interface UpdateModalProps {
   index: number;

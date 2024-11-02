@@ -1,9 +1,9 @@
-import { useFetchAdmin } from "@/lib/order/hooks/useFetchAdmin";
+import { useFetchAdmin } from "@/features/order/hooks/useFetchAdmin";
 import HomeButton from "../common/components/HomeButton";
 import { Layout, authStatusType } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
-import { useUpdateOrder } from "@/lib/order/hooks/useUpdateOrder";
-import { Dropdown } from "@/packages/Dropdown/Dropdown";
+import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
+import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
 
 const Administration = () => {
   const { data } = useFetchAdmin();

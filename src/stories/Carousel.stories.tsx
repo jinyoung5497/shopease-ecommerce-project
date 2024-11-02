@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Carousel } from "@/packages/Carousel/Carousel";
+import { Carousel } from "@/shared/components/Carousel/Carousel";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 const meta: Meta = {
   title: "Components/Carousel",
