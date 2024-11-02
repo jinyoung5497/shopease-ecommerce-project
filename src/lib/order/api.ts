@@ -76,7 +76,6 @@ export const fetchOrderAPI = async (
             },
           };
         }
-        console.log(orderItem);
 
         return orderItem; // 제품 정보가 없을 경우 기본 주문 항목 반환
       })
