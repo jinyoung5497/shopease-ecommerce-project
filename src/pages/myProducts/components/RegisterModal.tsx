@@ -2,14 +2,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
-import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
+import { useAddProduct } from "@/features/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useProductStore } from "@/store/product/useProductStore";
-import { IProduct } from "@/lib/product";
-import { Button } from "@/packages/button/Button";
-import { Dropdown } from "@/packages/Dropdown/Dropdown";
-import { Modal } from "@/packages/Modal/Modal";
-import { Input } from "@/packages/Input/Input";
+import { IProduct } from "@/features/product/api";
+import { Button } from "@/shared/components/button/Button";
+import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
+import { Modal } from "@/shared/components/Modal/Modal";
+import { Input } from "@/shared/components/Input/Input";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -90,7 +90,6 @@ const RegisterModal = () => {
   const handleImageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const files = event.target.files;
-    console.log(files?.length);
     if (files && files.length > 0) {
       setImageList((prev) => [...prev, ...Array.from(files)]);
       const fileNames = Array.from(files)

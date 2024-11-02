@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { authStore } from "./types";
 import Cookies from "js-cookie";
-import { IUser } from "@/lib/auth";
-import { auth, db } from "@/config/firebase";
+import { IUser } from "@/features/auth/api";
+import { auth, db } from "@/app/firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
 export const useAuthStore = create<authStore>()((set) => ({

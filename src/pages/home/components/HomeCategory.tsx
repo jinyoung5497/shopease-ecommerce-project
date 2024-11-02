@@ -1,8 +1,8 @@
-import { pageRoutes } from "@/apiRoutes";
-import { useDetailedProductInfo } from "@/hooks/useDetailedProductInfo";
-import { useNavigation } from "@/hooks/useNavigation";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProduct";
-import { Button } from "@/packages/button/Button";
+import { pageRoutes } from "@/app/apiRoutes";
+import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
+import { useNavigation } from "@/shared/hooks/useNavigation";
+import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
+import { Button } from "@/shared/components/button/Button";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();

@@ -1,4 +1,4 @@
-import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
+import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
 import HomeButton from "../common/components/HomeButton";
 import { Layout, authStatusType } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
@@ -6,11 +6,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback } from "react";
-import { useAddOrder } from "@/lib/order/hooks/useAddOrder";
-import { useDeleteAllCart } from "@/lib/cart/hooks/useDeleteCart";
-import { useNavigation } from "@/hooks/useNavigation";
-import { Button } from "@/packages/button/Button";
-import { Input } from "@/packages/Input/Input";
+import { useAddOrder } from "@/features/order/hooks/useAddOrder";
+import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
+import { useNavigation } from "@/shared/hooks/useNavigation";
+import { Button } from "@/shared/components/button/Button";
+import { Input } from "@/shared/components/Input/Input";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),

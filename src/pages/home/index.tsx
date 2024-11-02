@@ -1,8 +1,8 @@
 import { Layout } from "@/pages/common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
-import { useNavigation } from "@/hooks/useNavigation";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 import HomeCategory from "./components/HomeCategory";
-import { Button } from "@/packages/button/Button";
+import { Button } from "@/shared/components/button/Button";
 
 const Home = () => {
   const { navToCategoryProduct } = useNavigation();

@@ -1,17 +1,17 @@
-import { useNavigation } from "@/hooks/useNavigation";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
-import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
+import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
 import { useCartStore } from "@/store/cart/useCartStore";
-import { useUpdateCart } from "@/lib/cart/hooks/useUpdateCart";
+import { useUpdateCart } from "@/features/cart/hooks/useUpdateCart";
 import {
   useDeleteAllCart,
   useDeleteCart,
-} from "@/lib/cart/hooks/useDeleteCart";
+} from "@/features/cart/hooks/useDeleteCart";
 import { useToastStore } from "@/store/toast/useToastStore";
-import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
-import { Button } from "@/packages/button/Button";
-import { Sheet } from "@/packages/Sheet/Sheet";
+import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
+import { Button } from "@/shared/components/button/Button";
+import { Sheet } from "@/shared/components/Sheet/Sheet";
 import { X } from "lucide-react";
 
 const NavigationBar = () => {

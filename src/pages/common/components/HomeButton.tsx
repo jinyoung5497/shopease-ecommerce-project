@@ -1,5 +1,5 @@
-import { useNavigation } from "@/hooks/useNavigation";
-import { Button } from "@/packages/button/Button";
+import { useNavigation } from "@/shared/hooks/useNavigation";
+import { Button } from "@/shared/components/button/Button";
 
 interface HomeButtonProps {
   style?: string;

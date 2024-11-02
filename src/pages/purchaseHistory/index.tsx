@@ -1,10 +1,10 @@
-import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
+import { useFetchOrder } from "@/features/order/hooks/useFetchOrder";
 import HomeButton from "../common/components/HomeButton";
 import { Layout, authStatusType } from "../common/components/Layout";
 import NavigationBar from "../common/components/NavigationBar";
-import { useUpdateOrder } from "@/lib/order/hooks/useUpdateOrder";
-import { useUpdateProductQuantity } from "@/lib/product/hooks/useUpdateProductQuantity";
-import { Button } from "@/packages/button/Button";
+import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
+import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
+import { Button } from "@/shared/components/button/Button";
 
 const PurchaseHistory = () => {
   const { data } = useFetchOrder();
@@ -15,7 +15,6 @@ const PurchaseHistory = () => {
     id: string | undefined,
     productId: string | undefined
   ) => {
-    console.log(id);
     if (id) {
       updateStatus({ orderId: id, status: "주문 취소" });
     }

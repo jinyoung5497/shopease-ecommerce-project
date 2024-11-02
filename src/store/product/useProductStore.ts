@@ -1,4 +1,4 @@
-import { IProduct } from "@/lib/product";
+import { IProduct } from "@/features/product/api";
 import { create } from "zustand";
 
 interface ProductState {

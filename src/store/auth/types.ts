@@ -1,4 +1,4 @@
-import { IUser } from "@/lib/auth";
+import { IUser } from "@/features/auth/api";
 
 export type authStore = {
   isSeller: boolean;

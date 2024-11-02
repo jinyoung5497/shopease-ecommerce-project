@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { pageRoutes } from "@/apiRoutes";
+import { pageRoutes } from "@/app/apiRoutes";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Toast } from "./Toast";
 
