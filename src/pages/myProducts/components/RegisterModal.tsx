@@ -166,6 +166,8 @@ const RegisterModal = () => {
                 <Dropdown.Trigger
                   variant="outline"
                   size="large"
+                  full
+                  between
                   rightIcon={
                     <i className="fi fi-rs-angle-small-down text-2xl"></i>
                   }

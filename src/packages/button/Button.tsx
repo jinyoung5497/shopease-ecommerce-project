@@ -20,6 +20,7 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
       full = false,
       children,
       className,
+      between,
       ...rest
     },
     ref
@@ -175,7 +176,11 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
             <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-blue-500 border-solid"></div>
           </div>
         ) : (
-          <div className={`flex items-center justify-center gap-1`}>
+          <div
+            className={`flex items-center ${
+              between ? "justify-between" : "justify-center"
+            } gap-1`}
+          >
             {icon && icon}
             {children}
           </div>

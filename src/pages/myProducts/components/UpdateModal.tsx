@@ -173,6 +173,8 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                 <Dropdown.Trigger
                   variant="outline"
                   size="large"
+                  full
+                  between
                   rightIcon={
                     <i className="fi fi-rs-angle-small-down text-2xl translate-y-1"></i>
                   }
