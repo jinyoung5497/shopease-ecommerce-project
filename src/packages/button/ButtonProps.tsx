@@ -13,4 +13,5 @@ export interface ButtonProps
   full?: boolean;
   className?: string;
   children: React.ReactNode;
+  between?: boolean;
 }

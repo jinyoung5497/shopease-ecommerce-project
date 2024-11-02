@@ -92,7 +92,7 @@ export const DropdownMenu = ({ children }: DropdownMenuProps) => {
   if (!context?.open) return null;
   return (
     <div
-      className="w-max rounded-[7px] flex flex-col items-start absolute top-10 drop-shadow-lg bg-white p-1 gap-1 max-h-40 overflow-y-auto mt-1 z-20"
+      className="w-max min-w-48 rounded-[7px] flex flex-col items-start absolute top-10 drop-shadow-lg bg-white p-1 gap-1 max-h-44 overflow-y-auto mt-1 z-20"
       ref={dropdownMenuRef}
     >
       {children}

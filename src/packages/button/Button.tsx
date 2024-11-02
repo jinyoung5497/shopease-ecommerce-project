@@ -1,5 +1,7 @@
 import React from "react";
 import { ButtonProps } from "./ButtonProps";
+import { cva } from "class-variance-authority";
+import { Slot } from "@radix-ui/react-slot";
 
 export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
@@ -19,11 +21,12 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
       full = false,
       children,
       className,
+      between,
       ...rest
     },
     ref
   ) => {
-    const Component = asChild ? "span" : "button"; // asChild를 사용해 요소를 변경할 수 있음
+    const Component = asChild ? Slot : "button"; // asChild를 사용해 요소를 변경할 수 있음
 
     // 각 스타일 옵션을 클래스명으로 매핑하여 확장성과 유지보수성을 높임
     const sizeClass = {
@@ -34,48 +37,111 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
       xlarge: "px-[16px] py-[7px] text-[18px]",
     }[size];
 
-    const variantStyles = {
-      solid: {
-        variantClass: "text-white",
-        colorClass: {
-          primary: "bg-primary hover:bg-blue-900",
-          blue: "bg-blue-600 hover:bg-blue-500",
-          black: "bg-black hover:bg-zinc-700",
-          red: "bg-red-600 hover:bg-red-500",
-        }[color],
+    const buttonVariants = cva("", {
+      variants: {
+        variant: {
+          solid: "text-white",
+          outline: "border border-solid",
+          ghost: "",
+          link: "",
+        },
+        color: {
+          primary: "",
+          blue: "",
+          black: "",
+          red: "",
+        },
       },
-      outline: {
-        variantClass: "text-black border border-solid",
-        colorClass: {
-          primary:
+      compoundVariants: [
+        {
+          variant: "solid",
+          color: "primary",
+          className: "bg-primary hover:bg-blue-900",
+        },
+        {
+          variant: "outline",
+          color: "primary",
+          className:
             "text-primary border-primary hover:bg-primary hover:text-white",
-          blue: "text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white",
-          black: "text-black border-black hover:bg-black hover:text-white",
-          red: "text-red-600 border-red-600 hover:bg-red-600 hover:text-white",
-        }[color],
+        },
+        {
+          variant: "ghost",
+          color: "primary",
+          className: "text-primary hover:bg-primary hover:text-white",
+        },
+        {
+          variant: "link",
+          color: "primary",
+          className: "text-primary hover:text-blue-800",
+        },
+        {
+          variant: "solid",
+          color: "blue",
+          className: "bg-blue-600 hover:bg-blue-500 text-white",
+        },
+        {
+          variant: "outline",
+          color: "blue",
+          className:
+            "text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white",
+        },
+        {
+          variant: "ghost",
+          color: "blue",
+          className: "text-blue-600 hover:bg-blue-600 hover:text-white",
+        },
+        {
+          variant: "link",
+          color: "blue",
+          className: "text-blue-600 hover:text-blue-400",
+        },
+        {
+          variant: "solid",
+          color: "black",
+          className: "bg-black hover:bg-zinc-700 text-white",
+        },
+        {
+          variant: "outline",
+          color: "black",
+          className: "text-black border-black hover:bg-black hover:text-white",
+        },
+        {
+          variant: "ghost",
+          color: "black",
+          className: "text-black hover:bg-black hover:text-white",
+        },
+        {
+          variant: "link",
+          color: "black",
+          className: "text-black hover:text-zinc-600",
+        },
+        {
+          variant: "solid",
+          color: "red",
+          className: "bg-red-600 hover:bg-red-500 text-white",
+        },
+        {
+          variant: "outline",
+          color: "red",
+          className:
+            "text-red-600 border-red-600 hover:bg-red-600 hover:text-white",
+        },
+        {
+          variant: "ghost",
+          color: "red",
+          className: "text-red-600 hover:bg-red-600 hover:text-white",
+        },
+        {
+          variant: "link",
+          color: "red",
+          className: "text-red-600 hover:text-red-400",
+        },
+      ],
+      defaultVariants: {
+        variant: "solid",
+        color: "primary",
       },
-      ghost: {
-        variantClass: "",
-        colorClass: {
-          primary: "text-primary hover:bg-primary hover:text-white",
-          blue: "text-blue-600 hover:bg-blue-600 hover:text-white",
-          black: "text-black hover:bg-black hover:text-white",
-          red: "text-red-600 hover:bg-red-600 hover:text-white",
-        }[color],
-      },
-      link: {
-        variantClass: ``,
-        colorClass: {
-          primary: "text-primary hover:text-blue-800",
-          blue: "text-blue-600 hover:text-blue-400",
-          black: "text-black hover:text-zinc-600",
-          red: "text-red-600 hover:text-red-400",
-        }[color],
-      },
-    };
-
-    // 선택된 변형의 스타일 가져오기
-    const { variantClass, colorClass } = variantStyles[variant];
+    });
 
     const radiusClass = {
       none: "rounded-none",
@@ -88,8 +154,9 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
     // 클래스 문자열을 결합하여 가독성 향상
     const classes = [
       sizeClass,
-      variantClass,
-      colorClass,
+      // variantClass,
+      // colorClass,
+      buttonVariants({ variant, color }),
       radiusClass,
       className,
       full && "w-full",
@@ -110,7 +177,11 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
             <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-blue-500 border-solid"></div>
           </div>
         ) : (
-          <div className={`flex items-center justify-center gap-1`}>
+          <div
+            className={`flex items-center ${
+              between ? "justify-between" : "justify-center"
+            } gap-1`}
+          >
             {icon && icon}
             {children}
           </div>
