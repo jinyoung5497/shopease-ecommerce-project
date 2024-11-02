@@ -1,6 +1,7 @@
 import React from "react";
 import { ButtonProps } from "./ButtonProps";
 import { cva } from "class-variance-authority";
+import { Slot } from "@radix-ui/react-slot";
 
 export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
@@ -25,7 +26,7 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(
     },
     ref
   ) => {
-    const Component = asChild ? "span" : "button"; // asChild를 사용해 요소를 변경할 수 있음
+    const Component = asChild ? Slot : "button"; // asChild를 사용해 요소를 변경할 수 있음
 
     // 각 스타일 옵션을 클래스명으로 매핑하여 확장성과 유지보수성을 높임
     const sizeClass = {

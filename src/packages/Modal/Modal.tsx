@@ -44,7 +44,7 @@ export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerType) => {
   return (
     <Button
       onClick={(event) => {
-        context?.setOpen((prev) => !prev);
+        context?.setOpen(true);
         event.preventDefault();
       }}
       className="min-w-24 flex items-center justify-between"
