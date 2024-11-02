@@ -85,3 +85,11 @@
 * {
   font-family: "Poppins";
 }
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
