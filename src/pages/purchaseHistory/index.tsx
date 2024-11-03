@@ -1,7 +1,7 @@
 import { useFetchOrder } from "@/features/order/hooks/useFetchOrder";
-import HomeButton from "../common/components/HomeButton";
-import { Layout, authStatusType } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { Button } from "@/shared/components/button/Button";

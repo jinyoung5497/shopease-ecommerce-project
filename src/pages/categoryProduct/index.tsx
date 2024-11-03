@@ -1,6 +1,6 @@
-import HomeButton from "../common/components/HomeButton";
-import { Layout } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import FilterButton from "./components/FilterButton";
 import React, { Suspense } from "react";
 import { useSearchParams } from "react-router-dom";

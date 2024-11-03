@@ -7,8 +7,8 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
-import { Layout, authStatusType } from "../common/components/Layout";
-import HomeButton from "../common/components/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import HomeButton from "../../shared/layout/HomeButton";
 import { Button } from "@/shared/components/button/Button";
 import { Input } from "@/shared/components/Input/Input";
 

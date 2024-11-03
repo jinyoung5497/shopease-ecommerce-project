@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { pageRoutes } from "@/app/apiRoutes";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { Toast } from "./Toast";
+import { Toast } from "../toast/Toast";
 
 export const authStatusType = {
   NEED_LOGIN: "NEED_LOGIN",

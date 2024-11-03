@@ -10,10 +10,10 @@ import DetailedProduct from "../pages/detailedProduct";
 import MyProducts from "../pages/myProducts";
 import PurchaseHistory from "../pages/purchaseHistory";
 import SignUp from "../pages/signUp";
-import { ErrorPage } from "../pages/error/components/ErrorPage";
-import { NotFoundPage } from "../pages/error/components/NotFoundPage";
-import { RootErrorBoundary } from "@/pages/common/components/RootErrorHandler";
-import { RootSuspense } from "@/pages/common/components/RootSuspense";
+import { ErrorPage } from "../shared/error/ErrorPage";
+import { NotFoundPage } from "../shared/error/NotFoundPage";
+import { RootErrorBoundary } from "@/shared/layout/RootErrorHandler";
+import { RootSuspense } from "@/shared/layout/RootSuspense";
 
 const CommonLayout = () => (
   <RootErrorBoundary>

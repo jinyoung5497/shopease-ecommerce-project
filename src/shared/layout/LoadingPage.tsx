@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 
-import { Layout } from "@/pages/common/components/Layout";
+import { Layout } from "@/shared/layout/Layout";
 
 export const LoadingPage = () => {
   return (

@@ -1,6 +1,6 @@
-import HomeButton from "../common/components/HomeButton";
-import { Layout } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import { useProductStore } from "@/store/product/useProductStore";
 import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
 import { useAddCart } from "@/features/cart/hooks/useAddCart";

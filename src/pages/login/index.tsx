@@ -7,8 +7,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { Layout, authStatusType } from "../common/components/Layout";
-import HomeButton from "../common/components/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import HomeButton from "../../shared/layout/HomeButton";
 import { Button } from "@/shared/components/button/Button";
 import { Input } from "@/shared/components/Input/Input";
 

@@ -1,7 +1,7 @@
 import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
-import HomeButton from "../common/components/HomeButton";
-import { Layout, authStatusType } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

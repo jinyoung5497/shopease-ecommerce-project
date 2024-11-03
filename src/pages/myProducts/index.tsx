@@ -1,6 +1,6 @@
-import HomeButton from "../common/components/HomeButton";
-import { Layout, authStatusType } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import RegisterModal from "./components/RegisterModal";
 import React, { Suspense } from "react";
 
