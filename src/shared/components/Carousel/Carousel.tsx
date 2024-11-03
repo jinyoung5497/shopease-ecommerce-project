@@ -1,11 +1,22 @@
-import { createContext, useContext, useRef, useState } from "react";
-import {
-  RootProps,
-  CarouselContentProps,
-  CarouselItemsProps,
-  CarouselPreviousProps,
-  CarouselNextProps,
-} from "./CarouselPropTypes";
+import { ReactNode, createContext, useContext, useRef, useState } from "react";
+
+type RootProps = {
+  children: ReactNode;
+};
+type CarouselContentProps = {
+  children: ReactNode;
+};
+type CarouselItemsProps = {
+  images: string[] | undefined;
+};
+type CarouselPreviousProps = {
+  children: ReactNode;
+  images: string[] | undefined;
+};
+type CarouselNextProps = {
+  children: ReactNode;
+  images: string[] | undefined;
+};
 
 const CarouselContext = createContext<{
   currentIndex: number;

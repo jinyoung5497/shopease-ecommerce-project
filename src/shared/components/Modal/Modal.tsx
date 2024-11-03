@@ -1,18 +1,42 @@
 import { createContext, useContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
-import {
-  RootProps,
-  ModalTriggerType,
-  ModalContentProps,
-  ModalHeaderProps,
-  ModalTitleProps,
-  ModalDescriptionProps,
-  ModalItemsProps,
-  ModalFooterProps,
-} from "./ModalType";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
-import { ModalCloseProps } from "./ModalType";
+
+import { ReactNode } from "react";
+import { ButtonProps } from "../button/Button";
+
+export type RootProps = {
+  children: ReactNode;
+};
+export type ModalTriggerType = {
+  rightIcon?: ReactNode;
+} & ButtonProps;
+export type ModalContentProps = {
+  children: ReactNode;
+};
+export type ModalHeaderProps = {
+  children: ReactNode;
+};
+export type ModalTitleProps = {
+  title: string;
+};
+export type ModalDescriptionProps = {
+  description: string;
+};
+export type ModalItemsProps = {
+  children: ReactNode;
+};
+export type ModalFooterProps = {
+  children: ReactNode;
+};
+export type ModalCloseProps = {
+  topRight?: boolean;
+  topLeft?: boolean;
+  bottomRight?: boolean;
+  bottomLeft?: boolean;
+  children: ReactNode;
+};
 
 const ModalContext = createContext<{
   open: boolean;
