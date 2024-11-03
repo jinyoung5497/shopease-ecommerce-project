@@ -1,4 +1,4 @@
-import { ICart } from "@/store/cart/types";
+import { Cart } from "@/store/cart/types";
 import { db } from "@/app/firebase";
 import {
   setDoc,
@@ -15,8 +15,8 @@ import {
 // 장바구니에 아이템을 추가하는 API 함수 (userId 기준)
 export const addCartAPI = async (
   userId: string,
-  cartItem: ICart
-): Promise<ICart> => {
+  cartItem: Cart
+): Promise<Cart> => {
   try {
     const { productId } = cartItem;
 
@@ -35,7 +35,7 @@ export const addCartAPI = async (
 // Firestore에서 사용자의 cart 데이터를 가져오는 함수
 export const getCartAPI = async (
   userId: string | undefined
-): Promise<ICart[]> => {
+): Promise<Cart[]> => {
   if (!userId) throw new Error("User ID is undefined");
 
   try {
@@ -43,11 +43,11 @@ export const getCartAPI = async (
     const q = query(cartCollectionRef, where("buyerId", "==", userId)); // 사용자별로 cart 필터링
     const querySnapshot = await getDocs(q);
 
-    const cartItems: ICart[] = querySnapshot.docs.map((doc) => {
+    const cartItems: Cart[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
       // Firestore 문서에서 가져온 데이터를 ICart 타입에 맞게 변환
-      const cartItem: ICart = {
+      const cartItem: Cart = {
         productId: data.productId || "",
         sellerId: data.sellerId || "",
         buyerId: userId || "",
@@ -70,7 +70,7 @@ export const getCartAPI = async (
 
 export const updateCartAPI = async (
   userId: string | undefined,
-  data: ICart[],
+  data: Cart[],
   quantity: number,
   index: number
 ): Promise<void> => {

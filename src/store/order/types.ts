@@ -1,4 +1,4 @@
-export interface IOrder {
+export interface Order {
   id?: string;
   sellerId: string;
   buyerId: string;

@@ -1,4 +1,4 @@
-import { IProduct } from "@/features/product/api";
+import { Product } from "@/features/product/api";
 import { useNavigation } from "./useNavigation";
 import { useProductStore } from "@/store/product/useProductStore";
 
@@ -6,7 +6,7 @@ export const useDetailedProductInfo = () => {
   const { navToDetailedProduct } = useNavigation();
   const { setIndex, setDetailedProductInfo } = useProductStore();
 
-  const handleProductCardClick = (value: IProduct, index: number) => {
+  const handleProductCardClick = (value: Product, index: number) => {
     const stringIndex = index.toString();
     navToDetailedProduct(stringIndex, value.id);
     setIndex(index);

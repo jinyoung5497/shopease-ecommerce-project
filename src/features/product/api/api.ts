@@ -21,10 +21,10 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { IProduct } from ".";
+import { Product } from ".";
 
 export const addProductAPI = async (
-  product: Omit<IProduct, "id" | "createdAt" | "updatedAt" | "productImages">,
+  product: Omit<Product, "id" | "createdAt" | "updatedAt" | "productImages">,
   imageFiles: File[] = [] // 여러 장의 이미지를 받는 배열
 ): Promise<void> => {
   try {
@@ -80,7 +80,7 @@ export const getInfiniteProductsAPI = async ({
 }: {
   pageParam: number;
 }): Promise<{
-  products: IProduct[];
+  products: Product[];
   currentPage: number;
   nextPage: number | null;
 }> => {
@@ -105,14 +105,14 @@ export const getInfiniteProductsAPI = async ({
     const querySnapshot = await getDocs(q);
 
     // 가져온 문서들을 IProduct 타입으로 변환
-    const products: IProduct[] = querySnapshot.docs.map((doc) => {
+    const products: Product[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
         ...data,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
-      } as IProduct;
+      } as Product;
     });
 
     // 현재 페이지 이후에 더 많은 제품이 있는지 확인
@@ -141,7 +141,7 @@ export const deleteProductAPI = async (productId: string): Promise<void> => {
 
 export const updateProductAPI = async (
   productId: string,
-  updatedData: Partial<IProduct>,
+  updatedData: Partial<Product>,
   imageFiles: File[] = []
 ): Promise<void> => {
   try {
@@ -188,20 +188,20 @@ export const updateProductAPI = async (
   }
 };
 
-export const getProductsAPI = async (): Promise<IProduct[]> => {
+export const getProductsAPI = async (): Promise<Product[]> => {
   try {
     const productsRef = collection(db, "products");
     const q = query(productsRef, orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
 
-    const products: IProduct[] = querySnapshot.docs.map((doc) => {
+    const products: Product[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
         ...data,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
-      } as IProduct;
+      } as Product;
     });
 
     return products;

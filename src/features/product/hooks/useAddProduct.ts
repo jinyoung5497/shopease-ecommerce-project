@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IProduct, addProductAPI } from "../api";
+import { Product, addProductAPI } from "../api";
 
 export const useAddProduct = () => {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export const useAddProduct = () => {
       imageFiles,
     }: {
       product: Omit<
-        IProduct,
+        Product,
         "id" | "createdAt" | "updatedAt" | "productImages"
       >;
       imageFiles: File[];

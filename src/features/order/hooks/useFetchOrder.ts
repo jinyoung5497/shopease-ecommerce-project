@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrderAPI } from "../api/api";
-import { IOrder } from "@/store/order/types";
+import { Order } from "@/store/order/types";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
 export const useFetchOrder = () => {
   const { user } = useAuthStore();
   const userId = user?.uid;
 
-  const { data, error, isLoading } = useQuery<IOrder[]>({
+  const { data, error, isLoading } = useQuery<Order[]>({
     queryKey: ["orders"],
     queryFn: () => fetchOrderAPI(userId!),
     enabled: !!userId,

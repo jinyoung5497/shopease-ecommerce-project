@@ -5,7 +5,7 @@ import {
   updateProfile,
 } from "@firebase/auth";
 import {
-  IgoogleUser,
+  GoogleUser,
   LoginRequestDto,
   LoginResponseDto,
   RegisterUserReqDTO,
@@ -70,7 +70,7 @@ export const loginAPI = async (
 
 export const googleLoginAPI = async (
   isSeller: boolean
-): Promise<IgoogleUser> => {
+): Promise<GoogleUser> => {
   const userCredential = await signInWithPopup(auth, googleProvider);
   const user = userCredential.user;
 

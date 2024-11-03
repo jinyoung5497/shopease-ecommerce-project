@@ -9,7 +9,7 @@ import { ButtonProps } from "../button/Button";
 export type RootProps = {
   children: ReactNode;
 };
-export type ModalTriggerType = {
+export type ModalTriggerProps = {
   rightIcon?: ReactNode;
 } & ButtonProps;
 export type ModalContentProps = {
@@ -30,7 +30,7 @@ export type ModalItemsProps = {
 export type ModalFooterProps = {
   children: ReactNode;
 };
-export type ModalCloseProps = {
+export type ModalCloseButtonProps = {
   topRight?: boolean;
   topLeft?: boolean;
   bottomRight?: boolean;
@@ -38,12 +38,14 @@ export type ModalCloseProps = {
   children: ReactNode;
 };
 
-const ModalContext = createContext<{
+interface ModalContextType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   label: string;
   setLabel: React.Dispatch<React.SetStateAction<string>>;
-} | null>(null);
+}
+
+const ModalContext = createContext<ModalContextType | null>(null);
 
 export const ModalRoot = ({ children }: RootProps) => {
   const [open, setOpen] = useState(false);
@@ -63,7 +65,7 @@ export const ModalRoot = ({ children }: RootProps) => {
   );
 };
 
-export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerType) => {
+export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
   const context = useContext(ModalContext);
   return (
     <Button
@@ -114,7 +116,7 @@ export const ModalClose = ({
   bottomRight,
   bottomLeft,
   children,
-}: ModalCloseProps) => {
+}: ModalCloseButtonProps) => {
   const context = useContext(ModalContext);
 
   const closeClass = [

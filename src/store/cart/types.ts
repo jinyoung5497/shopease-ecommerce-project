@@ -1,4 +1,4 @@
-export interface ICart {
+export interface Cart {
   productId: string;
   sellerId: string;
   buyerId: string;

@@ -6,7 +6,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
-import { IProduct } from "@/features/product/api";
+import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
 import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
 import { Modal } from "@/shared/components/Modal/Modal";
@@ -16,7 +16,7 @@ interface UpdateModalProps {
   index: number;
 }
 
-type ProductCategoryType = IProduct["productCategory"];
+type ProductCategoryType = Product["productCategory"];
 
 const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const { mutate: updateProduct } = useUpdateProduct();

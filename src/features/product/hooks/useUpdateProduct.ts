@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProductAPI } from "../api";
-import { IProduct } from "../api";
+import { Product } from "../api";
 
 // 제품 업데이트 훅
 export const useUpdateProduct = () => {
@@ -13,7 +13,7 @@ export const useUpdateProduct = () => {
       imageFiles,
     }: {
       productId: string;
-      updatedData: Partial<IProduct>;
+      updatedData: Partial<Product>;
       imageFiles: File[];
     }) => {
       return updateProductAPI(productId, updatedData, imageFiles);
