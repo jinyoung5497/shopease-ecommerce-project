@@ -1,4 +1,4 @@
-import { ErrorPage } from "@/pages/error/components/ErrorPage";
+import { ErrorPage } from "@/shared/error/ErrorPage";
 import { ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 

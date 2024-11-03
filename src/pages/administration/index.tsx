@@ -1,7 +1,7 @@
 import { useFetchAdmin } from "@/features/order/hooks/useFetchAdmin";
-import HomeButton from "../common/components/HomeButton";
-import { Layout, authStatusType } from "../common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import HomeButton from "../../shared/layout/HomeButton";
+import { Layout, authStatusType } from "../../shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
 import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
 

@@ -1,5 +1,5 @@
-import { Layout } from "@/pages/common/components/Layout";
-import NavigationBar from "../common/components/NavigationBar";
+import { Layout } from "@/shared/layout/Layout";
+import NavigationBar from "../../shared/layout/NavigationBar";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import HomeCategory from "./components/HomeCategory";
 import { Button } from "@/shared/components/button/Button";
