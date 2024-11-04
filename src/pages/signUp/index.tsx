@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import google from "../../shared/assets/google.svg";
+import google from "../../../public/assets/google.svg";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRegister } from "@/features/auth/api";
