@@ -1,7 +1,7 @@
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { Product } from "@/features/product/api";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
 import { useNavigation } from "@/shared/hooks/useNavigation";
@@ -44,37 +44,40 @@ const CategoryCard = () => {
     }
   }, [fetchNextPage, inView]);
 
-  const renderCategoryCard = (value: Product) => {
-    return (
-      <div
-        key={value.id} // id를 키로 사용
-        onClick={() => navToDetailedProduct(value.id)}
-        className="flex flex-col gap-1 relative cursor-pointer mb-10"
-      >
-        <div className="w-70 flex items-center justify-center">
-          {value.productImages && value.productImages.length > 0 ? (
-            <img
-              src={value.productImages[0]}
-              alt={`${value.productName} image`}
-              className="w-70"
-            />
-          ) : (
-            <div className="text-center">상품 이미지를 찾을 수 없습니다.</div>
-          )}
-        </div>
+  const renderCategoryCard = useCallback(
+    (value: Product) => {
+      return (
+        <div
+          key={value.id} // id를 키로 사용
+          onClick={() => navToDetailedProduct(value.id)}
+          className="flex flex-col gap-1 relative cursor-pointer mb-10"
+        >
+          <div className="w-70 flex items-center justify-center">
+            {value.productImages && value.productImages.length > 0 ? (
+              <img
+                src={value.productImages[0]}
+                alt={`${value.productName} image`}
+                className="w-70"
+              />
+            ) : (
+              <div className="text-center">상품 이미지를 찾을 수 없습니다.</div>
+            )}
+          </div>
 
-        {/* 상품 정보 */}
-        <div className="text-gray text-[12px]">{value.productCategory}</div>
-        <div>{value.productName}</div>
-        <div>
-          {value.productPrice.toLocaleString("ko-KR", {
-            style: "currency",
-            currency: "KRW",
-          })}
+          {/* 상품 정보 */}
+          <div className="text-gray text-[12px]">{value.productCategory}</div>
+          <div>{value.productName}</div>
+          <div>
+            {value.productPrice.toLocaleString("ko-KR", {
+              style: "currency",
+              currency: "KRW",
+            })}
+          </div>
         </div>
-      </div>
-    );
-  };
+      );
+    },
+    [navToDetailedProduct]
+  );
 
   return (
     <>
