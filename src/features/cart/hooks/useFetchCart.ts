@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCartAPI } from "../api/api";
-import { Cart } from "@/store/cart/types"; // Firebase 인증 함수
+import { Cart } from "@/shared/types/cart/types"; // Firebase 인증 함수
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
 export const useFetchCart = () => {

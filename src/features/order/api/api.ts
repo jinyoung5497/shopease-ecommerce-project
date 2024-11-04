@@ -8,7 +8,7 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { Order } from "@/store/order/types";
+import { Order } from "@/shared/types/order/types";
 import { db } from "@/app/firebase";
 import { v4 as uuidv4 } from "uuid";
 

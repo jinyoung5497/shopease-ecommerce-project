@@ -1,5 +1,5 @@
 import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
-import { Order } from "@/store/order/types";
+import { Order } from "@/shared/types/order/types";
 import { memo } from "react";
 
 type AdminOrders = {

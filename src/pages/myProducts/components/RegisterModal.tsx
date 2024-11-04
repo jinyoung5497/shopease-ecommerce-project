@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
 import { useAddProduct } from "@/features/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useProductStore } from "@/store/product/useProductStore";
 import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
 import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
@@ -16,8 +15,9 @@ const RegisterModal = () => {
   const { user } = useAuthStore();
   const [selectedCategory, setSelectedCategory] =
     useState<ProductCategoryType>("Men's Clothing");
-  const { imageNameList, setImageNameList, resetImageNameList } =
-    useProductStore();
+  // const { imageNameList, setImageNameList, resetImageNameList } =
+  //   useProductStore();
+  const [imageNameList, setImageNameList] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageList, setImageList] = useState<File[]>([]);
 
@@ -75,7 +75,7 @@ const RegisterModal = () => {
         setValue("remainder", 0);
         setValue("description", "");
         setSelectedCategory("Men's Clothing");
-        resetImageNameList();
+        setImageNameList([]);
         setImageList([]);
         setIsModalOpen(false);
       }
@@ -95,9 +95,9 @@ const RegisterModal = () => {
       const fileNames = Array.from(files)
         .map((file) => file.name)
         .join(", ");
-      setImageNameList(fileNames);
+      setImageNameList((prev) => [...prev, fileNames]);
     } else {
-      setImageNameList("파일을 선택해주세요");
+      // setImageNameList("파일을 선택해주세요");
     }
   };
 
@@ -115,6 +115,7 @@ const RegisterModal = () => {
         onClick={(event) => {
           event.preventDefault();
           resetField(field);
+          if (field === "image") setImageNameList([]);
         }}
         variant="link"
       >
@@ -126,7 +127,7 @@ const RegisterModal = () => {
   return (
     <div className="w-full  my-10 px-40 flex justify-end">
       <Modal.Root>
-        <button onClick={() => setIsModalOpen(true)}>
+        <div onClick={() => setIsModalOpen(true)}>
           <Modal.Trigger
             icon={
               <i className="fi fi-rs-plus-small text-2xl translate-y-[2px]"></i>
@@ -135,7 +136,7 @@ const RegisterModal = () => {
           >
             상품 추가
           </Modal.Trigger>
-        </button>
+        </div>
         {isModalOpen && (
           <Modal.Content>
             <Modal.Close topRight>
