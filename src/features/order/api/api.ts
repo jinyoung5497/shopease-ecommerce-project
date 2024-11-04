@@ -8,11 +8,11 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { IOrder } from "@/store/order/types";
+import { Order } from "@/store/order/types";
 import { db } from "@/app/firebase";
 import { v4 as uuidv4 } from "uuid";
 
-export const addOrderAPI = async (order: IOrder) => {
+export const addOrderAPI = async (order: Order) => {
   const ordersRef = collection(db, "orders"); // 'orders' 컬렉션 참조
   const orderId = uuidv4(); // 고유한 주문 ID 생성
 
@@ -25,7 +25,7 @@ export const addOrderAPI = async (order: IOrder) => {
 
 export const fetchOrderAPI = async (
   userId: string | undefined
-): Promise<IOrder[]> => {
+): Promise<Order[]> => {
   if (!userId) throw new Error("User ID is undefined");
 
   try {
@@ -33,11 +33,11 @@ export const fetchOrderAPI = async (
     const q = query(ordersRef, where("buyerId", "==", userId));
     const querySnapshot = await getDocs(q);
 
-    const orderItems: IOrder[] = await Promise.all(
+    const orderItems: Order[] = await Promise.all(
       querySnapshot.docs.map(async (doc) => {
         const data = doc.data();
 
-        const orderItem: IOrder = {
+        const orderItem: Order = {
           id: data.id,
           productId: data.productId || "",
           sellerId: data.sellerId || "",
@@ -112,7 +112,7 @@ export const updateOrderStatus = async (
 
 export const fetchAdminAPI = async (
   sellerId: string | undefined
-): Promise<IOrder[]> => {
+): Promise<Order[]> => {
   if (!sellerId) throw new Error("User ID is undefined");
 
   try {
@@ -120,11 +120,11 @@ export const fetchAdminAPI = async (
     const q = query(ordersRef, where("sellerId", "==", sellerId));
     const querySnapshot = await getDocs(q);
 
-    const orderItems: IOrder[] = await Promise.all(
+    const orderItems: Order[] = await Promise.all(
       querySnapshot.docs.map(async (doc) => {
         const data = doc.data();
 
-        const orderItem: IOrder = {
+        const orderItem: Order = {
           id: data.id,
           productId: data.productId || "",
           sellerId: data.sellerId || "",

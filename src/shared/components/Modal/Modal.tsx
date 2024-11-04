@@ -1,25 +1,51 @@
 import { createContext, useContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
-import {
-  RootProps,
-  ModalTriggerType,
-  ModalContentProps,
-  ModalHeaderProps,
-  ModalTitleProps,
-  ModalDescriptionProps,
-  ModalItemsProps,
-  ModalFooterProps,
-} from "./ModalType";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
-import { ModalCloseProps } from "./ModalType";
 
-const ModalContext = createContext<{
+import { ReactNode } from "react";
+import { ButtonProps } from "../button/Button";
+
+export type RootProps = {
+  children: ReactNode;
+};
+export type ModalTriggerProps = {
+  rightIcon?: ReactNode;
+} & ButtonProps;
+export type ModalContentProps = {
+  children: ReactNode;
+};
+export type ModalHeaderProps = {
+  children: ReactNode;
+};
+export type ModalTitleProps = {
+  title: string;
+};
+export type ModalDescriptionProps = {
+  description: string;
+};
+export type ModalItemsProps = {
+  children: ReactNode;
+};
+export type ModalFooterProps = {
+  children: ReactNode;
+};
+export type ModalCloseButtonProps = {
+  topRight?: boolean;
+  topLeft?: boolean;
+  bottomRight?: boolean;
+  bottomLeft?: boolean;
+  children: ReactNode;
+};
+
+interface ModalContextType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   label: string;
   setLabel: React.Dispatch<React.SetStateAction<string>>;
-} | null>(null);
+}
+
+const ModalContext = createContext<ModalContextType | null>(null);
 
 export const ModalRoot = ({ children }: RootProps) => {
   const [open, setOpen] = useState(false);
@@ -39,7 +65,7 @@ export const ModalRoot = ({ children }: RootProps) => {
   );
 };
 
-export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerType) => {
+export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
   const context = useContext(ModalContext);
   return (
     <Button
@@ -90,7 +116,7 @@ export const ModalClose = ({
   bottomRight,
   bottomLeft,
   children,
-}: ModalCloseProps) => {
+}: ModalCloseButtonProps) => {
   const context = useContext(ModalContext);
 
   const closeClass = [

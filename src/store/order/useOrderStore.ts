@@ -1,14 +1,14 @@
 import { create } from "zustand";
-import { IOrder } from "./types";
+import { Order } from "./types";
 
-interface OrderType {
-  order: IOrder[];
-  setOrder: (order: IOrder) => void;
+interface OrderStore {
+  order: Order[];
+  setOrder: (order: Order) => void;
 }
 
-export const useOrderStore = create<OrderType>((set) => ({
+export const useOrderStore = create<OrderStore>((set) => ({
   order: [],
-  setOrder: (newOrder: IOrder) =>
+  setOrder: (newOrder: Order) =>
     set((state) => ({
       order: [...state.order, newOrder],
     })),

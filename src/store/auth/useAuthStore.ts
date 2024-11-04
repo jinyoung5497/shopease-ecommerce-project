@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { authStore } from "./types";
+import { AuthStore } from "./types";
 import Cookies from "js-cookie";
-import { IUser } from "@/features/auth/api";
+import { User } from "@/features/auth/api";
 import { auth, db } from "@/app/firebase";
 import { doc, getDoc } from "@firebase/firestore";
 
-export const useAuthStore = create<authStore>()((set) => ({
+export const useAuthStore = create<AuthStore>()((set) => ({
   isSeller: false,
   isLogin: !!Cookies.get("accessToken"),
   user: null,
@@ -13,7 +13,7 @@ export const useAuthStore = create<authStore>()((set) => ({
   setIsSellerFalse: () => set(() => ({ isSeller: false })),
   setIsSellerTrue: () => set(() => ({ isSeller: true })),
   setIsLogin: (isLogin: boolean) => set({ isLogin }),
-  setUser: (user: IUser) => set({ user, isLogin: true }),
+  setUser: (user: User) => set({ user, isLogin: true }),
   logout: () => {
     set({ isLogin: false, user: null, isSeller: false }),
       Cookies.remove("accessToken");

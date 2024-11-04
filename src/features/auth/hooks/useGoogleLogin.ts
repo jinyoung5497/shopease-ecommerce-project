@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { IgoogleUser, googleLoginAPI } from "../api";
+import { GoogleUser, googleLoginAPI } from "../api";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { pageRoutes } from "@/app/apiRoutes";
 
@@ -8,7 +8,7 @@ export const useGoogleLogin = () => {
   const navigate = useNavigate();
   const { setUser, setIsLogin } = useAuthStore();
 
-  return useMutation<IgoogleUser, Error, boolean>({
+  return useMutation<GoogleUser, Error, boolean>({
     mutationFn: googleLoginAPI,
     onSuccess: (userData) => {
       setIsLogin(true);

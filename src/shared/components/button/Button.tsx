@@ -1,7 +1,21 @@
 import React from "react";
-import { ButtonProps } from "./ButtonProps";
 import { cva } from "class-variance-authority";
 import { Slot } from "@radix-ui/react-slot";
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+  size?: ButtonSize;
+  variant?: ButtonVariant;
+  color?: ButtonColor;
+  radius?: ButtonRadius;
+  icon?: React.ReactNode;
+  loading?: boolean;
+  full?: boolean;
+  className?: string;
+  children: React.ReactNode;
+  between?: boolean;
+}
 
 export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";

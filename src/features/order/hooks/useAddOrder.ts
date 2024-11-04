@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addOrderAPI } from "../api/api";
 import { useOrderStore } from "@/store/order/useOrderStore";
-import { IOrder } from "@/store/order/types";
+import { Order } from "@/store/order/types";
 
 export const useAddOrder = () => {
   const queryClient = useQueryClient();
@@ -9,7 +9,7 @@ export const useAddOrder = () => {
 
   return useMutation({
     mutationFn: addOrderAPI,
-    onSuccess: (newOrder: IOrder) => {
+    onSuccess: (newOrder: Order) => {
       setOrder(newOrder);
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },

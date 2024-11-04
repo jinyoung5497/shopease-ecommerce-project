@@ -5,7 +5,7 @@ type ProductCategoryType =
   | "Hat"
   | "Kids";
 
-export interface IProduct {
+export interface Product {
   id: string;
   sellerId: string;
   productName: string;

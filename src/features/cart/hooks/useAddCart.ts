@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCartAPI } from "../api/api";
-import { ICart } from "@/store/cart/types";
+import { Cart } from "@/store/cart/types";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
 // 장바구니 아이템을 추가하는 훅
@@ -10,7 +10,7 @@ export const useAddCart = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (newCartItem: ICart) => addCartAPI(userId!, newCartItem), // userId와 새로운 장바구니 항목 전달
+    mutationFn: (newCartItem: Cart) => addCartAPI(userId!, newCartItem), // userId와 새로운 장바구니 항목 전달
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] }); // userId 기반 쿼리 무효화
     },

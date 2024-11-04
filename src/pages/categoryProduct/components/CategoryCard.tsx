@@ -1,7 +1,7 @@
 import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
-import { IProduct } from "@/features/product/api";
+import { Product } from "@/features/product/api";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
@@ -48,7 +48,7 @@ const CategoryCard = () => {
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20 mb-20">
         {selectedFilters.length === 0 &&
           data?.pages.map((page) =>
-            page.products.map((value: IProduct, index) => (
+            page.products.map((value: Product, index) => (
               <div
                 key={value.id} // id를 키로 사용합니다.
                 onClick={() => handleProductCardClick(value, index)}
@@ -86,7 +86,7 @@ const CategoryCard = () => {
               (filter) => value.productCategory === categoryMap[filter]
             );
           })
-          .map((value: IProduct, index) => (
+          .map((value: Product, index) => (
             <div
               key={value.id} // id를 키로 사용
               onClick={() => handleProductCardClick(value, index)}

@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { useAddProduct } from "@/features/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useProductStore } from "@/store/product/useProductStore";
-import { IProduct } from "@/features/product/api";
+import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
 import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
 import { Modal } from "@/shared/components/Modal/Modal";
@@ -21,7 +21,7 @@ const RegisterModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageList, setImageList] = useState<File[]>([]);
 
-  type ProductCategoryType = IProduct["productCategory"];
+  type ProductCategoryType = Product["productCategory"];
 
   const schema = z.object({
     title: z.string().min(1, "이름은 필수입니다"),

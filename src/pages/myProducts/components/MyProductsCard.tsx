@@ -2,7 +2,7 @@ import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
-import { IProduct } from "@/features/product/api";
+import { Product } from "@/features/product/api";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
@@ -33,7 +33,7 @@ const MyProductsCard = () => {
     <div className="relative">
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
         {data?.pages.map((page) =>
-          page.products.map((value: IProduct, index: number) => {
+          page.products.map((value: Product, index: number) => {
             if (value.sellerId === user?.uid) {
               return (
                 <div
