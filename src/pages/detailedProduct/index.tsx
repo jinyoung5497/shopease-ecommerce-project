@@ -1,59 +1,97 @@
 import HomeButton from "../../shared/layout/HomeButton";
 import { Layout } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
-import { useProductStore } from "@/store/product/useProductStore";
-import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
 import { useAddCart } from "@/features/cart/hooks/useAddCart";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { Button } from "@/shared/components/button/Button";
 import { Carousel } from "@/shared/components/carousel/Carousel";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { useFetchDetailedProduct } from "@/features/product/hooks/useFetchDetailedProduct";
+import { useParams } from "react-router-dom";
+import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
+import { useNavigation } from "@/shared/hooks/useNavigation";
+import { useCallback, useMemo } from "react";
 
 const DetailedProduct = () => {
-  const { detailedProductInfo } = useProductStore();
   const { data } = useFetchProducts();
-  const { handleProductCardClick } = useDetailedProductInfo();
+  const { navToDetailedProduct } = useNavigation();
   const { mutate: addCart } = useAddCart();
   const { user, isSeller } = useAuthStore();
   const addToast = useToastStore((state) => state.addToast);
-  const { navToHome } = useNavigation();
+  const { id: productId } = useParams<{ id: string }>();
 
-  if (!detailedProductInfo.id) {
-    navToHome();
-  }
+  if (!productId) throw new Error("productId is required");
 
-  const handleCartRegister = () => {
-    if (user?.uid && !isSeller) {
-      const newProductInCart = {
-        productId: detailedProductInfo.id || "",
-        sellerId: detailedProductInfo.sellerId || "",
-        buyerId: user?.uid || "",
-        productName: detailedProductInfo.productName || "",
-        productImage:
-          (detailedProductInfo.productImages &&
-            detailedProductInfo.productImages[0]) ||
-          "",
-        quantity: 1,
-        productPrice: detailedProductInfo.productPrice || 0,
-        totalPrice: detailedProductInfo.productPrice || 0,
-      };
-      if (detailedProductInfo.productQuantity! > 0) {
-        addCart(newProductInCart);
-      } else {
-        addToast("제품 수량이 부족합니다", "error");
-      }
-    } else {
+  const { data: detailedData } = useFetchDetailedProduct(productId);
+
+  const handleCartRegister = useCallback(() => {
+    if (!user?.uid) {
       addToast("로그인이 필요한 기능입니다", "error");
+      return;
     }
     if (isSeller) {
       addToast("구매자 아이디로 로그인 하세요", "error");
+      return;
     }
-  };
+    if (detailedData?.productQuantity! <= 0) {
+      addToast("제품 수량이 부족합니다", "error");
+      return;
+    }
 
-  if (!detailedProductInfo) throw new Error();
+    if (detailedData) {
+      const newProductInCart = {
+        productId: detailedData.id,
+        sellerId: detailedData.sellerId,
+        buyerId: user.uid,
+        productName: detailedData.productName,
+        productImage: detailedData.productImages?.[0] || "",
+        quantity: 1,
+        productPrice: detailedData.productPrice,
+        totalPrice: detailedData.productPrice,
+      };
+      addCart(newProductInCart);
+    }
+  }, [user, isSeller, detailedData, addCart, addToast]);
+
+  const RecommenedProductCard = useMemo(() => {
+    return data
+      ?.filter(
+        (value) =>
+          value.productCategory === detailedData?.productCategory &&
+          value.id !== detailedData?.id
+      )
+      .slice(0, 4)
+      .map((value) => (
+        <div
+          key={value.id}
+          onClick={() => navToDetailedProduct(value.id)}
+          className="flex flex-col gap-1 relative cursor-pointer"
+        >
+          <div className="flex items-center justify-center">
+            {value.productImages && value.productImages.length > 0 ? (
+              <img
+                src={value.productImages[0]}
+                alt="productImage"
+                className="w-80"
+              />
+            ) : (
+              <div className="text-center">
+                There are no images for this product
+              </div>
+            )}
+          </div>
+          <div className="text-gray text-[12px]">{value.productCategory}</div>
+          <div>{value.productName}</div>
+          <div>
+            {value.productPrice.toLocaleString("ko-KR", {
+              style: "currency",
+              currency: "KRW",
+            })}
+          </div>
+        </div>
+      ));
+  }, [data, detailedData]);
 
   return (
     <Layout>
@@ -61,33 +99,35 @@ const DetailedProduct = () => {
       <HomeButton style="absolute top-32 left-10" />
       <div className="flex items-center justify-center">
         <div className="flex items-center justify-center gap-28 m-40 w-3/5  ">
-          <Carousel.Root>
-            <Carousel.Previous images={detailedProductInfo?.productImages}>
-              <ArrowBigLeft />
-            </Carousel.Previous>
-            <Carousel.Content>
-              <Carousel.Items images={detailedProductInfo?.productImages} />
-            </Carousel.Content>
-            <Carousel.Next images={detailedProductInfo?.productImages}>
-              <ArrowBigRight />
-            </Carousel.Next>
-          </Carousel.Root>
+          {detailedData?.productImages && (
+            <Carousel.Root>
+              <Carousel.Previous images={detailedData.productImages}>
+                <ArrowBigLeft />
+              </Carousel.Previous>
+              <Carousel.Content>
+                <Carousel.Items images={detailedData.productImages} />
+              </Carousel.Content>
+              <Carousel.Next images={detailedData.productImages}>
+                <ArrowBigRight />
+              </Carousel.Next>
+            </Carousel.Root>
+          )}
           <div className="flex flex-col gap-5 w-4/5 h-full ">
             <div className="text-primary font-semibold text-3xl">
-              {detailedProductInfo.productName}
+              {detailedData?.productName}
             </div>
             <div className="font-semibold">
-              {detailedProductInfo.productPrice?.toLocaleString("ko-KR", {
+              {detailedData?.productPrice?.toLocaleString("ko-KR", {
                 style: "currency",
                 currency: "KRW",
               })}
             </div>
-            <div>{detailedProductInfo.productQuantity}개 남았습니다</div>
+            <div>{detailedData?.productQuantity}개 남았습니다</div>
             <div
               className="overflow-y-scroll  h-[400px]"
               style={{ whiteSpace: "pre-wrap" }}
             >
-              {detailedProductInfo.productDescription}
+              {detailedData?.productDescription}
             </div>
             <Button
               onClick={handleCartRegister}
@@ -104,44 +144,7 @@ const DetailedProduct = () => {
           Recommended
         </div>
         <div className="flex gap-4 items-center justify-center m-10 mb-20">
-          {data
-            ?.filter(
-              (value) =>
-                value.productCategory === detailedProductInfo.productCategory &&
-                value.id !== detailedProductInfo.id
-            )
-            .slice(0, 4)
-            .map((value, index) => (
-              <div
-                key={value.id}
-                onClick={() => handleProductCardClick(value, index)}
-                className="flex flex-col gap-1 relative cursor-pointer"
-              >
-                <div className="flex items-center justify-center">
-                  {value.productImages && value.productImages.length > 0 ? (
-                    <img
-                      src={value.productImages[0]}
-                      alt="productImage"
-                      className="w-80"
-                    />
-                  ) : (
-                    <div className="text-center">
-                      There are no images for this product
-                    </div>
-                  )}
-                </div>
-                <div className="text-gray text-[12px]">
-                  {value.productCategory}
-                </div>
-                <div>{value.productName}</div>
-                <div>
-                  {value.productPrice.toLocaleString("ko-KR", {
-                    style: "currency",
-                    currency: "KRW",
-                  })}
-                </div>
-              </div>
-            ))}
+          {RecommenedProductCard}
         </div>
       </div>
     </Layout>

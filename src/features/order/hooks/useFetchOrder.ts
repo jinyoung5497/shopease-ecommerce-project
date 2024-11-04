@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrderAPI } from "../api/api";
-import { Order } from "@/store/order/types";
+import { Order } from "@/shared/types/order/types";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
 export const useFetchOrder = () => {

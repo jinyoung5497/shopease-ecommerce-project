@@ -11,10 +11,8 @@ export const useNavigation = () => {
   const navToCategoryProduct = () => navigate(pageRoutes.categoryProduct);
   const navToFilteredProduct = (path: string) => navigate(path);
   const navToCheckout = () => navigate(pageRoutes.checkout);
-  const navToDetailedProduct = (index: string, id: string) =>
-    navigate(
-      pageRoutes.detailedProduct.replace(":id", id).replace(":index", index)
-    );
+  const navToDetailedProduct = (id: string) =>
+    navigate(pageRoutes.detailedProduct.replace(":id", id));
   const navToMyProducts = () => navigate(pageRoutes.myProducts);
   const navToPurchaseHistory = () => navigate(pageRoutes.purchaseHistory);
 

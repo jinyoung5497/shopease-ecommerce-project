@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCartAPI } from "../api/api";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchCart } from "./useFetchCart";
-import { useCartStore } from "@/store/cart/useCartStore";
 
 // 카트 아이템 업데이트 훅
 export const useUpdateCart = () => {
@@ -10,10 +9,15 @@ export const useUpdateCart = () => {
   const queryClient = useQueryClient();
   const userId = user?.uid;
   const { data } = useFetchCart();
-  const { cartQuantity, index } = useCartStore();
 
   return useMutation({
-    mutationFn: () => {
+    mutationFn: ({
+      cartQuantity,
+      index,
+    }: {
+      cartQuantity: number;
+      index: number;
+    }) => {
       if (data) {
         return updateCartAPI(userId, data, cartQuantity, index); // 실제 API 호출
       } else {

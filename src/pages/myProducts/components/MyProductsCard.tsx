@@ -5,13 +5,13 @@ import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFe
 import { Product } from "@/features/product/api";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
   const { data, fetchNextPage, isFetchingNextPage } =
     useFetchInfiniteProducts();
-  const { handleProductCardClick } = useDetailedProductInfo();
+  const { navToDetailedProduct } = useNavigation();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
@@ -47,7 +47,7 @@ const MyProductsCard = () => {
                       <img
                         src={value.productImages[0]}
                         alt="productImage"
-                        onClick={() => handleProductCardClick(value, index)}
+                        onClick={() => navToDetailedProduct(value.id)}
                         className="w-70"
                       />
                     ) : (
@@ -57,15 +57,15 @@ const MyProductsCard = () => {
                     )}
                   </div>
                   <div
-                    onClick={() => handleProductCardClick(value, index)}
+                    onClick={() => navToDetailedProduct(value.id)}
                     className="text-gray text-[12px]"
                   >
                     {value.productCategory}
                   </div>
-                  <div onClick={() => handleProductCardClick(value, index)}>
+                  <div onClick={() => navToDetailedProduct(value.id)}>
                     {value.productName}
                   </div>
-                  <div onClick={() => handleProductCardClick(value, index)}>
+                  <div onClick={() => navToDetailedProduct(value.id)}>
                     {value.productPrice.toLocaleString("ko-KR", {
                       style: "currency",
                       currency: "KRW",
