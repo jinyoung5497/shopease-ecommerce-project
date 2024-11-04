@@ -1,5 +1,5 @@
 import { useLogin } from "@/features/auth/hooks/useLogin";
-import google from "../../shared/assets/google.svg";
+import google from "../../../public/assets/google.svg";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
