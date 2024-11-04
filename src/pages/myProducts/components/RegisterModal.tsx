@@ -7,9 +7,9 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useProductStore } from "@/store/product/useProductStore";
 import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
-import { Modal } from "@/shared/components/Modal/Modal";
-import { Input } from "@/shared/components/Input/Input";
+import { Dropdown } from "@/shared/components/dropdown/Dropdown";
+import { Modal } from "@/shared/components/modal/Modal";
+import { Input } from "@/shared/components/input/Input";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();

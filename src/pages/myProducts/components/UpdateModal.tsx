@@ -8,9 +8,9 @@ import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
 import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
-import { Modal } from "@/shared/components/Modal/Modal";
-import { Input } from "@/shared/components/Input/Input";
+import { Dropdown } from "@/shared/components/dropdown/Dropdown";
+import { Modal } from "@/shared/components/modal/Modal";
+import { Input } from "@/shared/components/input/Input";
 
 interface UpdateModalProps {
   index: number;

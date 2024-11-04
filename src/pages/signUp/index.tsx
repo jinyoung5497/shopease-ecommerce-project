@@ -10,7 +10,7 @@ import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import HomeButton from "../../shared/layout/HomeButton";
 import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/Input/Input";
+import { Input } from "@/shared/components/input/Input";
 
 const passwordSchema = z
   .string()

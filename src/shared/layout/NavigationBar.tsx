@@ -11,7 +11,7 @@ import {
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { Button } from "@/shared/components/button/Button";
-import { Sheet } from "@/shared/components/Sheet/Sheet";
+import { Sheet } from "@/shared/components/sheet/Sheet";
 import { X } from "lucide-react";
 
 const NavigationBar = () => {

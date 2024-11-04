@@ -1,4 +1,4 @@
-import { Toggle } from "@/shared/components/Toggle/Toggle";
+import { Toggle } from "@/shared/components/toggle/Toggle";
 import { Button } from "@/shared/components/button/Button";
 import { useSearchParams } from "react-router-dom";
 
