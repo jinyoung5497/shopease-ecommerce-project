@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Sheet } from "@/shared/components/Sheet/Sheet";
+import { Sheet } from "@/shared/components/sheet/Sheet";
 import { Button } from "@/shared/components/button/Button";
 import { ShoppingBasket, X } from "lucide-react";
 const meta: Meta = {

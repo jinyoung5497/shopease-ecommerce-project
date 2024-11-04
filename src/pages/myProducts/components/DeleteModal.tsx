@@ -1,5 +1,5 @@
 import { useDeleteProduct } from "@/features/product/hooks/useDeleteProduct";
-import { Modal } from "@/shared/components/Modal/Modal";
+import { Modal } from "@/shared/components/modal/Modal";
 import { Button } from "@/shared/components/button/Button";
 import { X } from "lucide-react";
 
