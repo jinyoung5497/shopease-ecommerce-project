@@ -7,7 +7,7 @@ type AdminOrders = {
   handleSelect: (orderId: string | undefined, status: string) => void;
 };
 
-const RenderOrders = memo(({ data, handleSelect }: AdminOrders) => {
+const RenderOrder = memo(({ data, handleSelect }: AdminOrders) => {
   const renderOrderItems = () =>
     data?.map((value) => (
       <div
@@ -61,7 +61,7 @@ const RenderOrders = memo(({ data, handleSelect }: AdminOrders) => {
         </div>
       </div>
     ));
-  return <>{renderOrderItems}</>;
+  return <>{renderOrderItems()}</>;
 });
 
-export default RenderOrders;
+export default RenderOrder;
