@@ -1,4 +1,4 @@
-import { Dropdown } from "@/shared/components/dropdowns/Dropdown";
+import { Dropdown } from "@/shared/components/dropdown/Dropdown";
 import { Order } from "@/shared/types/order/types";
 import { memo } from "react";
 
