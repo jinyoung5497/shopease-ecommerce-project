@@ -4,6 +4,7 @@ import NavigationBar from "../../shared/layout/NavigationBar";
 import FilterButton from "./components/FilterButton";
 import React, { Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
+import { LoadingSkeleton } from "../../shared/layout/LoadingSkeleton";
 
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 
@@ -54,14 +55,3 @@ const CartegoryProduct = () => {
 };
 
 export default CartegoryProduct;
-
-const LoadingSkeleton = () => (
-  <div className="grid grid-cols-5 gap-20 items-center justify-items-center mx-40 mb-10">
-    {[...Array(10)].map((_, index) => (
-      <div
-        key={index}
-        className="bg-slate-100 rounded-[5px] w-44 h-60 flex items-center justify-center"
-      />
-    ))}
-  </div>
-);
