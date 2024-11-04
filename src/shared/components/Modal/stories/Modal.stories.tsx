@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { Modal } from "@/shared/components/Modal/Modal";
-import { Input } from "@/shared/components/Input/Input";
+import { Modal } from "@/shared/components/modal/Modal";
+import { Input } from "@/shared/components/input/Input";
 import { Button } from "@/shared/components/button/Button";
 import { X } from "lucide-react";
 const meta: Meta = {

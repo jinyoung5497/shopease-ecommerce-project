@@ -5,7 +5,7 @@ import { useAddCart } from "@/features/cart/hooks/useAddCart";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { Button } from "@/shared/components/button/Button";
-import { Carousel } from "@/shared/components/Carousel/Carousel";
+import { Carousel } from "@/shared/components/carousel/Carousel";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { useFetchDetailedProduct } from "@/features/product/hooks/useFetchDetailedProduct";
 import { useParams } from "react-router-dom";

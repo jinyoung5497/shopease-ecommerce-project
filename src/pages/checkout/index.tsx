@@ -10,7 +10,7 @@ import { useAddOrder } from "@/features/order/hooks/useAddOrder";
 import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/Input/Input";
+import { Input } from "@/shared/components/input/Input";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),
