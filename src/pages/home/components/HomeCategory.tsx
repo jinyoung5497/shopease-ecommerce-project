@@ -1,13 +1,12 @@
 import { pageRoutes } from "@/app/apiRoutes";
-import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@/shared/components/button/Button";
+import CategoryPreviewCards from "./CategoryPreviewCards";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
-  const { handleProductCardClick } = useDetailedProductInfo();
-  const { navToFilteredProduct } = useNavigation();
+  const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
 
   const categoryList = [
     "Men's Clothing",
@@ -56,45 +55,11 @@ const HomeCategory = () => {
             </Button>
           </div>
           <div className="w-full flex gap-5 items-start justify-between mt-4 mb-20">
-            {data
-              ?.filter((value) => value.productCategory === category)
-              .slice(0, 5)
-              .map(
-                (
-                  value,
-                  idx: number // value는 IProduct 타입
-                ) => (
-                  <div
-                    key={value.id} // 제품의 고유 id를 key로 사용
-                    onClick={() => handleProductCardClick(value, idx)}
-                    className="flex flex-col gap-1 relative cursor-pointer"
-                  >
-                    <div className="w-72 flex items-center justify-center">
-                      {value.productImages && value.productImages.length > 0 ? (
-                        <img
-                          src={value.productImages[0]} // 첫 번째 이미지 사용
-                          alt="productImage"
-                          className=""
-                        />
-                      ) : (
-                        <div className="text-center">
-                          No images available for this product
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-gray text-[12px]">
-                      {value.productCategory}
-                    </div>
-                    <div className="overflow-clip">{value.productName}</div>
-                    <div>
-                      {value.productPrice.toLocaleString("ko-KR", {
-                        style: "currency",
-                        currency: "KRW",
-                      })}
-                    </div>
-                  </div>
-                )
-              )}
+            <CategoryPreviewCards
+              category={category}
+              data={data}
+              navToDetailedProduct={navToDetailedProduct}
+            />
           </div>
         </div>
       ))}

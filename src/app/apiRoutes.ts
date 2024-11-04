@@ -4,7 +4,7 @@ export const pageRoutes = {
   administration: "/administration",
   categoryProduct: "/category-product/",
   checkout: "/checkout",
-  detailedProduct: "/product/:id/:index",
+  detailedProduct: "/product/:id/",
   myProducts: "/my-products",
   purchaseHistory: "/purchase-history",
   signUp: "/sign-up",

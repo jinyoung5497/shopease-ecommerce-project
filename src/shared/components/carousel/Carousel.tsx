@@ -126,7 +126,7 @@ export const CarouselPrevious = ({
     );
   };
 
-  return <div onClick={handlePrevious}>{children}</div>;
+  return <button onClick={handlePrevious}>{children}</button>;
 };
 
 export const CarouselNext = ({ children, images }: CarouselNextProps) => {
@@ -139,7 +139,7 @@ export const CarouselNext = ({ children, images }: CarouselNextProps) => {
     );
   };
 
-  return <div onClick={handleNext}>{children}</div>;
+  return <button onClick={handleNext}>{children}</button>;
 };
 
 export const Carousel = {

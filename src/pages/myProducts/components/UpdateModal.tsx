@@ -4,13 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
-import { useProductStore } from "@/store/product/useProductStore";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
 import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
-import { Modal } from "@/shared/components/Modal/Modal";
-import { Input } from "@/shared/components/Input/Input";
+import { Dropdown } from "@/shared/components/dropdown/Dropdown";
+import { Modal } from "@/shared/components/modal/Modal";
+import { Input } from "@/shared/components/input/Input";
 
 interface UpdateModalProps {
   index: number;
@@ -27,8 +26,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       ? data.pages[0].products[index].productCategory
       : "Men's Clothing"
   );
-  const { imageNameList, setImageNameList, resetImageNameList } =
-    useProductStore();
+  const [imageNameList, setImageNameList] = useState<string[]>([]);
   const [imageList, setImageList] = useState<File[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -76,9 +74,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       const fileNames = Array.from(files)
         .map((file) => file.name)
         .join(", ");
-      setImageNameList(fileNames);
-    } else {
-      setImageNameList("파일을 선택해주세요");
+      setImageNameList((prev) => [...prev, fileNames]);
     }
   };
 
@@ -104,7 +100,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
         });
         setIsModalOpen(false);
         setImageList([]);
-        resetImageNameList();
+        setImageNameList([]);
       }
     },
     [updateProduct, selectedCategory, user, imageNameList, imageList]
@@ -128,6 +124,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
         onClick={(event) => {
           event.preventDefault();
           resetField(field);
+          if (field === "image") setImageNameList([]);
         }}
         variant="link"
       >
@@ -140,9 +137,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     <div className="absolute top-2 left-2">
       <Modal.Root>
         <Modal.Trigger variant="link" color="black">
-          <button onClick={() => setIsModalOpen(true)}>
+          <div onClick={() => setIsModalOpen(true)}>
             <i className="fi fi-rs-edit text-xl"></i>
-          </button>
+          </div>
         </Modal.Trigger>
         {isModalOpen && (
           <Modal.Content>
@@ -261,9 +258,13 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                   rightIcon={clearButton("image")}
                 />
                 <div className="flex gap-2 flex-wrap">
-                  {imageNameList.map((value, index) => (
-                    <div key={index}>{value}</div>
-                  ))}
+                  {imageNameList.length > 0
+                    ? imageNameList.map((value, index) => (
+                        <div key={index}>{value}</div>
+                      ))
+                    : data?.pages[0].products[index].productImageName.map(
+                        (value, index) => <div key={index}>{value}</div>
+                      )}
                 </div>
               </Modal.Items>
               <Modal.Footer>
@@ -273,7 +274,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                   full
                   className="flex items-center justify-center"
                 >
-                  상품 등록
+                  상품 편집
                 </Button>
               </Modal.Footer>
             </form>

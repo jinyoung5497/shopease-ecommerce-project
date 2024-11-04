@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Input } from "@/shared/components/Input/Input";
-import { InputProps } from "@/shared/components/Input/Input";
+import { Input } from "@/shared/components/input/Input";
+import { InputProps } from "@/shared/components/input/Input";
 import { FieldError } from "react-hook-form";
 
 const meta: Meta<typeof Input> = {

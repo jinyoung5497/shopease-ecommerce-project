@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import google from "../../shared/assets/google.svg";
+import google from "../../../public/assets/google.svg";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRegister } from "@/features/auth/api";
@@ -10,7 +10,7 @@ import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import HomeButton from "../../shared/layout/HomeButton";
 import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/Input/Input";
+import { Input } from "@/shared/components/input/Input";
 
 const passwordSchema = z
   .string()

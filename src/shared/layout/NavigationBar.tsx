@@ -2,7 +2,6 @@ import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useEffect } from "react";
 import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
-import { useCartStore } from "@/store/cart/useCartStore";
 import { useUpdateCart } from "@/features/cart/hooks/useUpdateCart";
 import {
   useDeleteAllCart,
@@ -11,7 +10,7 @@ import {
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { Button } from "@/shared/components/button/Button";
-import { Sheet } from "@/shared/components/Sheet/Sheet";
+import { Sheet } from "@/shared/components/sheet/Sheet";
 import { X } from "lucide-react";
 
 const NavigationBar = () => {
@@ -21,7 +20,6 @@ const NavigationBar = () => {
   const isSeller = useAuthStore((state) => state.isSeller);
   const { data } = useFetchCart();
   const { navToCheckout } = useNavigation();
-  const { setIndex, setCartQuantity } = useCartStore();
   const { mutate: updateCart } = useUpdateCart();
   const { mutate: deleteCartItem } = useDeleteCart();
   const { mutate: deleteAllCartItems } = useDeleteAllCart();
@@ -47,18 +45,13 @@ const NavigationBar = () => {
 
   const increaseQuantity = (index: number) => {
     if (data) {
-      setCartQuantity(data[index].quantity + 1);
-      setIndex(index);
+      updateCart({ cartQuantity: data[index].quantity + 1, index });
     }
-
-    updateCart();
   };
 
   const decreaseQuantity = (index: number) => {
     if (data && data[index].quantity > 1) {
-      setCartQuantity(data[index].quantity - 1);
-      setIndex(index);
-      updateCart();
+      updateCart({ cartQuantity: data[index].quantity - 1, index });
     }
   };
 
