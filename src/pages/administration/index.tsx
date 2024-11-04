@@ -3,13 +3,14 @@ import HomeButton from "../../shared/layout/HomeButton";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
 import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
-import { Dropdown } from "@/shared/components/Dropdown/Dropdown";
+import { renderOrders } from "@/features/order/ui/renderOrders";
 
 const Administration = () => {
   const { data } = useFetchAdmin();
   const { mutate: updateStatus } = useUpdateOrder();
 
-  const handleSelect = (orderId: string, status: string) => {
+  const handleSelect = (orderId: string | undefined, status: string) => {
+    if (!orderId) throw new Error();
     updateStatus({ orderId, status });
   };
 
@@ -28,66 +29,7 @@ const Administration = () => {
         </div>
 
         <div className="grid grid-cols-4 gap-4 items-start justify-items-center mx-20 m-20">
-          {data?.map((value, index) => (
-            <div
-              key={index}
-              className="flex flex-col gap-1 relative cursor-pointer mb-10 "
-            >
-              <div className="absolute top-4 right-4 rounded-[10px] font-semibold">
-                <Dropdown.Root>
-                  <Dropdown.Trigger
-                    variant="outline"
-                    full
-                    size="small"
-                    rightIcon={
-                      <i className="fi fi-rs-angle-small-down text-2xl translate-y-1"></i>
-                    }
-                  >
-                    {value.status}
-                  </Dropdown.Trigger>
-                  <Dropdown.Menu>
-                    <Dropdown.Title title="Category" />
-                    <Dropdown.MenuItem
-                      onClick={() => handleSelect(value.id!, "주문 완료")}
-                    >
-                      주문 완료
-                    </Dropdown.MenuItem>
-                    <Dropdown.MenuItem
-                      onClick={() => handleSelect(value.id!, "발송 대기")}
-                    >
-                      발송 대기
-                    </Dropdown.MenuItem>
-                    <Dropdown.MenuItem
-                      onClick={() => handleSelect(value.id!, "발송 시작")}
-                    >
-                      발송 시작
-                    </Dropdown.MenuItem>
-                    <Dropdown.MenuItem
-                      onClick={() => handleSelect(value.id!, "주문 취소")}
-                    >
-                      주문 취소
-                    </Dropdown.MenuItem>
-                  </Dropdown.Menu>
-                </Dropdown.Root>
-              </div>
-
-              <img
-                src={value.productDetails?.image}
-                alt="productImage"
-                className="w-72"
-              />
-              <div className="text-gray text-[12px]">
-                {value.productDetails?.category}
-              </div>
-              <div>{value.productDetails?.name}</div>
-              <div>
-                {value.productDetails?.price.toLocaleString("ko-KR", {
-                  style: "currency",
-                  currency: "KRW",
-                })}
-              </div>
-            </div>
-          ))}
+          {renderOrders({ data, handleSelect })}
         </div>
       </div>
     </Layout>
