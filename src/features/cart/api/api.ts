@@ -1,4 +1,4 @@
-import { Cart } from "@/store/cart/types";
+import { Cart } from "@/shared/types/cart/types";
 import { db } from "@/app/firebase";
 import {
   setDoc,

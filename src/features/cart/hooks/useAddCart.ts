@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCartAPI } from "../api/api";
-import { Cart } from "@/store/cart/types";
+import { Cart } from "@/shared/types/cart/types";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
 // 장바구니 아이템을 추가하는 훅
