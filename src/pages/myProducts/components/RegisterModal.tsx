@@ -6,7 +6,7 @@ import { useAddProduct } from "@/features/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Product } from "@/features/product/api";
 import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/dropdowns/Dropdown";
+import { Dropdown } from "@/shared/components/dropdown/Dropdown";
 import { Modal } from "@/shared/components/modal/Modal";
 import { Input } from "@/shared/components/input/Input";
 
