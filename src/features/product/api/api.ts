@@ -211,6 +211,44 @@ export const getProductsAPI = async (): Promise<Product[]> => {
   }
 };
 
+export const getDetailedProductAPI = async (
+  productId: string
+): Promise<Product | undefined> => {
+  try {
+    // Firestore의 'products' 컬렉션에서 productId에 해당하는 문서 참조 가져오기
+    const productRef = doc(db, "products", productId);
+    const productSnapshot = await getDoc(productRef);
+
+    // 문서가 존재하는지 확인
+    if (productSnapshot.exists()) {
+      const data = productSnapshot.data();
+
+      // 데이터 구조를 Product 타입에 맞게 매핑
+      const productInfo: Product = {
+        id: productSnapshot.id,
+        sellerId: data.sellerId,
+        productName: data.productName,
+        productPrice: data.productPrice,
+        productQuantity: data.productQuantity,
+        productDescription: data.productDescription,
+        productCategory: data.productCategory,
+        productImages: data.productImages,
+        productImageName: data.productImageName,
+        createdAt: data.createdAt.toDate(), // Timestamp 변환
+        updatedAt: data.updatedAt.toDate(), // Timestamp 변환
+      };
+
+      return productInfo;
+    } else {
+      console.error("No product found with the specified ID.");
+      return undefined;
+    }
+  } catch (error) {
+    console.error("Error fetching product: ", error);
+    throw error;
+  }
+};
+
 // 제품 수량 감소 API
 export const updateProductQuantity = async ({
   productId,

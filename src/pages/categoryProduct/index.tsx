@@ -3,37 +3,12 @@ import { Layout } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
 import FilterButton from "./components/FilterButton";
 import React, { Suspense } from "react";
-import { useSearchParams } from "react-router-dom";
 import { LoadingSkeleton } from "../../shared/layout/LoadingSkeleton";
+import GetCategoryTitle from "./components/GetCategoryTitle";
 
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 
-const CartegoryProduct = () => {
-  const [searchParams] = useSearchParams();
-
-  const getTitle = () => {
-    const activeFilters = [
-      { label: "Men's Clothing", isActive: "men" },
-      { label: "Women's Clothing", isActive: "women" },
-      { label: "Sneakers", isActive: "sneakers" },
-      { label: "Hat", isActive: "hat" },
-      { label: "Kids", isActive: "kids" },
-    ];
-
-    const selectedFilters = searchParams.getAll("filter");
-
-    if (selectedFilters.length === 0) {
-      return "All products";
-    } else if (selectedFilters.length === 1) {
-      const matchedFilter = activeFilters.find(
-        (filter) => filter.isActive === selectedFilters[0]
-      );
-      return matchedFilter && matchedFilter.label;
-    } else {
-      return "Multi filtering";
-    }
-  };
-
+const CategoryProduct = () => {
   return (
     <Layout>
       <div>
@@ -44,7 +19,7 @@ const CartegoryProduct = () => {
         </div>
       </div>
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
-        {getTitle()}
+        <GetCategoryTitle />
       </div>
       <FilterButton />
       <Suspense fallback={<LoadingSkeleton />}>
@@ -54,4 +29,4 @@ const CartegoryProduct = () => {
   );
 };
 
-export default CartegoryProduct;
+export default CategoryProduct;

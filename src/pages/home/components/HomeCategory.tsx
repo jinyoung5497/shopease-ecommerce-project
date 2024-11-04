@@ -1,13 +1,11 @@
 import { pageRoutes } from "@/app/apiRoutes";
-import { useDetailedProductInfo } from "@/shared/hooks/useDetailedProductInfo";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@/shared/components/button/Button";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
-  const { handleProductCardClick } = useDetailedProductInfo();
-  const { navToFilteredProduct } = useNavigation();
+  const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
 
   const categoryList = [
     "Men's Clothing",
@@ -61,12 +59,11 @@ const HomeCategory = () => {
               .slice(0, 5)
               .map(
                 (
-                  value,
-                  idx: number // value는 IProduct 타입
+                  value // value는 IProduct 타입
                 ) => (
                   <div
                     key={value.id} // 제품의 고유 id를 key로 사용
-                    onClick={() => handleProductCardClick(value, idx)}
+                    onClick={() => navToDetailedProduct(value.id)}
                     className="flex flex-col gap-1 relative cursor-pointer"
                   >
                     <div className="w-72 flex items-center justify-center">

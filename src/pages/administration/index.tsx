@@ -8,7 +8,7 @@ import React from "react";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 
 const RenderOrders = React.lazy(
-  () => import("../../features/order/ui/renderOrders")
+  () => import("../../features/order/ui/RenderOrders")
 );
 
 const Administration = () => {
