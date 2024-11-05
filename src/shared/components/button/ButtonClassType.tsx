@@ -20,6 +20,7 @@ export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
 export type ButtonColor = "primary" | "blue" | "black" | "red";
 export type ButtonRadius = "none" | "small" | "medium" | "large" | "full";
+
 // 각 스타일 옵션을 클래스명으로 매핑하여 확장성과 유지보수성을 높임
 export const sizeClass = {
   xsmall: "px-[7px] py-[1px] text-[12px]",
@@ -28,6 +29,7 @@ export const sizeClass = {
   large: "px-[14px] py-[7px] text-[16px]",
   xlarge: "px-[16px] py-[7px] text-[18px]",
 };
+
 export const radiusClass = {
   none: "rounded-none",
   small: "rounded-[5px]",
@@ -35,6 +37,7 @@ export const radiusClass = {
   large: "rounded-[12px]",
   full: "rounded-full",
 };
+
 export const buttonVariants = cva("", {
   variants: {
     variant: {
