@@ -1,10 +1,11 @@
-import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import { ReactNode, createContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
 import { ButtonProps } from "@/shared/components/button/ButtonClassType";
 import styles from "./Sheet.module.css";
 import { useSheetAnimation } from "@/shared/hooks/useSheetAnimation";
+import { useCustomContext } from "@/shared/hooks/useCustomContext";
 
 export type RootProps = {
   children: ReactNode;
@@ -57,7 +58,7 @@ export const SheetRoot = ({ children }: RootProps) => {
 };
 
 export const SheetTrigger = ({ ...rest }: SheetTriggerType) => {
-  const context = useContext(SheetContext);
+  const context = useCustomContext(SheetContext);
   return (
     <Button
       onClick={() => {
@@ -73,7 +74,7 @@ export const SheetTrigger = ({ ...rest }: SheetTriggerType) => {
 
 export const SheetContent = ({ children }: SheetContentProps) => {
   const SheetContentRef = useRef<HTMLDivElement>(null);
-  const context = useContext(SheetContext);
+  const context = useCustomContext(SheetContext);
   const shouldRender = useSheetAnimation(context?.open);
 
   if (context) {
@@ -108,7 +109,7 @@ export const SheetClose = ({
   bottomLeft,
   children,
 }: SheetCloseProps) => {
-  const context = useContext(SheetContext);
+  const context = useCustomContext(SheetContext);
 
   const closeClass = [
     topRight && "absolute top-4 right-7",

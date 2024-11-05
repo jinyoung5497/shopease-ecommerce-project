@@ -1,13 +1,7 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import { ButtonProps } from "../button/ButtonClassType";
+import { useCustomContext } from "@/shared/hooks/useCustomContext";
 
 const DropdownContext = createContext<{
   open: boolean;
@@ -44,7 +38,7 @@ export const DropdownTrigger = ({
   rightIcon,
   ...rest
 }: DropdownTriggerType) => {
-  const context = useContext(DropdownContext);
+  const context = useCustomContext(DropdownContext);
   return (
     <Button
       onClick={(event) => {
@@ -66,7 +60,7 @@ type DropdownMenuProps = {
 
 export const DropdownMenu = ({ children }: DropdownMenuProps) => {
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
-  const context = useContext(DropdownContext);
+  const context = useCustomContext(DropdownContext);
 
   useEffect(() => {
     if (context?.open) {
@@ -121,7 +115,7 @@ export const DropdownMenuItem = ({
   icon,
   onClick,
 }: DropdownMenuItemProps) => {
-  const context = useContext(DropdownContext);
+  const context = useCustomContext(DropdownContext);
   return (
     <button
       onClick={() => {

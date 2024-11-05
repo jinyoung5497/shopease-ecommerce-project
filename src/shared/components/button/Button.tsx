@@ -22,7 +22,7 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
       children,
       className,
       between,
-      ...rest
+      ...props
     },
     ref
   ) => {
@@ -44,8 +44,8 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
       <Component
         ref={ref}
         className={classes}
-        onClick={!loading ? rest.onClick : undefined}
-        {...rest}
+        onClick={!loading ? props.onClick : undefined}
+        {...props}
       >
         {loading ? (
           <div className="flex items-center justify-center gap-3">
