@@ -45,6 +45,14 @@ export const Toggle = React.forwardRef<HTMLElement, ToggleProps>(
       xlarge: "px-[16px] py-[7px] text-[18px]",
     }[size];
 
+    const radiusClass = {
+      none: "rounded-none",
+      small: "rounded-[5px]",
+      medium: "rounded-[8px]",
+      large: "rounded-[12px]",
+      full: "rounded-full",
+    }[radius];
+
     const variantStyles = {
       outline: {
         variantClass: "text-black border border-solid",
@@ -84,14 +92,6 @@ export const Toggle = React.forwardRef<HTMLElement, ToggleProps>(
 
     // 선택된 변형의 스타일 가져오기
     const { variantClass, colorClass } = variantStyles[variant];
-
-    const radiusClass = {
-      none: "rounded-none",
-      small: "rounded-[5px]",
-      medium: "rounded-[8px]",
-      large: "rounded-[12px]",
-      full: "rounded-full",
-    }[radius];
 
     // 클래스 문자열을 결합하여 가독성 향상
     const classes = [
