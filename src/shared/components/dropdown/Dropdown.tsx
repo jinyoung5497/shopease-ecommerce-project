@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { Button } from "../button/Button";
-import { ButtonProps } from "../button/Button";
+import { ButtonProps } from "../button/ButtonClassType";
 
 const DropdownContext = createContext<{
   open: boolean;
