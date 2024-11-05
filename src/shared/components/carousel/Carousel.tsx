@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import { useCustomContext } from "@/shared/hooks/useCustomContext";
+import { ReactNode, createContext, useRef, useState } from "react";
 
 type RootProps = {
   children: ReactNode;
@@ -51,7 +52,7 @@ export const CarouselItems = ({ images }: CarouselItemsProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
   const currentTranslate = useRef(0);
-  const context = useContext(CarouselContext);
+  const context = useCustomContext(CarouselContext);
 
   if (!images) throw new Error();
 
@@ -117,7 +118,7 @@ export const CarouselPrevious = ({
   children,
   images,
 }: CarouselPreviousProps) => {
-  const context = useContext(CarouselContext);
+  const context = useCustomContext(CarouselContext);
   if (!images) throw new Error();
 
   const handlePrevious = () => {
@@ -130,7 +131,7 @@ export const CarouselPrevious = ({
 };
 
 export const CarouselNext = ({ children, images }: CarouselNextProps) => {
-  const context = useContext(CarouselContext);
+  const context = useCustomContext(CarouselContext);
   if (!images) throw new Error();
 
   const handleNext = () => {

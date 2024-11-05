@@ -5,6 +5,7 @@ import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
 
 import { ReactNode } from "react";
 import { ButtonProps } from "../button/ButtonClassType";
+import { useCustomContext } from "@/shared/hooks/useCustomContext";
 
 export type RootProps = {
   children: ReactNode;
@@ -66,7 +67,7 @@ export const ModalRoot = ({ children }: RootProps) => {
 };
 
 export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
-  const context = useContext(ModalContext);
+  const context = useCustomContext(ModalContext);
   return (
     <Button
       onClick={(event) => {
