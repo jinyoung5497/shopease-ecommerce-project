@@ -40,9 +40,9 @@ export const Basic = () => (
       <Modal.Divider />
       <Modal.Items>
         <Input label="상품 이름" placeholder="상품 이름" full />
-        <Input label="상품 이름" placeholder="상품 이름" full />
-        <Input label="상품 이름" placeholder="상품 이름" full />
-        <Input label="상품 이름" placeholder="상품 이름" full />
+        <Input label="상품 설명" placeholder="상품 설명" full />
+        <Input label="상품 재고" placeholder="상품 재고" full />
+        <Input label="상품 가격" placeholder="상품 가격" full />
       </Modal.Items>
       <Modal.Footer>
         <Button full>등록하기</Button>

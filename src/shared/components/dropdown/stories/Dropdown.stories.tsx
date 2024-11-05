@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { Dropdown } from "@/shared/components/dropdown/Dropdown";
+import { ChevronDown } from "lucide-react";
 const meta: Meta = {
   title: "Components/Dropdown",
   tags: ["autodocs"],
@@ -58,41 +59,21 @@ export const LongList = () => (
 
 export const ItemWithIcon = () => (
   <Dropdown.Root>
-    <Dropdown.Trigger
-      rightIcon={
-        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-1"></div>
-      }
-    >
+    <Dropdown.Trigger rightIcon={<ChevronDown className="-translate-y-1" />}>
       카테고리 선택
     </Dropdown.Trigger>
 
     <Dropdown.Menu>
       <Dropdown.Title title="Category" />
-      <Dropdown.MenuItem
-        icon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
-      >
+      <Dropdown.MenuItem icon={<ChevronDown />}>
         Men's Clothing
       </Dropdown.MenuItem>
-      <Dropdown.MenuItem
-        icon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
-      >
+      <Dropdown.MenuItem icon={<ChevronDown />}>
         Women's Clothing
       </Dropdown.MenuItem>
-      <Dropdown.MenuItem
-        icon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
-      >
-        Sneakers
-      </Dropdown.MenuItem>
-      <Dropdown.MenuItem
-        icon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
-      >
-        Hat
-      </Dropdown.MenuItem>
-      <Dropdown.MenuItem
-        icon={<div className="rounded-full bg-pink-500 w-4 h-4"></div>}
-      >
-        Kids
-      </Dropdown.MenuItem>
+      <Dropdown.MenuItem icon={<ChevronDown />}>Sneakers</Dropdown.MenuItem>
+      <Dropdown.MenuItem icon={<ChevronDown />}>Hat</Dropdown.MenuItem>
+      <Dropdown.MenuItem icon={<ChevronDown />}>Kids</Dropdown.MenuItem>
     </Dropdown.Menu>
   </Dropdown.Root>
 );

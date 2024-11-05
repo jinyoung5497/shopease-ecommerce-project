@@ -24,7 +24,11 @@ const meta: Meta = {
 
 export default meta; // 메타 데이터 내보내기
 
-const imageList = ["image1", "image2", "image3"];
+const imageList = [
+  "https://via.placeholder.com/300x200?text=Image+1",
+  "https://via.placeholder.com/300x200?text=Image+2",
+  "https://via.placeholder.com/300x200?text=Image+3",
+];
 
 export const Basic = () => (
   <Carousel.Root>

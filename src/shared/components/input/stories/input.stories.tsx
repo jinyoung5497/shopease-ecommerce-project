@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Input } from "@/shared/components/input/Input";
 import { InputProps } from "@/shared/components/input/Input";
 import { FieldError } from "react-hook-form";
+import { ChevronDown, LogIn } from "lucide-react";
 
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
@@ -43,9 +44,8 @@ export const leftIcon = () => (
     <Input
       label="login"
       placeholder="로그인 하세요"
-      leftIcon={
-        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-[2px]"></div>
-      }
+      className="translate-y-[2px]"
+      leftIcon={<LogIn />}
     />
   </>
 );
@@ -55,9 +55,8 @@ export const rightIcon = () => (
     <Input
       label="login"
       placeholder="로그인 하세요"
-      rightIcon={
-        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-[2px]"></div>
-      }
+      className="translate-y-[2px]"
+      rightIcon={<LogIn />}
     />
   </>
 );
@@ -66,23 +65,20 @@ export const iconOnBothSides = () => (
     <Input
       label="login"
       placeholder="로그인 하세요"
-      leftIcon={
-        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-[2px]"></div>
-      }
-      rightIcon={
-        <div className="rounded-full bg-pink-500 w-4 h-4 -translate-y-[2px]"></div>
-      }
+      className="translate-y-[2px]"
+      leftIcon={<LogIn />}
+      rightIcon={<ChevronDown />}
     />
   </>
 );
 
 export const radius = () => (
   <>
-    <Input radius="none" />
-    <Input radius="small" />
-    <Input radius="medium" />
-    <Input radius="large" />
-    <Input radius="full" />
+    <Input placeholder="none" radius="none" />
+    <Input placeholder="small" radius="small" />
+    <Input placeholder="medium" radius="medium" />
+    <Input placeholder="large" radius="large" />
+    <Input placeholder="full" radius="full" />
   </>
 );
 
@@ -105,6 +101,6 @@ export const error = () => (
 
 export const full = () => (
   <>
-    <Input full={true} />
+    <Input full={true} placeholder="full" label="Full" />
   </>
 );
