@@ -5,6 +5,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./.storybook/**/*.{js,jsx,ts,tsx}",
+    "../../packages/ui/**/*{.js,.ts,.jsx,.tsx}",
   ],
   theme: {
     extend: {
