@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "./Dropdown";
 import { ChevronDown } from "lucide-react";
 const meta: Meta = {
   title: "Components/Dropdown",

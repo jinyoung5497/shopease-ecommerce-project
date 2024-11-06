@@ -1,4 +1,4 @@
-import { useCustomContext } from "../hooks/useCustomContext";
+import { useCustomContext } from "../../hooks/useCustomContext";
 import { ReactNode, createContext, useRef, useState } from "react";
 
 type RootProps = {

@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { Sheet } from "../Sheet";
-import { Button } from "../../button/Button";
+import { Sheet } from "./Sheet";
+import { Button } from "../button/Button";
 import { ShoppingBasket, X } from "lucide-react";
 const meta: Meta = {
   title: "Components/Sheet",

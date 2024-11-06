@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { Modal } from "../Modal";
-import { Input } from "../../input/Input";
-import { Button } from "../../button/Button";
+import { Modal } from "./Modal";
+import { Input } from "../input/Input";
+import { Button } from "../button/Button";
 import { X } from "lucide-react";
 const meta: Meta = {
   title: "Components/Modal",

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Toggle, ToggleColor, ToggleRadius, ToggleSize } from "../Toggle";
-import { ToggleProps } from "../../toggle/Toggle";
+import { Toggle, ToggleColor, ToggleRadius, ToggleSize } from "./Toggle";
+import { ToggleProps } from "./Toggle";
 import { useState } from "react";
 
 const meta: Meta<typeof Toggle> = {

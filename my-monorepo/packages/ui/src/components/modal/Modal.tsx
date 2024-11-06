@@ -1,11 +1,11 @@
 import { createContext, useContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
-import { useOutsideClick } from "../hooks/useOutsideClick";
-import { useDisableScroll } from "../hooks/useDisableScroll";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useDisableScroll } from "../../hooks/useDisableScroll";
 
 import { ReactNode } from "react";
 import { ButtonProps } from "../button/ButtonType";
-import { useCustomContext } from "../hooks/useCustomContext";
+import { useCustomContext } from "../../hooks/useCustomContext";
 
 export type RootProps = {
   children: ReactNode;
