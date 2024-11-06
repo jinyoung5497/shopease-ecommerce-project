@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@repo/ui/*": ["packages/ui/src/*"]
+    }
+  }
+}
