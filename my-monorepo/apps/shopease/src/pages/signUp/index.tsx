@@ -9,8 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import HomeButton from "../../shared/layout/HomeButton";
-import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/input/Input";
+import { Button } from "@repo/ui/button/Button";
+import { Input } from "@repo/ui/input/Input";
 
 const passwordSchema = z
   .string()
@@ -18,12 +18,12 @@ const passwordSchema = z
   .refine(
     (value) =>
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[A-Z])(?=.*\d)(?=.*[\W_])|(?=.*[a-z])(?=.*\d)(?=.*[\W_])/.test(
-        value
+        value,
       ) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W_)/.test(value),
     {
       message:
         "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자 중 3종류 이상의 문자 조합이어야 합니다.",
-    }
+    },
   )
   .refine(
     (value) =>
@@ -32,7 +32,7 @@ const passwordSchema = z
     {
       message:
         "비밀번호는 10자 이상일 경우, 영어 대문자, 소문자, 숫자, 특수문자 중 2종류 이상의 문자 조합이어야 합니다.",
-    }
+    },
   )
   .refine((value) => !/123|qwerty|password/.test(value), {
     message: "비밀번호에 쉬운 문자열 또는 잘 알려진 단어를 포함할 수 없습니다.",
@@ -79,7 +79,7 @@ const SignUp = () => {
         isSeller: isSeller,
       });
     },
-    [registerUser, isSeller]
+    [registerUser, isSeller],
   );
 
   const handleNavToLogin = (event: React.MouseEvent<HTMLButtonElement>) => {

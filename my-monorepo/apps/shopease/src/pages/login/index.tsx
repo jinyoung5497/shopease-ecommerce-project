@@ -9,8 +9,8 @@ import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import HomeButton from "../../shared/layout/HomeButton";
-import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/input/Input";
+import { Button } from "@repo/ui/button/Button";
+import { Input } from "@repo/ui/input/Input";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력하세요"),
@@ -46,7 +46,7 @@ const Login = () => {
         password: data.password,
       });
     },
-    [login, isSeller]
+    [login, isSeller],
   );
 
   const handleBuyerLogin = (event: React.MouseEvent<HTMLButtonElement>) => {

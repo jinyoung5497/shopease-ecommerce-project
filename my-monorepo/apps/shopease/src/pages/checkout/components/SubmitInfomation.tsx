@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/button/Button";
+import { Button } from "@repo/ui/button/Button";
 import { Cart } from "@/shared/types/cart/types";
 
 type Props = {
@@ -9,7 +9,7 @@ const SubmitInfomation = ({ data }: Props) => {
   const totalPrice =
     data?.reduce(
       (total, product) => total + product.productPrice * product.quantity,
-      0
+      0,
     ) || 0;
 
   return (

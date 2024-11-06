@@ -6,10 +6,10 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
 import { Product } from "@/features/product/api";
-import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/dropdown/Dropdown";
-import { Modal } from "@/shared/components/modal/Modal";
-import { Input } from "@/shared/components/input/Input";
+import { Button } from "@repo/ui/button/Button";
+import { Dropdown } from "@repo/ui/dropdown/Dropdown";
+import { Modal } from "@repo/ui/modal/Modal";
+import { Input } from "@repo/ui/input/Input";
 
 interface UpdateModalProps {
   index: number;
@@ -24,7 +24,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
   const [selectedCategory, setSelectedCategory] = useState<ProductCategoryType>(
     data && data.pages[0]?.products[index]
       ? data.pages[0].products[index].productCategory
-      : "Men's Clothing"
+      : "Men's Clothing",
   );
   const [imageNameList, setImageNameList] = useState<string[]>([]);
   const [imageList, setImageList] = useState<File[]>([]);
@@ -44,7 +44,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       .refine((files) => files && files.length > 0, "이미지는 필수입니다")
       .refine(
         (files) => files[0] instanceof File,
-        "업로드된 파일이 유효하지 않습니다"
+        "업로드된 파일이 유효하지 않습니다",
       ),
   });
 
@@ -103,7 +103,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
         setImageNameList([]);
       }
     },
-    [updateProduct, selectedCategory, user, imageNameList, imageList]
+    [updateProduct, selectedCategory, user, imageNameList, imageList],
   );
 
   const handleCategory = (category: ProductCategoryType) => {
@@ -117,7 +117,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       | "remainder"
       | "description"
       | "remainder"
-      | "image"
+      | "image",
   ) => {
     return (
       <Button
@@ -263,7 +263,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                         <div key={index}>{value}</div>
                       ))
                     : data?.pages[0].products[index].productImageName.map(
-                        (value, index) => <div key={index}>{value}</div>
+                        (value, index) => <div key={index}>{value}</div>,
                       )}
                 </div>
               </Modal.Items>

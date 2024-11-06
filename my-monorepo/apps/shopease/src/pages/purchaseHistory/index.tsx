@@ -4,7 +4,7 @@ import { Layout, authStatusType } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
 import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
-import { Button } from "@/shared/components/button/Button";
+import { Button } from "@repo/ui/button/Button";
 
 const PurchaseHistory = () => {
   const { data } = useFetchOrder();
@@ -13,7 +13,7 @@ const PurchaseHistory = () => {
 
   const updateOrder = (
     id: string | undefined,
-    productId: string | undefined
+    productId: string | undefined,
   ) => {
     if (id) {
       updateStatus({ orderId: id, status: "주문 취소" });

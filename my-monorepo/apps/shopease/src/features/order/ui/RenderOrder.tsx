@@ -1,4 +1,4 @@
-import { Dropdown } from "@/shared/components/dropdown/Dropdown";
+import { Dropdown } from "@repo/ui/dropdown/Dropdown";
 import { Order } from "@/shared/types/order/types";
 import { memo } from "react";
 
@@ -37,7 +37,7 @@ const RenderOrder = memo(({ data, handleSelect }: AdminOrders) => {
                   >
                     {status}
                   </Dropdown.MenuItem>
-                )
+                ),
               )}
             </Dropdown.Menu>
           </Dropdown.Root>

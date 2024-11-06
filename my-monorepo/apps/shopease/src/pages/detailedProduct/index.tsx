@@ -4,8 +4,8 @@ import NavigationBar from "../../shared/layout/NavigationBar";
 import { useAddCart } from "@/features/cart/hooks/useAddCart";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useToastStore } from "@/store/toast/useToastStore";
-import { Button } from "@/shared/components/button/Button";
-import { Carousel } from "@/shared/components/carousel/Carousel";
+import { Button } from "@repo/ui/button/Button";
+import { Carousel } from "@repo/ui/carousel/Carousel";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { useFetchDetailedProduct } from "@/features/product/hooks/useFetchDetailedProduct";
 import { useParams } from "react-router-dom";
@@ -59,7 +59,7 @@ const DetailedProduct = () => {
       ?.filter(
         (value) =>
           value.productCategory === detailedData?.productCategory &&
-          value.id !== detailedData?.id
+          value.id !== detailedData?.id,
       )
       .slice(0, 4)
       .map((value) => (
