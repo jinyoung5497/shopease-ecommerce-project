@@ -18,6 +18,8 @@ coverage
 # Turbo
 .turbo
 
+.build-storybook.log
+
 # Vercel
 .vercel
 
@@ -36,3 +38,5 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+*storybook.log
