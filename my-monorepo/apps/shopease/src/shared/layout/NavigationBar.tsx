@@ -9,8 +9,8 @@ import {
 } from "@/features/cart/hooks/useDeleteCart";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
-import { Button } from "@/shared/components/button/Button";
-import { Sheet } from "@/shared/components/sheet/Sheet";
+import { Button } from "@repo/ui/button/Button";
+import { Sheet } from "@repo/ui/sheet/Sheet";
 import { X } from "lucide-react";
 
 const NavigationBar = () => {

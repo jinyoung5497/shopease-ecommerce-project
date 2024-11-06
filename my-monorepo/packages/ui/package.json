@@ -4,7 +4,13 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./button/Button": "./src/button/Button.tsx"
+    "./button/Button": "./src/components/button/Button.tsx",
+    "./carousel/Carousel": "./src/components/carousel/Carousel.tsx",
+    "./dropdown/Dropdown": "./src/components/dropdown/Dropdown.tsx",
+    "./input/Input": "./src/components/input/Input.tsx",
+    "./modal/Modal": "./src/components/modal/Modal.tsx",
+    "./sheet/Sheet": "./src/components/sheet/Sheet.tsx",
+    "./toggle/Toggle": "./src/components/toggle/Toggle.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

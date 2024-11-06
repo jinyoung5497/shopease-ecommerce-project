@@ -1,7 +1,7 @@
 import { pageRoutes } from "@/app/apiRoutes";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
-import { Button } from "@/shared/components/button/Button";
+import { Button } from "@repo/ui/button/Button";
 import CategoryPreviewCards from "./CategoryPreviewCards";
 
 const HomeCategory = () => {
@@ -30,7 +30,7 @@ const HomeCategory = () => {
       | "Women's Clothing"
       | "Sneakers"
       | "Hat"
-      | "Kids"
+      | "Kids",
   ) => {
     const categoryKey = categoryMap[category];
     navToFilteredProduct(`${pageRoutes.categoryProduct}?filter=${categoryKey}`);

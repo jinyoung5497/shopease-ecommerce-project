@@ -5,10 +5,10 @@ import { useCallback, useState } from "react";
 import { useAddProduct } from "@/features/product/hooks/useAddProduct";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { Product } from "@/features/product/api";
-import { Button } from "@/shared/components/button/Button";
-import { Dropdown } from "@/shared/components/dropdown/Dropdown";
-import { Modal } from "@/shared/components/modal/Modal";
-import { Input } from "@/shared/components/input/Input";
+import { Button } from "@repo/ui/button/Button";
+import { Dropdown } from "@repo/ui/dropdown/Dropdown";
+import { Modal } from "@repo/ui/modal/Modal";
+import { Input } from "@repo/ui/input/Input";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -37,7 +37,7 @@ const RegisterModal = () => {
       .refine((files) => files && files.length > 0, "이미지는 필수입니다")
       .refine(
         (files) => files[0] instanceof File,
-        "업로드된 파일이 유효하지 않습니다"
+        "업로드된 파일이 유효하지 않습니다",
       ),
   });
 
@@ -80,7 +80,7 @@ const RegisterModal = () => {
         setIsModalOpen(false);
       }
     },
-    [addProduct, selectedCategory, user, setValue, imageNameList, imageList]
+    [addProduct, selectedCategory, user, setValue, imageNameList, imageList],
   );
 
   const handleCategory = (category: ProductCategoryType) => {
@@ -108,7 +108,7 @@ const RegisterModal = () => {
       | "remainder"
       | "description"
       | "remainder"
-      | "image"
+      | "image",
   ) => {
     return (
       <Button

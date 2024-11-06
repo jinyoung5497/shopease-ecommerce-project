@@ -1,6 +1,6 @@
 import { useDeleteProduct } from "@/features/product/hooks/useDeleteProduct";
-import { Modal } from "@/shared/components/modal/Modal";
-import { Button } from "@/shared/components/button/Button";
+import { Modal } from "@repo/ui/modal/Modal";
+import { Button } from "@repo/ui/button/Button";
 import { X } from "lucide-react";
 
 interface DeleteModalProps {

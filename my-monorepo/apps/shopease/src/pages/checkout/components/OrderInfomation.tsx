@@ -1,5 +1,5 @@
-import { Button } from "@/shared/components/button/Button";
-import { Input } from "@/shared/components/input/Input";
+import { Button } from "@repo/ui/button/Button";
+import { Input } from "@repo/ui/input/Input";
 import { Cart } from "@/shared/types/cart/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

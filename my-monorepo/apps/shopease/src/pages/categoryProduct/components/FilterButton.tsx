@@ -1,5 +1,5 @@
-import { Toggle } from "@/shared/components/toggle/Toggle";
-import { Button } from "@/shared/components/button/Button";
+import { Toggle } from "@repo/ui/toggle/Toggle";
+import { Button } from "@repo/ui/button/Button";
 import { useSearchParams } from "react-router-dom";
 
 const FilterButton = () => {
