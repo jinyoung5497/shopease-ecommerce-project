@@ -1,12 +1,14 @@
 import type { Meta } from "@storybook/react";
 import { Dropdown } from "@/shared/components/dropdown/Dropdown";
 import { ChevronDown } from "lucide-react";
+
+type StoryFn = (args: any) => JSX.Element;
 const meta: Meta = {
   title: "Components/Dropdown",
   tags: ["autodocs"],
   component: Dropdown.Root, // Dropdown.Root를 메타 데이터로 설정
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div
         style={{
           display: "flex",

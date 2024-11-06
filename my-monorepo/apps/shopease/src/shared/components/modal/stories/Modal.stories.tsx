@@ -3,12 +3,14 @@ import { Modal } from "@/shared/components/modal/Modal";
 import { Input } from "@/shared/components/input/Input";
 import { Button } from "@/shared/components/button/Button";
 import { X } from "lucide-react";
+type StoryFn = (args: any) => JSX.Element;
+
 const meta: Meta = {
   title: "Components/Modal",
   tags: ["autodocs"],
   component: Modal.Root, // Modal.Root를 메타 데이터로 설정
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div
         style={{
           display: "flex",

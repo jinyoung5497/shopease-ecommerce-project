@@ -2,13 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "../Button";
 import { ButtonProps } from "@/shared/components/button/ButtonClassType";
+type StoryFn = (args: any) => JSX.Element;
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
   tags: ["autodocs"],
   component: Button,
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div
         style={{
           display: "flex",

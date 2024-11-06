@@ -4,13 +4,14 @@ import { Input } from "@/shared/components/input/Input";
 import { InputProps } from "@/shared/components/input/Input";
 import { FieldError } from "react-hook-form";
 import { ChevronDown, LogIn } from "lucide-react";
+type StoryFn = (args: any) => JSX.Element;
 
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
   tags: ["autodocs"],
   component: Input,
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div
         style={{
           display: "flex",

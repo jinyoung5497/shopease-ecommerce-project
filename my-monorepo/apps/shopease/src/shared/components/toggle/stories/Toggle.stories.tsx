@@ -3,13 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Toggle, ToggleColor, ToggleRadius, ToggleSize } from "../Toggle";
 import { ToggleProps } from "@/shared/components/toggle/Toggle";
 import { useState } from "react";
+type StoryFn = (args: any) => JSX.Element;
 
 const meta: Meta<typeof Toggle> = {
   title: "Components/Toggle",
   tags: ["autodocs"],
   component: Toggle,
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div
         style={{
           display: "flex",
@@ -55,7 +56,7 @@ export const size = () => {
 
   const toggleActive = (index: number) => {
     setActiveStates((prevStates) =>
-      prevStates.map((state, i) => (i === index ? !state : state))
+      prevStates.map((state, i) => (i === index ? !state : state)),
     );
   };
 
@@ -82,7 +83,7 @@ export const variant = () => {
 
   const toggleActive = (index: number) => {
     setActiveStates((prevStates) =>
-      prevStates.map((state, i) => (i === index ? !state : state))
+      prevStates.map((state, i) => (i === index ? !state : state)),
     );
   };
 
@@ -116,7 +117,7 @@ export const color = () => {
 
   const toggleActive = (index: number) => {
     setActiveStates((prevStates) =>
-      prevStates.map((state, i) => (i === index ? !state : state))
+      prevStates.map((state, i) => (i === index ? !state : state)),
     );
   };
 
@@ -149,7 +150,7 @@ export const radius = () => {
 
   const toggleActive = (index: number) => {
     setActiveStates((prevStates) =>
-      prevStates.map((state, i) => (i === index ? !state : state))
+      prevStates.map((state, i) => (i === index ? !state : state)),
     );
   };
 
