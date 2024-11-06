@@ -14,7 +14,8 @@
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@repo/ui/*": ["packages/ui/src/*"]
     }
   }
 }
