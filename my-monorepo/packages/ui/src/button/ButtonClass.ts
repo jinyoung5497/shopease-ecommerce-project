@@ -1,20 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementRef } from "react";
 import { cva } from "class-variance-authority";
-
-export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
-  asChild?: boolean;
-  size?: ButtonSize;
-  variant?: ButtonVariant;
-  color?: ButtonColor;
-  radius?: ButtonRadius;
-  icon?: React.ReactNode;
-  loading?: boolean;
-  full?: boolean;
-  className?: string;
-  children: React.ReactNode;
-  between?: boolean;
-};
-export type Ref = ElementRef<"button">;
 
 export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";

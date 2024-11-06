@@ -4,7 +4,7 @@ import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useDisableScroll } from "../hooks/useDisableScroll";
 
 import { ReactNode } from "react";
-import { ButtonProps } from "../button/ButtonClassType";
+import { ButtonProps } from "../button/ButtonType";
 import { useCustomContext } from "../hooks/useCustomContext";
 
 export type RootProps = {

@@ -6,7 +6,7 @@ import {
   sizeClass,
   buttonVariants,
   radiusClass,
-} from "./ButtonClassType";
+} from "./ButtonType";
 
 export const Button = React.forwardRef<Ref, ButtonProps>(
   (
@@ -24,7 +24,7 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
       between,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Component = asChild ? Slot : "button"; // asChild를 사용해 요소를 변경할 수 있음
 
@@ -63,5 +63,5 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
         )}
       </Component>
     );
-  }
+  },
 );

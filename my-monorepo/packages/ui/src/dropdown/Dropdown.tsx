@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { Button } from "../button/Button";
-import { ButtonProps } from "../button/ButtonClassType";
+import { ButtonProps } from "../button/ButtonType";
 import { useCustomContext } from "../hooks/useCustomContext";
 
 const DropdownContext = createContext<{

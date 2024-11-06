@@ -2,7 +2,7 @@ import { ReactNode, createContext, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useDisableScroll } from "../hooks/useDisableScroll";
-import { ButtonProps } from "../button/ButtonClassType";
+import { ButtonProps } from "../button/ButtonType";
 import styles from "./Sheet.module.css";
 import { useSheetAnimation } from "../hooks/useSheetAnimation";
 import { useCustomContext } from "../hooks/useCustomContext";
