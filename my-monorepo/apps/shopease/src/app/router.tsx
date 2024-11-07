@@ -6,7 +6,7 @@ import Login from "@/pages/login";
 import Administration from "../pages/administration";
 import CategoryProduct from "@/pages/categoryProduct";
 import Checkout from "../pages/checkout";
-import DetailedProduct from "../pages/detailedProduct";
+import DetailedProduct from "@/pages/detailedProduct";
 import MyProducts from "../pages/myProducts";
 import PurchaseHistory from "../pages/purchaseHistory";
 import SignUp from "../pages/signUp";

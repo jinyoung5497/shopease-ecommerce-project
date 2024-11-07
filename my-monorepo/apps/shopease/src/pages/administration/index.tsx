@@ -8,7 +8,7 @@ import React from "react";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 
 const RenderOrders = React.lazy(
-  () => import("../../features/order/ui/RenderOrder")
+  () => import("../../features/order/ui/RenderOrder"),
 );
 
 const Administration = () => {
@@ -20,7 +20,7 @@ const Administration = () => {
       if (!orderId) throw new Error();
       updateStatus({ orderId, status });
     },
-    [updateStatus]
+    [updateStatus],
   );
 
   return (
@@ -36,7 +36,14 @@ const Administration = () => {
             관리자 페이지에선 주문 완료된 상품들을 관리할 수 있는 페이지 입니다.
           </p>
         </div>
-        <Suspense fallback={<LoadingSkeleton />}>
+        <Suspense
+          fallback={
+            <LoadingSkeleton
+              numberOfCards={4}
+              styles="grid grid-cols-4 gap-4 items-start justify-items-center mx-20 m-20"
+            />
+          }
+        >
           <div className="grid grid-cols-4 gap-4 items-start justify-items-center mx-20 m-20">
             <RenderOrders data={data} handleSelect={handleSelect} />
           </div>

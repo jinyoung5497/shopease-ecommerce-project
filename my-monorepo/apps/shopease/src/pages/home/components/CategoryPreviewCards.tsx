@@ -12,7 +12,6 @@ const CategoryPreviewCards = ({
   data,
   navToDetailedProduct,
 }: CategoryPreviewCardsType) => {
-  // 카테고리별로 제품을 필터링하고 메모이제이션
   const filteredProducts = useMemo(() => {
     return data
       ?.filter((value) => value.productCategory === category)
@@ -29,11 +28,7 @@ const CategoryPreviewCards = ({
         >
           <div className="w-72 flex items-center justify-center">
             {value.productImages && value.productImages.length > 0 ? (
-              <img
-                src={value.productImages[0]}
-                alt="productImage"
-                className=""
-              />
+              <img src={value.productImages[0]} alt="productImage" />
             ) : (
               <div className="text-center">
                 No images available for this product

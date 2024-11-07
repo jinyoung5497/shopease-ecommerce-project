@@ -24,7 +24,7 @@ const CategoryCard = () => {
   } as const;
 
   const selectedFilters: CategoryMapType[] = searchParams.getAll(
-    "filter"
+    "filter",
   ) as CategoryMapType[];
 
   // Intersection Observer 설정
@@ -75,7 +75,7 @@ const CategoryCard = () => {
         </div>
       );
     },
-    [navToDetailedProduct]
+    [navToDetailedProduct],
   );
 
   // 필터링된 데이터를 메모이제이션
@@ -86,8 +86,8 @@ const CategoryCard = () => {
     return (
       filteredData?.filter((value) =>
         selectedFilters.some(
-          (filter) => value.productCategory === categoryMap[filter]
-        )
+          (filter) => value.productCategory === categoryMap[filter],
+        ),
       ) || []
     );
   }, [selectedFilters, data, filteredData, categoryMap]);
