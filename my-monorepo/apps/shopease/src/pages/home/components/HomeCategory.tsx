@@ -2,13 +2,17 @@ import { pageRoutes } from "@/app/apiRoutes";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@repo/ui/button/Button";
-import CategoryPreviewCards from "./CategoryPreviewCards";
 import { getProductsAPI } from "@/features/product/api/api";
 import useThrottledPrefetch from "@/shared/hooks/useThrottledPrefetch";
+import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
+import React, { Suspense, useCallback } from "react";
 
-const HomeCategory = () => {
+const HomeCategory = React.memo(() => {
   const { data } = useFetchProducts();
   const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
+  const CategoryPreviewCards = React.lazy(
+    () => import("./CategoryPreviewCards"),
+  );
 
   const categoryList = [
     "Men's Clothing",
@@ -26,24 +30,29 @@ const HomeCategory = () => {
     Kids: "kids",
   };
 
-  const handleMoreClick = (
-    category:
-      | "Men's Clothing"
-      | "Women's Clothing"
-      | "Sneakers"
-      | "Hat"
-      | "Kids",
-  ) => {
-    const categoryKey = categoryMap[category];
-    navToFilteredProduct(`${pageRoutes.categoryProduct}?filter=${categoryKey}`);
-    window.scrollTo({
-      top: 0, // 맨 위로 스크롤
-      behavior: "smooth", // 부드러운 스크롤 효과
-    });
-  };
+  const handleMoreClick = useCallback(
+    (
+      category:
+        | "Men's Clothing"
+        | "Women's Clothing"
+        | "Sneakers"
+        | "Hat"
+        | "Kids",
+    ) => {
+      const categoryKey = categoryMap[category];
+      navToFilteredProduct(
+        `${pageRoutes.categoryProduct}?filter=${categoryKey}`,
+      );
+      window.scrollTo({
+        top: 0, // 맨 위로 스크롤
+        behavior: "smooth", // 부드러운 스크롤 효과
+      });
+    },
+    [navToFilteredProduct],
+  );
 
   const prefetchCategoryProductData = useThrottledPrefetch({
-    queryKey: ["product"],
+    queryKey: ["categoryProduct"],
     queryFn: getProductsAPI,
     delay: 3000,
   });
@@ -64,16 +73,25 @@ const HomeCategory = () => {
             </Button>
           </div>
           <div className="w-full flex gap-5 items-start justify-between mt-4 mb-20">
-            <CategoryPreviewCards
-              category={category}
-              data={data}
-              navToDetailedProduct={navToDetailedProduct}
-            />
+            <Suspense
+              fallback={
+                <LoadingSkeleton
+                  numberOfCards={5}
+                  styles="flex justify-between w-full"
+                />
+              }
+            >
+              <CategoryPreviewCards
+                category={category}
+                data={data}
+                navToDetailedProduct={navToDetailedProduct}
+              />
+            </Suspense>
           </div>
         </div>
       ))}
     </div>
   );
-};
+});
 
 export default HomeCategory;
