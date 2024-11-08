@@ -58,7 +58,7 @@ const HomeCategory = React.memo(() => {
   });
 
   return (
-    <div className="m-20 mx-36">
+    <div className="m-20 mx-36 gap-20 flex flex-col">
       {categoryList.map((category, index) => (
         <div key={index}>
           <div className="flex items-center justify-between text-primary">
@@ -72,22 +72,20 @@ const HomeCategory = React.memo(() => {
               더보기
             </Button>
           </div>
-          <div className="w-full flex gap-5 items-start justify-between mt-4 mb-20">
-            <Suspense
-              fallback={
-                <LoadingSkeleton
-                  numberOfCards={5}
-                  styles="flex justify-between w-full"
-                />
-              }
-            >
-              <CategoryPreviewCards
-                category={category}
-                data={data}
-                navToDetailedProduct={navToDetailedProduct}
+          <Suspense
+            fallback={
+              <LoadingSkeleton
+                numberOfCards={5}
+                styles="flex justify-between w-full"
               />
-            </Suspense>
-          </div>
+            }
+          >
+            <CategoryPreviewCards
+              category={category}
+              data={data}
+              navToDetailedProduct={navToDetailedProduct}
+            />
+          </Suspense>
         </div>
       ))}
     </div>
