@@ -3,6 +3,8 @@ import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@repo/ui/button/Button";
 import CategoryPreviewCards from "./CategoryPreviewCards";
+import { getProductsAPI } from "@/features/product/api/api";
+import useThrottledPrefetch from "@/shared/hooks/useThrottledPrefetch";
 
 const HomeCategory = () => {
   const { data } = useFetchProducts();
@@ -40,6 +42,12 @@ const HomeCategory = () => {
     });
   };
 
+  const prefetchCategoryProductData = useThrottledPrefetch({
+    queryKey: ["product"],
+    queryFn: getProductsAPI,
+    delay: 3000,
+  });
+
   return (
     <div className="m-20 mx-36">
       {categoryList.map((category, index) => (
@@ -50,6 +58,7 @@ const HomeCategory = () => {
               onClick={() => handleMoreClick(category)}
               variant="link"
               size="large"
+              onMouseEnter={prefetchCategoryProductData}
             >
               더보기
             </Button>

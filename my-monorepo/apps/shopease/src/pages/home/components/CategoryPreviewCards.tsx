@@ -24,9 +24,9 @@ const CategoryPreviewCards = ({
         <div
           key={value.id}
           onClick={() => navToDetailedProduct(value.id)}
-          className="flex flex-col gap-1 relative cursor-pointer"
+          className="flex flex-col gap-1 relative cursor-pointer w-80"
         >
-          <div className="w-72 flex items-center justify-center">
+          <div className="flex items-center justify-center">
             {value.productImages && value.productImages.length > 0 ? (
               <img src={value.productImages[0]} alt="productImage" />
             ) : (
@@ -36,7 +36,7 @@ const CategoryPreviewCards = ({
             )}
           </div>
           <div className="text-gray text-[12px]">{value.productCategory}</div>
-          <div className="overflow-clip">{value.productName}</div>
+          <div className="">{value.productName}</div>
           <div>
             {value.productPrice.toLocaleString("ko-KR", {
               style: "currency",

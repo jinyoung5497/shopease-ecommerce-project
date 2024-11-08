@@ -3,9 +3,20 @@ import NavigationBar from "../../shared/layout/NavigationBar";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import HomeCategory from "./components/HomeCategory";
 import { Button } from "@repo/ui/button/Button";
+import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
+import { useState } from "react";
 
 const Home = () => {
   const { navToCategoryProduct } = useNavigation();
+  const { fetchNextPage, hasNextPage } = useFetchInfiniteProducts();
+  const [hasFetched, setHasFetched] = useState(false);
+
+  const handleFetchNextPage = () => {
+    if (hasNextPage && !hasFetched) {
+      fetchNextPage();
+      setHasFetched(true);
+    }
+  };
 
   return (
     <Layout>
@@ -23,6 +34,7 @@ const Home = () => {
           onClick={navToCategoryProduct}
           radius="full"
           className="px-[60px]"
+          onMouseEnter={handleFetchNextPage}
         >
           All Products
         </Button>
