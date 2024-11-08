@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
 import { useNavigation } from "@/shared/hooks/useNavigation";
+import ImageLoading from "@/shared/components/ImageLoading";
 
 const CategoryCard = () => {
   const { data, fetchNextPage, isFetchingNextPage } =
@@ -24,7 +25,7 @@ const CategoryCard = () => {
   } as const;
 
   const selectedFilters: CategoryMapType[] = searchParams.getAll(
-    "filter"
+    "filter",
   ) as CategoryMapType[];
 
   // Intersection Observer 설정
@@ -49,20 +50,9 @@ const CategoryCard = () => {
         <div
           key={value.id} // id를 키로 사용
           onClick={() => navToDetailedProduct(value.id)}
-          className="flex flex-col gap-1 relative cursor-pointer mb-10"
+          className="flex flex-col gap-1 relative cursor-pointer mb-10 w-80"
         >
-          <div className="w-70 flex items-center justify-center">
-            {value.productImages && value.productImages.length > 0 ? (
-              <img
-                src={value.productImages[0]}
-                alt={`${value.productName} image`}
-                className="w-70"
-              />
-            ) : (
-              <div className="text-center">상품 이미지를 찾을 수 없습니다.</div>
-            )}
-          </div>
-
+          <ImageLoading value={value} />
           {/* 상품 정보 */}
           <div className="text-gray text-[12px]">{value.productCategory}</div>
           <div>{value.productName}</div>
@@ -75,7 +65,7 @@ const CategoryCard = () => {
         </div>
       );
     },
-    [navToDetailedProduct]
+    [navToDetailedProduct],
   );
 
   // 필터링된 데이터를 메모이제이션
@@ -86,8 +76,8 @@ const CategoryCard = () => {
     return (
       filteredData?.filter((value) =>
         selectedFilters.some(
-          (filter) => value.productCategory === categoryMap[filter]
-        )
+          (filter) => value.productCategory === categoryMap[filter],
+        ),
       ) || []
     );
   }, [selectedFilters, data, filteredData, categoryMap]);

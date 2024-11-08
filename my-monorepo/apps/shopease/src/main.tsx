@@ -16,7 +16,7 @@ if (rootElement) {
     <QueryClientProvider client={queryClient}>
       {isDevEnvironment && <ReactQueryDevtools />}
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 } else {
   console.error("Failed to find the root element.");

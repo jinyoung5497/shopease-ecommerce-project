@@ -8,6 +8,7 @@ export const useFetchInfiniteProducts = () => {
     isLoading,
     fetchNextPage, // 다음 페이지를 가져오는 함수
     isFetchingNextPage, // 다음 페이지를 로딩 중인지 여부
+    hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["products"],
     queryFn: getInfiniteProductsAPI, // 페이지 매개변수 전달
@@ -24,5 +25,6 @@ export const useFetchInfiniteProducts = () => {
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
+    hasNextPage,
   };
 };

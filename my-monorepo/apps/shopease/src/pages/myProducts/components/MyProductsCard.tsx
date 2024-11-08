@@ -6,6 +6,7 @@ import { Product } from "@/features/product/api";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useNavigation } from "@/shared/hooks/useNavigation";
+import ImageLoading from "@/shared/components/ImageLoading";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
@@ -38,24 +39,11 @@ const MyProductsCard = () => {
               return (
                 <div
                   key={value.id} // id를 키로 사용합니다.
-                  className="flex flex-col gap-1 relative cursor-pointer"
+                  className="flex flex-col gap-1 relative cursor-pointer w-72"
                 >
                   <UpdateModal index={index} />
                   <DeleteModal id={value.id} />
-                  <div className=" w-70 flex items-center justify-center">
-                    {value.productImages && value.productImages.length > 0 ? (
-                      <img
-                        src={value.productImages[0]}
-                        alt="productImage"
-                        onClick={() => navToDetailedProduct(value.id)}
-                        className="w-70"
-                      />
-                    ) : (
-                      <div className="text-center">
-                        There are no images for this product
-                      </div>
-                    )}
-                  </div>
+                  <ImageLoading value={value} />
                   <div
                     onClick={() => navToDetailedProduct(value.id)}
                     className="text-gray text-[12px]"
@@ -75,7 +63,7 @@ const MyProductsCard = () => {
               );
             }
             return null; // 조건이 만족하지 않을 경우 null 반환
-          })
+          }),
         )}
       </div>
       {!isFetchingNextPage ? (

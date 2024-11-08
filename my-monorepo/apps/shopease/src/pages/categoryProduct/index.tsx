@@ -22,7 +22,14 @@ const CategoryProduct = () => {
         <GetCategoryTitle />
       </div>
       <FilterButton />
-      <Suspense fallback={<LoadingSkeleton />}>
+      <Suspense
+        fallback={
+          <LoadingSkeleton
+            numberOfCards={5}
+            styles={"grid grid-cols-5 gap-20 items-center mx-40 mb-10"}
+          />
+        }
+      >
         <CategoryCard />
       </Suspense>
     </Layout>

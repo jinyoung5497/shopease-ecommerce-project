@@ -1,3 +1,4 @@
+import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 import HomeButton from "../../shared/layout/HomeButton";
 import { Layout, authStatusType } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
@@ -18,7 +19,14 @@ const MyProducts = () => {
       </div>
 
       <RegisterModal />
-      <Suspense fallback={<LoadingSkeleton />}>
+      <Suspense
+        fallback={
+          <LoadingSkeleton
+            numberOfCards={10}
+            styles="grid grid-cols-5 gap-4 items-start justify-items-center mx-40"
+          />
+        }
+      >
         <MyProductsCard />
       </Suspense>
     </Layout>
@@ -26,14 +34,3 @@ const MyProducts = () => {
 };
 
 export default MyProducts;
-
-const LoadingSkeleton = () => (
-  <div className="grid grid-cols-5 gap-20 items-center justify-items-center mx-40 mb-10">
-    {[...Array(10)].map((_, index) => (
-      <div
-        key={index}
-        className="bg-slate-100 rounded-[5px] w-44 h-60 flex items-center justify-center"
-      />
-    ))}
-  </div>
-);
