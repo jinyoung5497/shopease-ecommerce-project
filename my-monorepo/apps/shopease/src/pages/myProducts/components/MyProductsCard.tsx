@@ -32,7 +32,7 @@ const MyProductsCard = () => {
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-40">
+      <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20">
         {data?.pages.map((page) =>
           page.products.map((value: Product, index: number) => {
             if (value.sellerId === user?.uid) {

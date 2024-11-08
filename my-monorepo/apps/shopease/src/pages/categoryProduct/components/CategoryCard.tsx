@@ -50,7 +50,7 @@ const CategoryCard = () => {
         <div
           key={value.id} // id를 키로 사용
           onClick={() => navToDetailedProduct(value.id)}
-          className="flex flex-col gap-1 relative cursor-pointer mb-10 w-80"
+          className="flex flex-col gap-1 relative cursor-pointer mb-10 w-72"
         >
           <ImageLoading value={value} />
           {/* 상품 정보 */}
