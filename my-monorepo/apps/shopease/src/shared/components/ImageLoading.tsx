@@ -5,7 +5,7 @@ const ImageLoading = ({ value }: { value: Product }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div className="w-full rounded-[5px] bg-slate-100 overflow-hidden flex h-[420px]">
+    <div className=" rounded-[5px] bg-slate-100 overflow-hidden flex h-[420px]">
       {/* Placeholder (shows only if image hasn't loaded yet) */}
       {!isLoaded && (
         <div className="h-auto w-full flex items-center justify-center bg-slate-100">

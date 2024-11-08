@@ -60,7 +60,7 @@ const HomeCategory = React.memo(() => {
   return (
     <div className="m-20 mx-36 gap-20 flex flex-col">
       {categoryList.map((category, index) => (
-        <div key={index}>
+        <div key={index} className="gap-4 flex flex-col">
           <div className="flex items-center justify-between text-primary">
             <div>{category}</div>
             <Button
