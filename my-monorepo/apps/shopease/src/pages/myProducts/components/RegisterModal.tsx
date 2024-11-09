@@ -9,6 +9,7 @@ import { Button } from "@repo/ui/button/Button";
 import { Dropdown } from "@repo/ui/dropdown/Dropdown";
 import { Modal } from "@repo/ui/modal/Modal";
 import { Input } from "@repo/ui/input/Input";
+import imageCompression from "browser-image-compression";
 
 const RegisterModal = () => {
   const { mutate: addProduct } = useAddProduct();
@@ -87,17 +88,47 @@ const RegisterModal = () => {
     setSelectedCategory(category);
   };
 
-  const handleImageName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     event.preventDefault();
     const files = event.target.files;
     if (files && files.length > 0) {
-      setImageList((prev) => [...prev, ...Array.from(files)]);
-      const fileNames = Array.from(files)
-        .map((file) => file.name)
-        .join(", ");
-      setImageNameList((prev) => [...prev, fileNames]);
+      const compressedFiles: File[] = [];
+      const fileNames: string[] = [];
+
+      // Compression options
+      const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+        fileType: "image/webp",
+      };
+
+      for (const file of files) {
+        try {
+          const compressedFile = await imageCompression(file, options);
+
+          // 파일 이름에 .webp 확장자 추가
+          const webpFile = new File(
+            [compressedFile],
+            `${file.name.split(".")[0]}.webp`,
+            {
+              type: "image/webp",
+            },
+          );
+
+          compressedFiles.push(webpFile);
+          fileNames.push(webpFile.name);
+        } catch (error) {
+          console.error("Image compression error:", error);
+        }
+      }
+      setImageList((prev) => [...prev, ...compressedFiles]);
+      setImageNameList((prev) => [...prev, ...fileNames]);
     } else {
-      // setImageNameList("파일을 선택해주세요");
+      setImageList([]);
+      setImageNameList([]);
     }
   };
 
@@ -250,7 +281,7 @@ const RegisterModal = () => {
                   full
                   label="상품 이미지"
                   radius="medium"
-                  onChange={handleImageName}
+                  onChange={handleImageUpload}
                   rightIcon={clearButton("image")}
                 />
                 <div className="flex gap-2 flex-wrap">

@@ -19,13 +19,14 @@ import {
   uploadBytes,
   getDownloadURL,
   deleteObject,
+  listAll,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { Product } from ".";
 
 export const addProductAPI = async (
   product: Omit<Product, "id" | "createdAt" | "updatedAt" | "productImages">,
-  imageFiles: File[] = [] // 여러 장의 이미지를 받는 배열
+  imageFiles: File[] = [], // 여러 장의 이미지를 받는 배열
 ): Promise<void> => {
   try {
     // imageFiles가 배열이 맞는지 확인
@@ -38,7 +39,10 @@ export const addProductAPI = async (
 
     for (const imageFile of imageFiles) {
       const imageRef = ref(storage, `products/${productId}/${imageFile.name}`);
-      await uploadBytes(imageRef, imageFile);
+      const metadata = {
+        contentType: "image/webp", // WebP 포맷 설정
+      };
+      await uploadBytes(imageRef, imageFile, metadata);
 
       const imageUrl = await getDownloadURL(imageRef);
       imageUrls.push(imageUrl);
@@ -61,13 +65,13 @@ const PAGE_SIZE = 10;
 
 // pageParam에 해당하는 마지막 문서를 가져오는 헬퍼 함수
 const getLastVisibleDocument = async (
-  pageParam: number
+  pageParam: number,
 ): Promise<DocumentData> => {
   const productsRef = collection(db, "products");
   const q = query(
     productsRef,
     orderBy("createdAt", "desc"),
-    limit(pageParam) // pageParam 만큼의 문서를 가져와서 마지막 문서를 찾음
+    limit(pageParam), // pageParam 만큼의 문서를 가져와서 마지막 문서를 찾음
   );
 
   const querySnapshot = await getDocs(q);
@@ -95,7 +99,7 @@ export const getInfiniteProductsAPI = async ({
         productsRef,
         orderBy("createdAt", "desc"),
         startAfter(lastVisible), // 마지막 문서 이후로 시작
-        limit(PAGE_SIZE)
+        limit(PAGE_SIZE),
       );
     } else {
       // 처음에는 첫 페이지 데이터를 가져옴
@@ -131,8 +135,19 @@ export const getInfiniteProductsAPI = async ({
 
 export const deleteProductAPI = async (productId: string): Promise<void> => {
   try {
+    // Firestore의 해당 제품 문서 삭제
     const productDocRef = doc(db, "products", productId);
     await deleteDoc(productDocRef);
+
+    // Firebase Storage의 제품 이미지 폴더 경로 설정
+    const folderRef = ref(storage, `products/${productId}/`);
+
+    // 폴더 내 모든 파일을 삭제
+    const folderContents = await listAll(folderRef);
+    const deletePromises = folderContents.items.map((fileRef) =>
+      deleteObject(fileRef),
+    );
+    await Promise.all(deletePromises);
   } catch (error) {
     console.error("Error deleting product: ", error);
     throw error;
@@ -142,7 +157,7 @@ export const deleteProductAPI = async (productId: string): Promise<void> => {
 export const updateProductAPI = async (
   productId: string,
   updatedData: Partial<Product>,
-  imageFiles: File[] = []
+  imageFiles: File[] = [],
 ): Promise<void> => {
   try {
     const productDocRef = doc(db, "products", productId);
@@ -167,9 +182,12 @@ export const updateProductAPI = async (
       for (const imageFile of imageFiles) {
         const imageRef = ref(
           storage,
-          `products/${productId}/${imageFile.name}`
+          `products/${productId}/${imageFile.name}`,
         );
-        await uploadBytes(imageRef, imageFile);
+        const metadata = {
+          contentType: "image/webp", // WebP 포맷 설정
+        };
+        await uploadBytes(imageRef, imageFile, metadata);
 
         const imageUrl = await getDownloadURL(imageRef);
         imageUrls.push(imageUrl);
@@ -212,7 +230,7 @@ export const getProductsAPI = async (): Promise<Product[]> => {
 };
 
 export const getDetailedProductAPI = async (
-  productId: string
+  productId: string,
 ): Promise<Product | undefined> => {
   try {
     // Firestore의 'products' 컬렉션에서 productId에 해당하는 문서 참조 가져오기
