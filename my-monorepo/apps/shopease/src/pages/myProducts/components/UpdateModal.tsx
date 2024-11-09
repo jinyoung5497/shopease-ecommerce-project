@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
@@ -10,6 +10,7 @@ import { Button } from "@repo/ui/button/Button";
 import { Dropdown } from "@repo/ui/dropdown/Dropdown";
 import { Modal } from "@repo/ui/modal/Modal";
 import { Input } from "@repo/ui/input/Input";
+import React from "react";
 
 interface UpdateModalProps {
   index: number;
@@ -17,15 +18,20 @@ interface UpdateModalProps {
 
 type ProductCategoryType = Product["productCategory"];
 
-const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
+const UpdateModal: React.FC<UpdateModalProps> = React.memo(({ index }) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
   const { data } = useFetchInfiniteProducts();
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategoryType>(
-    data && data.pages[0]?.products[index]
-      ? data.pages[0].products[index].productCategory
-      : "Men's Clothing",
+  const initialCategory = useMemo(
+    () =>
+      data && data.pages[0]?.products[index]
+        ? data.pages[0].products[index].productCategory
+        : "Men's Clothing",
+    [data, index],
   );
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProductCategoryType>(initialCategory);
   const [imageNameList, setImageNameList] = useState<string[]>([]);
   const [imageList, setImageList] = useState<File[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -283,6 +289,6 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       </Modal.Root>
     </div>
   );
-};
+});
 
 export default UpdateModal;
