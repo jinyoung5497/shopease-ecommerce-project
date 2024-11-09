@@ -1,31 +1,34 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useUpdateProduct } from "@/features/product/hooks/useUpdateProduct";
 import { Product } from "@/features/product/api";
 import { Button } from "@repo/ui/button/Button";
 import { Dropdown } from "@repo/ui/dropdown/Dropdown";
 import { Modal } from "@repo/ui/modal/Modal";
 import { Input } from "@repo/ui/input/Input";
+import React from "react";
+import imageCompression from "browser-image-compression";
+import { useFetchDetailedProduct } from "@/features/product/hooks/useFetchDetailedProduct";
 
 interface UpdateModalProps {
-  index: number;
+  id: string;
 }
 
 type ProductCategoryType = Product["productCategory"];
 
-const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
+const UpdateModal: React.FC<UpdateModalProps> = React.memo(({ id }) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
-  const { data } = useFetchInfiniteProducts();
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategoryType>(
-    data && data.pages[0]?.products[index]
-      ? data.pages[0].products[index].productCategory
-      : "Men's Clothing",
+  const { data } = useFetchDetailedProduct(id);
+  const initialCategory = useMemo(
+    () => (data ? data.productCategory : "Men's Clothing"),
+    [data],
   );
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProductCategoryType>(initialCategory);
   const [imageNameList, setImageNameList] = useState<string[]>([]);
   const [imageList, setImageList] = useState<File[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,27 +57,74 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     register,
     handleSubmit,
     resetField,
+    reset,
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: data?.pages[0].products[index]?.productName || "",
-      price: data?.pages[0].products[index]?.productPrice || 0,
-      remainder: data?.pages[0].products[index]?.productQuantity || 0,
-      description: data?.pages[0].products[index]?.productDescription || "",
-      image: data?.pages[0].products[index].productImages,
+      title: data?.productName || "",
+      price: data?.productPrice || 0,
+      remainder: data?.productQuantity || 0,
+      description: data?.productDescription || "",
+      image: data?.productImages,
     },
   });
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Reset form values whenever `data` changes
+  useEffect(() => {
+    if (data) {
+      reset({
+        title: data.productName || "",
+        price: data.productPrice || 0,
+        remainder: data.productQuantity || 0,
+        description: data.productDescription || "",
+        image: data.productImages,
+      });
+      setSelectedCategory(data.productCategory);
+    }
+  }, [data, reset]);
+
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     event.preventDefault();
     const files = event.target.files;
     if (files && files.length > 0) {
-      setImageList((prev) => [...prev, ...Array.from(files)]);
-      const fileNames = Array.from(files)
-        .map((file) => file.name)
-        .join(", ");
-      setImageNameList((prev) => [...prev, fileNames]);
+      const compressedFiles: File[] = [];
+      const fileNames: string[] = [];
+
+      // Compression options
+      const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+        fileType: "image/webp",
+      };
+
+      for (const file of files) {
+        try {
+          const compressedFile = await imageCompression(file, options);
+
+          // 파일 이름에 .webp 확장자 추가
+          const webpFile = new File(
+            [compressedFile],
+            `${file.name.split(".")[0]}.webp`,
+            {
+              type: "image/webp",
+            },
+          );
+
+          compressedFiles.push(webpFile);
+          fileNames.push(webpFile.name);
+        } catch (error) {
+          console.error("Image compression error:", error);
+        }
+      }
+      setImageList((prev) => [...prev, ...compressedFiles]);
+      setImageNameList((prev) => [...prev, ...fileNames]);
+    } else {
+      setImageList([]);
+      setImageNameList([]);
     }
   };
 
@@ -82,7 +132,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
     async (formData) => {
       const { title, price, remainder, description } = formData;
       if (user && data) {
-        const productId = data.pages[0].products[index].id;
+        const productId = data.id;
         const productData = {
           sellerId: user.uid,
           productName: title,
@@ -254,7 +304,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                   full
                   label="상품 이미지"
                   radius="medium"
-                  onChange={handleImageChange}
+                  onChange={handleImageUpload}
                   rightIcon={clearButton("image")}
                 />
                 <div className="flex gap-2 flex-wrap">
@@ -262,9 +312,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
                     ? imageNameList.map((value, index) => (
                         <div key={index}>{value}</div>
                       ))
-                    : data?.pages[0].products[index].productImageName.map(
-                        (value, index) => <div key={index}>{value}</div>,
-                      )}
+                    : data?.productImageName.map((value, index) => (
+                        <div key={index}>{value}</div>
+                      ))}
                 </div>
               </Modal.Items>
               <Modal.Footer>
@@ -283,6 +333,6 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ index }) => {
       </Modal.Root>
     </div>
   );
-};
+});
 
 export default UpdateModal;

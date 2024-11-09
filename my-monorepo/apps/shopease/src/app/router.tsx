@@ -1,19 +1,21 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
 import { pageRoutes } from "@/app/apiRoutes";
-import Home from "@/pages/home";
-import Login from "@/pages/login";
-import Administration from "../pages/administration";
-import CategoryProduct from "@/pages/categoryProduct";
-import Checkout from "../pages/checkout";
-import DetailedProduct from "@/pages/detailedProduct";
-import MyProducts from "../pages/myProducts";
-import PurchaseHistory from "../pages/purchaseHistory";
-import SignUp from "../pages/signUp";
 import { ErrorPage } from "../shared/error/ErrorPage";
 import { NotFoundPage } from "../shared/error/NotFoundPage";
 import { RootErrorBoundary } from "@/shared/layout/RootErrorHandler";
 import { RootSuspense } from "@/shared/layout/RootSuspense";
+import { lazy } from "react";
+
+const Home = lazy(() => import("@/pages/home"));
+const Login = lazy(() => import("@/pages/login"));
+const Administration = lazy(() => import("../pages/administration"));
+const CategoryProduct = lazy(() => import("@/pages/categoryProduct"));
+const Checkout = lazy(() => import("../pages/checkout"));
+const DetailedProduct = lazy(() => import("@/pages/detailedProduct"));
+const MyProducts = lazy(() => import("../pages/myProducts"));
+const PurchaseHistory = lazy(() => import("../pages/purchaseHistory"));
+const SignUp = lazy(() => import("../pages/signUp"));
 
 const CommonLayout = () => (
   <RootErrorBoundary>

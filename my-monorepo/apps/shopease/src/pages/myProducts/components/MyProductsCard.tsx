@@ -34,16 +34,18 @@ const MyProductsCard = () => {
     <div className="relative">
       <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20">
         {data?.pages.map((page) =>
-          page.products.map((value: Product, index: number) => {
+          page.products.map((value: Product) => {
             if (value.sellerId === user?.uid) {
               return (
                 <div
                   key={value.id} // id를 키로 사용합니다.
                   className="flex flex-col gap-1 relative cursor-pointer w-72"
                 >
-                  <UpdateModal index={index} />
+                  <UpdateModal id={value.id} />
                   <DeleteModal id={value.id} />
-                  <ImageLoading value={value} />
+                  <div onClick={() => navToDetailedProduct(value.id)}>
+                    <ImageLoading value={value} />
+                  </div>
                   <div
                     onClick={() => navToDetailedProduct(value.id)}
                     className="text-gray text-[12px]"

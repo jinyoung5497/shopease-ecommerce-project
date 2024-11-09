@@ -14,7 +14,6 @@ export const authStatusType = {
 
 interface LayoutProps {
   children: ReactNode;
-  containerClassName?: string;
   authStatus?: string;
 }
 
