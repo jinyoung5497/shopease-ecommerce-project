@@ -3,7 +3,7 @@ import { AuthStore } from "./types";
 import Cookies from "js-cookie";
 import { User } from "@/features/auth/api";
 import { auth, db } from "@/app/firebase";
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc } from "@firebase/firestore/lite";
 
 export const useAuthStore = create<AuthStore>()((set) => ({
   isSeller: false,

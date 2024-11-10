@@ -10,12 +10,12 @@ import {
   updateDoc,
   deleteDoc,
   writeBatch,
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
 
 // 장바구니에 아이템을 추가하는 API 함수 (userId 기준)
 export const addCartAPI = async (
   userId: string,
-  cartItem: Cart
+  cartItem: Cart,
 ): Promise<Cart> => {
   try {
     const { productId } = cartItem;
@@ -34,7 +34,7 @@ export const addCartAPI = async (
 
 // Firestore에서 사용자의 cart 데이터를 가져오는 함수
 export const getCartAPI = async (
-  userId: string | undefined
+  userId: string | undefined,
 ): Promise<Cart[]> => {
   if (!userId) throw new Error("User ID is undefined");
 
@@ -72,7 +72,7 @@ export const updateCartAPI = async (
   userId: string | undefined,
   data: Cart[],
   quantity: number,
-  index: number
+  index: number,
 ): Promise<void> => {
   try {
     if (!userId) throw new Error("User ID is undefined");
@@ -87,7 +87,7 @@ export const updateCartAPI = async (
       "cart",
       userId,
       "items",
-      itemToUpdate.productId
+      itemToUpdate.productId,
     );
 
     // quantity와 totalPrice 업데이트
@@ -103,7 +103,7 @@ export const updateCartAPI = async (
 
 export const deleteCartItemAPI = async (
   userId: string | undefined,
-  productId: string // 삭제할 상품 ID
+  productId: string, // 삭제할 상품 ID
 ): Promise<void> => {
   try {
     if (!userId) throw new Error("User ID is undefined");
@@ -120,7 +120,7 @@ export const deleteCartItemAPI = async (
 };
 
 export const deleteAllCartAPI = async (
-  userId: string | undefined
+  userId: string | undefined,
 ): Promise<void> => {
   try {
     if (!userId) {

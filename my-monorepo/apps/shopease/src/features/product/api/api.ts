@@ -13,7 +13,7 @@ import {
   startAfter,
   limit,
   DocumentData,
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
 import {
   ref,
   uploadBytes,

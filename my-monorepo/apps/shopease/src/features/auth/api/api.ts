@@ -11,7 +11,7 @@ import {
   RegisterUserReqDTO,
 } from ".";
 import { auth, db, googleProvider } from "@/app/firebase";
-import { doc, getDoc, serverTimestamp, setDoc } from "@firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "@firebase/firestore/lite";
 import Cookies from "js-cookie";
 
 export const registerAPI = async ({
@@ -23,7 +23,7 @@ export const registerAPI = async ({
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
   const user = userCredential.user;
   // Firebase Authentication에서 displayName 업데이트
@@ -43,14 +43,14 @@ export const registerAPI = async ({
 };
 
 export const loginAPI = async (
-  loginData: LoginRequestDto
+  loginData: LoginRequestDto,
 ): Promise<LoginResponseDto> => {
   try {
     const { email, password } = loginData;
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     const user = userCredential.user;
     const token = await user.getIdToken();
@@ -69,7 +69,7 @@ export const loginAPI = async (
 };
 
 export const googleLoginAPI = async (
-  isSeller: boolean
+  isSeller: boolean,
 ): Promise<GoogleUser> => {
   const userCredential = await signInWithPopup(auth, googleProvider);
   const user = userCredential.user;
