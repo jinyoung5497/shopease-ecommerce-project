@@ -6,12 +6,14 @@ import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import ImageLoading from "@/shared/components/ImageLoading";
+import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 const CategoryCard = () => {
   const { data, fetchNextPage, isFetchingNextPage } =
     useFetchInfiniteProducts();
   const { data: filteredData } = useFetchProducts();
   const { navToDetailedProduct } = useNavigation();
+  const scrollToTop = useSmoothScrollToTop();
   const [searchParams] = useSearchParams();
 
   type CategoryMapType = keyof typeof categoryMap;
@@ -49,7 +51,10 @@ const CategoryCard = () => {
       return (
         <div
           key={value.id} // id를 키로 사용
-          onClick={() => navToDetailedProduct(value.id)}
+          onClick={() => {
+            navToDetailedProduct(value.id);
+            scrollToTop();
+          }}
           className="flex flex-col gap-1 relative cursor-pointer mb-10 w-72"
         >
           <ImageLoading value={value} />

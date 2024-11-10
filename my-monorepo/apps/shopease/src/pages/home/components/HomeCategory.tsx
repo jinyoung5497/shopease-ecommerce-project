@@ -6,10 +6,12 @@ import { getProductsAPI } from "@/features/product/api/api";
 import useThrottledPrefetch from "@/shared/hooks/useThrottledPrefetch";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 import React, { Suspense, useCallback } from "react";
+import { useSmoothScrollToTop } from "../../../shared/hooks/useSmoothScrollToTop";
 
 const HomeCategory = React.memo(() => {
   const { data } = useFetchProducts();
   const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
+  const scrollToTop = useSmoothScrollToTop();
   const CategoryPreviewCards = React.lazy(
     () => import("./CategoryPreviewCards"),
   );
@@ -43,10 +45,7 @@ const HomeCategory = React.memo(() => {
       navToFilteredProduct(
         `${pageRoutes.categoryProduct}?filter=${categoryKey}`,
       );
-      window.scrollTo({
-        top: 0, // 맨 위로 스크롤
-        behavior: "smooth", // 부드러운 스크롤 효과
-      });
+      scrollToTop();
     },
     [navToFilteredProduct],
   );

@@ -5,17 +5,24 @@ import HomeCategory from "./components/HomeCategory";
 import { Button } from "@repo/ui/button/Button";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { useState } from "react";
+import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 const Home = () => {
   const { navToCategoryProduct } = useNavigation();
   const { fetchNextPage, hasNextPage } = useFetchInfiniteProducts();
   const [hasFetched, setHasFetched] = useState(false);
+  const scrollToTop = useSmoothScrollToTop();
 
   const handleFetchNextPage = () => {
     if (hasNextPage && !hasFetched) {
       fetchNextPage();
       setHasFetched(true);
     }
+  };
+
+  const handleAllProductsButtonClick = () => {
+    navToCategoryProduct();
+    scrollToTop();
   };
 
   return (
@@ -31,7 +38,7 @@ const Home = () => {
           받아보세요.
         </p>
         <Button
-          onClick={navToCategoryProduct}
+          onClick={handleAllProductsButtonClick}
           radius="full"
           className="px-[60px]"
           onMouseEnter={handleFetchNextPage}
