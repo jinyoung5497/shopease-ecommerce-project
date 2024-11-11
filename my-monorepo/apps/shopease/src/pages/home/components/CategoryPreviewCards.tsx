@@ -2,6 +2,7 @@ import { Product } from "@/features/product/api/types";
 import React from "react";
 import { useMemo } from "react";
 import ImageLoading from "../../../shared/components/ImageLoading";
+import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 interface CategoryPreviewCardsType {
   category: "Men's Clothing" | "Women's Clothing" | "Sneakers" | "Hat" | "Kids";
@@ -16,13 +17,17 @@ const CategoryPreviewCards = React.memo(
         ?.filter((value) => value.productCategory === category)
         .slice(0, 5);
     }, [data, category]);
+    const scrollToTop = useSmoothScrollToTop();
 
     return (
       <div className="flex gap-5">
         {filteredProducts?.map((value) => (
           <div
             key={value.id}
-            onClick={() => navToDetailedProduct(value.id)}
+            onClick={() => {
+              navToDetailedProduct(value.id);
+              scrollToTop();
+            }}
             className="flex flex-col gap-1 cursor-pointer w-80"
           >
             <ImageLoading value={value} />

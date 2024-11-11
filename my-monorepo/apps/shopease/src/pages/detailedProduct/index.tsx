@@ -10,6 +10,7 @@ import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useCallback, useMemo } from "react";
 import ProductInfo from "./components/ProductInfo";
+import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 const DetailedProduct = () => {
   const { data } = useFetchProducts();
@@ -18,6 +19,7 @@ const DetailedProduct = () => {
   const { user, isSeller } = useAuthStore();
   const addToast = useToastStore((state) => state.addToast);
   const { id: productId } = useParams<{ id: string }>();
+  const scrollToTop = useSmoothScrollToTop();
 
   if (!productId) throw new Error("productId is required");
 
@@ -63,7 +65,10 @@ const DetailedProduct = () => {
       .map((value) => (
         <div
           key={value.id}
-          onClick={() => navToDetailedProduct(value.id)}
+          onClick={() => {
+            navToDetailedProduct(value.id);
+            scrollToTop();
+          }}
           className="flex flex-col gap-1 relative cursor-pointer"
         >
           <div className="flex items-center justify-center">

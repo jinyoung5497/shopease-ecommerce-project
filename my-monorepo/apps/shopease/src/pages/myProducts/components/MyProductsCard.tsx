@@ -7,12 +7,14 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import ImageLoading from "@/shared/components/ImageLoading";
+import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
   const { data, fetchNextPage, isFetchingNextPage } =
     useFetchInfiniteProducts();
   const { navToDetailedProduct } = useNavigation();
+  const scrollToTop = useSmoothScrollToTop();
 
   // Intersection Observer 설정
   const { ref, inView } = useInView({
@@ -43,19 +45,37 @@ const MyProductsCard = () => {
                 >
                   <UpdateModal id={value.id} />
                   <DeleteModal id={value.id} />
-                  <div onClick={() => navToDetailedProduct(value.id)}>
+                  <div
+                    onClick={() => {
+                      navToDetailedProduct(value.id);
+                      scrollToTop();
+                    }}
+                  >
                     <ImageLoading value={value} />
                   </div>
                   <div
-                    onClick={() => navToDetailedProduct(value.id)}
+                    onClick={() => {
+                      navToDetailedProduct(value.id);
+                      scrollToTop();
+                    }}
                     className="text-gray text-[12px]"
                   >
                     {value.productCategory}
                   </div>
-                  <div onClick={() => navToDetailedProduct(value.id)}>
+                  <div
+                    onClick={() => {
+                      navToDetailedProduct(value.id);
+                      scrollToTop();
+                    }}
+                  >
                     {value.productName}
                   </div>
-                  <div onClick={() => navToDetailedProduct(value.id)}>
+                  <div
+                    onClick={() => {
+                      navToDetailedProduct(value.id);
+                      scrollToTop();
+                    }}
+                  >
                     {value.productPrice.toLocaleString("ko-KR", {
                       style: "currency",
                       currency: "KRW",

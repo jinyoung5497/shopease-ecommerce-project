@@ -7,7 +7,7 @@ import {
   updateDoc,
   doc,
   setDoc,
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
 import { Order } from "@/shared/types/order/types";
 import { db } from "@/app/firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -24,7 +24,7 @@ export const addOrderAPI = async (order: Order) => {
 };
 
 export const fetchOrderAPI = async (
-  userId: string | undefined
+  userId: string | undefined,
 ): Promise<Order[]> => {
   if (!userId) throw new Error("User ID is undefined");
 
@@ -50,14 +50,14 @@ export const fetchOrderAPI = async (
         const productRef = collection(db, "products"); // 제품 컬렉션 참조
         const productQuery = query(
           productRef,
-          where("id", "==", orderItem.productId)
+          where("id", "==", orderItem.productId),
         );
         const productSnapshot = await getDocs(productQuery);
 
         const userRef = collection(db, "users");
         const userQuery = query(
           userRef,
-          where(documentId(), "==", orderItem.sellerId)
+          where(documentId(), "==", orderItem.sellerId),
         );
         const userSnapshot = await getDocs(userQuery);
         const userData = userSnapshot.docs[0].data();
@@ -78,7 +78,7 @@ export const fetchOrderAPI = async (
         }
 
         return orderItem; // 제품 정보가 없을 경우 기본 주문 항목 반환
-      })
+      }),
     );
 
     return orderItems;
@@ -92,7 +92,7 @@ export const fetchOrderAPI = async (
 export const updateOrderStatus = async (
   userId: string,
   orderId: string,
-  newStatus: string
+  newStatus: string,
 ) => {
   if (!userId || !orderId) throw new Error("User ID or Order ID is undefined");
 
@@ -111,7 +111,7 @@ export const updateOrderStatus = async (
 };
 
 export const fetchAdminAPI = async (
-  sellerId: string | undefined
+  sellerId: string | undefined,
 ): Promise<Order[]> => {
   if (!sellerId) throw new Error("User ID is undefined");
 
@@ -137,14 +137,14 @@ export const fetchAdminAPI = async (
         const productRef = collection(db, "products"); // 제품 컬렉션 참조
         const productQuery = query(
           productRef,
-          where("id", "==", orderItem.productId)
+          where("id", "==", orderItem.productId),
         );
         const productSnapshot = await getDocs(productQuery);
 
         const userRef = collection(db, "users");
         const userQuery = query(
           userRef,
-          where(documentId(), "==", orderItem.sellerId)
+          where(documentId(), "==", orderItem.sellerId),
         );
         const userSnapshot = await getDocs(userQuery);
         const userData = userSnapshot.docs[0].data();
@@ -165,7 +165,7 @@ export const fetchAdminAPI = async (
         }
 
         return orderItem; // 제품 정보가 없을 경우 기본 주문 항목 반환
-      })
+      }),
     );
 
     return orderItems;
