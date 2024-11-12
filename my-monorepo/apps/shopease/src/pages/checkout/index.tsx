@@ -73,16 +73,19 @@ const Checkout = () => {
       0,
     ) || 0;
 
+  const storeId = import.meta.env.PORTONE_STORE_ID;
+  const channelKey = import.meta.env.PORTONE_CHANNEL_KEY;
+
   const onSubmit: SubmitHandler<FormFields> = useCallback(async () => {
     try {
-      if (data) {
+      if (data && storeId) {
         const orderNames = data.map((value) => value.productName).join("\n");
         const response = await PortOne.requestPayment({
-          storeId: "store-989354b8-121b-4a54-be0a-5fe4c464841a",
-          channelKey: "channel-key-719e0506-97ce-444c-b237-c51b6678390a",
+          storeId: storeId,
+          channelKey: channelKey,
           paymentId: `payment-${crypto.randomUUID()}`,
           orderName: orderNames,
-          totalAmount: 1000,
+          totalAmount: totalPrice,
           currency: "CURRENCY_KRW",
           payMethod: "CARD",
         });
