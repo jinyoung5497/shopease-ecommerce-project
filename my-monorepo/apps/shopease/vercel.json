@@ -1,0 +1,17 @@
+{
+  "builds": [
+    {
+      "src": "apps/shopease/package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
