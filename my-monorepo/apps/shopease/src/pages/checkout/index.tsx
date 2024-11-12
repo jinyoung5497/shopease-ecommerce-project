@@ -73,8 +73,8 @@ const Checkout = () => {
       0,
     ) || 0;
 
-  const storeId = import.meta.env.PORTONE_STORE_ID;
-  const channelKey = import.meta.env.PORTONE_CHANNEL_KEY;
+  const storeId = import.meta.env.VITE_PORTONE_STORE_ID;
+  const channelKey = import.meta.env.VITE_PORTONE_CHANNEL_KEY;
 
   const onSubmit: SubmitHandler<FormFields> = useCallback(async () => {
     try {
