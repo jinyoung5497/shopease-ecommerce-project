@@ -2,7 +2,7 @@ import { Input } from "@repo/ui/input/Input";
 import { Cart } from "@/shared/types/cart/types";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { FormFields } from "..";
-import { Toggle } from "@repo/ui/toggle/Toggle";
+import { Button } from "@repo/ui/button/Button";
 
 type Props = {
   data: Cart[] | undefined;
@@ -117,9 +117,14 @@ const OrderInfomation = ({ data, register, errors }: Props) => {
         결제수단
       </h1>
       <div className="p-5">
-        <Toggle onClick={(event) => event.preventDefault()} size="xlarge">
+        <Button
+          onClick={(event) => {
+            event.preventDefault();
+          }}
+          size="xlarge"
+        >
           신용/체크카드
-        </Toggle>
+        </Button>
       </div>
     </div>
   );
