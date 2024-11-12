@@ -287,7 +287,7 @@ export const updateProductQuantity = async ({
   // 수량이 충분할 경우에만 업데이트
   if (currentQuantity > 0) {
     await updateDoc(productRef, {
-      productQuantity: currentQuantity - quantity,
+      productQuantity: currentQuantity + quantity,
     });
   } else {
     console.warn("Insufficient quantity to update");

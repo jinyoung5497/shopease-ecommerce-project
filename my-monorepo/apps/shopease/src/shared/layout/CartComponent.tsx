@@ -2,34 +2,35 @@ import { Button } from "@repo/ui/button/Button";
 import { Sheet } from "@repo/ui/sheet/Sheet";
 import { X } from "lucide-react";
 import { useCallback } from "react";
-import { Cart } from "../types/cart/types";
 import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useNavigation } from "../hooks/useNavigation";
-import React from "react";
+import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
 import CartItem from "./CartItem";
 
-type CartProps = {
-  data: Cart[] | undefined;
-};
-
-const CartComponent = React.memo(({ data }: CartProps) => {
+const CartComponent = () => {
   const { mutate: deleteAllCartItems } = useDeleteAllCart();
   const { mutate: updateQuantity } = useUpdateProductQuantity();
   const { addToast } = useToastStore();
   const { isLogin } = useAuthStore();
   const { navToCheckout } = useNavigation();
+  const { data } = useFetchCart();
 
   const handleCheckout = useCallback(() => {
-    if (!isLogin) {
-      addToast("로그인이 필요한 기능입니다", "error");
+    const isProductsHaveQuantity = data?.some((value) => value.quantity !== 0);
+    if (isProductsHaveQuantity) {
+      if (!isLogin) {
+        addToast("로그인이 필요한 기능입니다", "error");
+      } else {
+        data?.forEach((value) => {
+          updateQuantity({ productId: value.productId, quantity: -1 });
+        });
+        navToCheckout();
+      }
     } else {
-      data?.forEach((value) => {
-        updateQuantity({ productId: value.productId, quantity: 1 });
-      });
-      navToCheckout();
+      addToast("상품 재고가 부족합니다", "error");
     }
   }, [isLogin, data, addToast, updateQuantity, navToCheckout]);
 
@@ -88,6 +89,6 @@ const CartComponent = React.memo(({ data }: CartProps) => {
       </Sheet.Content>
     </Sheet.Root>
   );
-});
+};
 
 export default CartComponent;

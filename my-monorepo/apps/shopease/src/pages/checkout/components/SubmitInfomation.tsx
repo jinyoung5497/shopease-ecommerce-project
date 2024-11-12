@@ -1,17 +1,10 @@
 import { Button } from "@repo/ui/button/Button";
-import { Cart } from "@/shared/types/cart/types";
 
 type Props = {
-  data: Cart[] | undefined;
+  totalPrice: number;
 };
 
-const SubmitInfomation = ({ data }: Props) => {
-  const totalPrice =
-    data?.reduce(
-      (total, product) => total + product.productPrice * product.quantity,
-      0,
-    ) || 0;
-
+const SubmitInfomation = ({ totalPrice }: Props) => {
   return (
     <div className="sticky top-10 self-start">
       <div className="border-slate-200 border-[1px] p-5 rounded-t-[5px]">

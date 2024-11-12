@@ -5,23 +5,24 @@ import NavigationBar from "../../shared/layout/NavigationBar";
 import { useUpdateOrder } from "@/features/order/hooks/useUpdateOrder";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { Button } from "@repo/ui/button/Button";
+import { useCallback } from "react";
 
 const PurchaseHistory = () => {
   const { data } = useFetchOrder();
   const { mutate: updateStatus } = useUpdateOrder();
   const { mutate: updateQuantity } = useUpdateProductQuantity();
 
-  const updateOrder = (
-    id: string | undefined,
-    productId: string | undefined,
-  ) => {
-    if (id) {
-      updateStatus({ orderId: id, status: "주문 취소" });
-    }
-    if (productId) {
-      updateQuantity({ productId, quantity: -1 });
-    }
-  };
+  const updateOrder = useCallback(
+    (id: string | undefined, productId: string | undefined) => {
+      if (id) {
+        updateStatus({ orderId: id, status: "주문 취소" });
+      }
+      if (productId) {
+        updateQuantity({ productId, quantity: 1 });
+      }
+    },
+    [updateQuantity, updateStatus],
+  );
 
   return (
     <Layout authStatus={authStatusType.BUYER}>

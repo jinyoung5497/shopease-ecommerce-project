@@ -52,6 +52,7 @@ const DetailedProduct = () => {
       };
       addCart(newProductInCart);
     }
+    scrollToTop();
   }, [user, isSeller, detailedData, addCart, addToast]);
 
   const RecommenedProductCard = useMemo(() => {
