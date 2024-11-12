@@ -18,7 +18,7 @@ const PurchaseHistory = () => {
         updateStatus({ orderId: id, status: "주문 취소" });
       }
       if (productId) {
-        updateQuantity({ productId, quantity: -1 });
+        updateQuantity({ productId, quantity: 1 });
       }
     },
     [updateQuantity, updateStatus],

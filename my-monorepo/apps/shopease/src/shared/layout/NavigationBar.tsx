@@ -1,15 +1,12 @@
 import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCallback, useEffect } from "react";
-import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
 import { Button } from "@repo/ui/button/Button";
 import React from "react";
 import CartComponent from "./CartComponent";
 
 const NavigationBar = React.memo(() => {
   const { isLogin, logout, checkLoginStatus, isSeller } = useAuthStore();
-
-  const { data } = useFetchCart();
 
   const {
     navToLogin,
@@ -69,7 +66,7 @@ const NavigationBar = React.memo(() => {
           </Button>
         )}
 
-        <CartComponent data={data} />
+        <CartComponent />
       </div>
     </div>
   );
