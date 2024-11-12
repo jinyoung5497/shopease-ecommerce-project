@@ -75,16 +75,14 @@ const Checkout = () => {
 
   const storeId = import.meta.env.VITE_PORTONE_STORE_ID;
   const channelKey = import.meta.env.VITE_PORTONE_CHANNEL_KEY;
-  console.log(storeId);
-  console.log(channelKey);
 
   const onSubmit: SubmitHandler<FormFields> = useCallback(async () => {
     try {
       if (data) {
         const orderNames = data.map((value) => value.productName).join("\n");
         const response = await PortOne.requestPayment({
-          storeId: "store-989354b8-121b-4a54-be0a-5fe4c464841a",
-          channelKey: "channel-key-719e0506-97ce-444c-b237-c51b6678390a",
+          storeId: storeId,
+          channelKey: channelKey,
           paymentId: `payment-${crypto.randomUUID()}`,
           orderName: orderNames,
           totalAmount: totalPrice,
