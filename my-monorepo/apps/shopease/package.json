@@ -15,6 +15,7 @@
   "dependencies": {
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@hookform/resolvers": "^3.9.0",
+    "@portone/browser-sdk": "^0.0.10",
     "@radix-ui/react-slot": "^1.1.0",
     "@repo/ui": "*",
     "@tanstack/react-query": "^5.59.15",

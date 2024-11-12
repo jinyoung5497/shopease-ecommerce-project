@@ -1,32 +1,16 @@
-import { Button } from "@repo/ui/button/Button";
 import { Input } from "@repo/ui/input/Input";
 import { Cart } from "@/shared/types/cart/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const orderSchema = z.object({
-  name: z.string().min(1, "주문자명을 입력해주세요."),
-  phone: z.string().min(10, "연락처를 정확히 입력해주세요."),
-  email: z.string().email("유효한 이메일 주소를 입력해주세요."),
-  postalCode: z.string().min(5, "우편번호를 입력해주세요."),
-  address: z.string().min(1, "주소를 입력해주세요."),
-});
-
-type FormFields = z.infer<typeof orderSchema>;
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FormFields } from "..";
+import { Toggle } from "@repo/ui/toggle/Toggle";
 
 type Props = {
   data: Cart[] | undefined;
+  register: UseFormRegister<FormFields>;
+  errors: FieldErrors<FormFields>;
 };
 
-const OrderInfomation = ({ data }: Props) => {
-  const {
-    register, // 입력 폼과 연결
-    formState: { errors }, // 유효성 검사 에러 처리
-  } = useForm<FormFields>({
-    resolver: zodResolver(orderSchema), // Zod 스키마를 사용한 유효성 검사 적용
-  });
-
+const OrderInfomation = ({ data, register, errors }: Props) => {
   return (
     <div className="flex flex-col">
       <h1 className="text-primary text-xl w-full border-b-2 border-primary pb-2">
@@ -133,7 +117,9 @@ const OrderInfomation = ({ data }: Props) => {
         결제수단
       </h1>
       <div className="p-5">
-        <Button size="xlarge">신용/체크카드</Button>
+        <Toggle onClick={(event) => event.preventDefault()} size="xlarge">
+          신용/체크카드
+        </Toggle>
       </div>
     </div>
   );
