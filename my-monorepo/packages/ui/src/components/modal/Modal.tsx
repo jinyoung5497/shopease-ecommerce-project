@@ -77,6 +77,7 @@ export const ModalRoot = ({
 
 export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
   const context = useCustomContext(ModalContext);
+
   return (
     <Button
       onClick={(event) => {
