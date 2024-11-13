@@ -16,5 +16,8 @@ jobs:
         working-directory: my-monorepo/packages/ui # UI 패키지로 이동하여 설치
         run: npm install
       - name: Run Chromatic
-        run: npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        working-directory: my-monorepo/packages/ui
+        uses: chromaui/action@latest
+        with:
+          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: my-monorepo/packages/ui
