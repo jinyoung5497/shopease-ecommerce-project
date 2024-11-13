@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useDisableScroll } from "../../hooks/useDisableScroll";
@@ -9,6 +9,8 @@ import { useCustomContext } from "../../hooks/useCustomContext";
 
 export type RootProps = {
   children: ReactNode;
+  controlledOpen?: boolean;
+  setControlledOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export type ModalTriggerProps = {
   rightIcon?: ReactNode;
@@ -40,23 +42,30 @@ export type ModalCloseButtonProps = {
 };
 
 interface ModalContextType {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   label: string;
   setLabel: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
-export const ModalRoot = ({ children }: RootProps) => {
+export const ModalRoot = ({
+  children,
+  controlledOpen,
+  setControlledOpen,
+}: RootProps) => {
   const [open, setOpen] = useState(false);
   const [label, setLabel] = useState("");
+  const isModalOpen = controlledOpen !== undefined ? controlledOpen : open;
+  const setIsModalOpen =
+    setControlledOpen !== undefined ? setControlledOpen : setOpen;
 
   return (
     <ModalContext.Provider
       value={{
-        open,
-        setOpen,
+        isModalOpen,
+        setIsModalOpen,
         label,
         setLabel,
       }}
@@ -71,8 +80,8 @@ export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
   return (
     <Button
       onClick={(event) => {
-        context?.setOpen(true);
         event.preventDefault();
+        context.setIsModalOpen(true);
       }}
       className="flex items-center justify-center"
       {...rest}
@@ -88,13 +97,13 @@ export const ModalContent = ({ children }: ModalContentProps) => {
   const context = useContext(ModalContext);
 
   if (context) {
-    useOutsideClick(ModalContentRef, context?.open, () =>
-      context?.setOpen(false),
+    useOutsideClick(ModalContentRef, context?.isModalOpen, () =>
+      context?.setIsModalOpen(false),
     );
-    useDisableScroll(context?.open);
+    useDisableScroll(context?.isModalOpen);
   }
 
-  if (!context?.open) return null;
+  if (!context?.isModalOpen) return null;
   return (
     <div className="bg-black bg-opacity-50 w-full h-full fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-10">
       <div
@@ -128,7 +137,10 @@ export const ModalClose = ({
   ].join(" ");
 
   return (
-    <button onClick={() => context?.setOpen(false)} className={closeClass}>
+    <button
+      onClick={() => context?.setIsModalOpen(false)}
+      className={closeClass}
+    >
       {children}
     </button>
   );
