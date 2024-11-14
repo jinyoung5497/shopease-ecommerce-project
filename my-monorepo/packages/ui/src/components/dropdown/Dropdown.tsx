@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useCustomContext } from "../../hooks/useCustomContext";
 import { Slot } from "@radix-ui/react-slot";
 import React from "react";

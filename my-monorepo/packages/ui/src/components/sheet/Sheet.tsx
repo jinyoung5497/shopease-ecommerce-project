@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useDisableScroll } from "../../hooks/useDisableScroll";
 import styles from "./Sheet.module.css";
