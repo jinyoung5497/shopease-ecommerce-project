@@ -34,11 +34,13 @@ const RenderOrder = memo(({ data, handleSelect }: AdminOrders) => {
 
               {["주문 완료", "발송 대기", "발송 시작", "주문 취소"].map(
                 (status, index) => (
-                  <Dropdown.MenuItem
-                    key={index}
-                    onClick={() => handleSelect(value.id, status)}
-                  >
-                    {status}
+                  <Dropdown.MenuItem key={index} value={status} asChild>
+                    <Button
+                      variant="link"
+                      onClick={() => handleSelect(value.id, status)}
+                    >
+                      {status}
+                    </Button>
                   </Dropdown.MenuItem>
                 ),
               )}

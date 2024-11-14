@@ -120,7 +120,7 @@ const Checkout = () => {
     <Layout authStatus={authStatusType.BUYER}>
       <div>
         <Modal.Root>
-          <Modal.Trigger>
+          <Modal.Trigger asChild>
             <Button
               variant="link"
               iconLeft={<ArrowLeft />}

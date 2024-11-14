@@ -17,7 +17,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
   return (
     <div className="absolute top-2 right-2">
       <Modal.Root>
-        <Modal.Trigger>
+        <Modal.Trigger asChild>
           <Button variant="link">
             <i className="fi fi-rs-trash text-2xl"></i>
           </Button>

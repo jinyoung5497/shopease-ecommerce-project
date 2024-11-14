@@ -159,7 +159,7 @@ const RegisterModal = () => {
         controlledOpen={isModalOpen}
         setControlledOpen={setIsModalOpen}
       >
-        <Modal.Trigger>
+        <Modal.Trigger asChild>
           <Button
             iconLeft={
               <i className="fi fi-rs-plus-small text-2xl translate-y-[2px]"></i>
@@ -197,7 +197,7 @@ const RegisterModal = () => {
               />
               <p className="text-[15px] text-primary">상품 카테고리</p>
               <Dropdown.Root>
-                <Dropdown.Trigger>
+                <Dropdown.Trigger asChild>
                   <Button
                     variant="outline"
                     size="large"
@@ -212,24 +212,26 @@ const RegisterModal = () => {
                 </Dropdown.Trigger>
                 <Dropdown.Menu>
                   <Dropdown.Title title="Category" />
-                  <Dropdown.MenuItem
-                    onClick={() => handleCategory("Men's Clothing")}
-                  >
-                    Men's Clothing
+                  <Dropdown.MenuItem asChild value="Men's Clothing">
+                    <button onClick={() => handleCategory("Men's Clothing")}>
+                      Men's Clothing
+                    </button>
                   </Dropdown.MenuItem>
-                  <Dropdown.MenuItem
-                    onClick={() => handleCategory("Women's Clothing")}
-                  >
-                    Women's Clothing
+                  <Dropdown.MenuItem asChild value="Women's Clothing">
+                    <button onClick={() => handleCategory("Women's Clothing")}>
+                      Women's Clothing
+                    </button>
                   </Dropdown.MenuItem>
-                  <Dropdown.MenuItem onClick={() => handleCategory("Sneakers")}>
-                    Sneakers
+                  <Dropdown.MenuItem asChild value="Sneakers">
+                    <button onClick={() => handleCategory("Sneakers")}>
+                      Sneakers
+                    </button>
                   </Dropdown.MenuItem>
-                  <Dropdown.MenuItem onClick={() => handleCategory("Hat")}>
-                    Hat
+                  <Dropdown.MenuItem asChild value="Hat">
+                    <button onClick={() => handleCategory("Hat")}>Hat</button>
                   </Dropdown.MenuItem>
-                  <Dropdown.MenuItem onClick={() => handleCategory("Kids")}>
-                    Kids
+                  <Dropdown.MenuItem asChild value="Kids">
+                    <button onClick={() => handleCategory("Kids")}>Kids</button>
                   </Dropdown.MenuItem>
                 </Dropdown.Menu>
               </Dropdown.Root>
