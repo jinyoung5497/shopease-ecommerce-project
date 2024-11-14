@@ -222,16 +222,18 @@ const UpdateModal: React.FC<UpdateModalProps> = React.memo(({ id }) => {
               />
               <p className="text-[15px] text-primary">상품 카테고리</p>
               <Dropdown.Root>
-                <Dropdown.Trigger
-                  variant="outline"
-                  size="large"
-                  full
-                  between
-                  rightIcon={
-                    <i className="fi fi-rs-angle-small-down text-2xl translate-y-1"></i>
-                  }
-                >
-                  카테고리 선택
+                <Dropdown.Trigger>
+                  <Button
+                    variant="outline"
+                    size="large"
+                    full
+                    between
+                    iconRight={
+                      <i className="fi fi-rs-angle-small-down text-2xl translate-y-1"></i>
+                    }
+                  >
+                    카테고리 선택
+                  </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Menu>
                   <Dropdown.Title title="Category" />
