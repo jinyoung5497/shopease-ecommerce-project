@@ -1,28 +1,45 @@
 import { ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { useCustomContext } from "../../hooks/useCustomContext";
 import { Slot } from "@radix-ui/react-slot";
+import React from "react";
 
 const DropdownContext = createContext<{
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  label: string;
-  setLabel: React.Dispatch<React.SetStateAction<string>>;
+  value: string | undefined;
+  dropdownOpen: boolean;
+  setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  dropdownValue: string;
+  setDropdownValue: React.Dispatch<React.SetStateAction<string>>;
 } | null>(null);
 
 type RootProps = {
   children: ReactNode;
+  value?: string;
+  onValueChange?: React.Dispatch<React.SetStateAction<string>>;
+  controlledOpen?: boolean;
+  setControlledOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export const DropdownRoot = ({ children }: RootProps) => {
+export const DropdownRoot = ({
+  children,
+  value,
+  onValueChange,
+  controlledOpen,
+  setControlledOpen,
+}: RootProps) => {
   const [open, setOpen] = useState(false);
   const [label, setLabel] = useState("");
+  const dropdownOpen = controlledOpen ? controlledOpen : open;
+  const setDropdownOpen = setControlledOpen ? setControlledOpen : setOpen;
+  const dropdownValue = value ? value : label;
+  const setDropdownValue = onValueChange ? onValueChange : setLabel;
 
   return (
     <DropdownContext.Provider
       value={{
-        open,
-        setOpen,
-        label,
-        setLabel,
+        value,
+        dropdownOpen,
+        setDropdownOpen,
+        dropdownValue,
+        setDropdownValue,
       }}
     >
       <div className="relative">{children}</div>
@@ -37,14 +54,23 @@ type DropdownTriggerType = {
 export const DropdownTrigger = ({ children, asChild }: DropdownTriggerType) => {
   const context = useCustomContext(DropdownContext);
   const Component = asChild ? Slot : "button";
+
+  const modifiedChildren = React.isValidElement(children)
+    ? React.cloneElement(
+        children,
+        {},
+        context.dropdownValue || children.props.children,
+      )
+    : context.dropdownValue || children;
+
   return (
     <Component
       onClick={(event) => {
-        context?.setOpen((prev) => !prev);
         event.preventDefault();
+        context?.setDropdownOpen((prev) => !prev);
       }}
     >
-      {context.label ? context.label : children}
+      {modifiedChildren}
     </Component>
   );
 };
@@ -58,7 +84,7 @@ export const DropdownMenu = ({ children }: DropdownMenuProps) => {
   const context = useCustomContext(DropdownContext);
 
   useEffect(() => {
-    if (context?.open) {
+    if (context?.dropdownOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     } else {
       document.removeEventListener("mousedown", handleOutsideClick);
@@ -67,18 +93,18 @@ export const DropdownMenu = ({ children }: DropdownMenuProps) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [context?.open]);
+  }, [context?.dropdownOpen]);
 
   const handleOutsideClick = (e: MouseEvent) => {
     if (
       dropdownMenuRef.current &&
       !dropdownMenuRef.current.contains(e.target as Node)
     ) {
-      context?.setOpen(false);
+      context?.setDropdownOpen(false);
     }
   };
 
-  if (!context?.open) return null;
+  if (!context?.dropdownOpen) return null;
   return (
     <div
       className="w-max min-w-48 rounded-[7px] flex flex-col items-start absolute top-10 drop-shadow-lg bg-white p-1 gap-1 max-h-44 overflow-y-auto mt-1 z-20"
@@ -102,28 +128,26 @@ export const DropdownMenuTitle = ({ title }: DropdownMenuTitleProps) => {
 
 type DropdownMenuItemProps = {
   children: ReactNode;
-  icon?: ReactNode;
-  onClick?: () => void;
+  asChild?: boolean;
+  value: string;
 };
 export const DropdownMenuItem = ({
   children,
-  icon,
-  onClick,
+  asChild,
+  value,
 }: DropdownMenuItemProps) => {
   const context = useCustomContext(DropdownContext);
+  const Component = asChild ? Slot : "button";
   return (
-    <button
+    <Component
       onClick={() => {
-        const value = children?.toString() ?? "";
-        context?.setLabel(value);
-        context?.setOpen(false);
-        onClick && onClick();
+        context?.setDropdownValue(value);
+        context?.setDropdownOpen(false);
       }}
       className="hover:bg-slate-100 rounded-[7px] min-h-8 text-sm w-full text-start px-2 flex items-center justify-start gap-1"
     >
-      {icon && icon}
       {children}
-    </button>
+    </Component>
   );
 };
 

@@ -2,6 +2,7 @@ import type { Meta } from "@storybook/react";
 import { Dropdown } from "./Dropdown";
 import { ChevronDown } from "lucide-react";
 import { Button } from "../button/Button";
+import { useState } from "react";
 const meta: Meta = {
   title: "Components/Dropdown",
   tags: ["autodocs"],
@@ -32,11 +33,15 @@ export const Basic = () => (
     </Dropdown.Trigger>
     <Dropdown.Menu>
       <Dropdown.Title title="Category" />
-      <Dropdown.MenuItem>Men's Clothing</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Women's Clothing</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Sneakers</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Hat</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Men's Clothing">
+        Men's Clothing
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Women's Clothing">
+        Women's Clothing
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Sneakers">Sneakers</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Hat">Hat</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids">Kids</Dropdown.MenuItem>
     </Dropdown.Menu>
   </Dropdown.Root>
 );
@@ -46,19 +51,64 @@ export const LongList = () => (
     <Dropdown.Trigger>카테고리 선택</Dropdown.Trigger>
     <Dropdown.Menu>
       <Dropdown.Title title="Category" />
-      <Dropdown.MenuItem>Men's Clothing</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Women's Clothing</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Sneakers</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Hat</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids1</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids2</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids3</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids4</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids5</Dropdown.MenuItem>
-      <Dropdown.MenuItem>Kids6</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Men's Clothing">
+        Men's Clothing
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Women's Clothing">
+        Women's Clothing
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Sneakers">Sneakers</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Hat">Hat</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids1">Kids1</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids2">Kids2</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids3">Kids3</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids4">Kids4</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids5">Kids5</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids6">Kids6</Dropdown.MenuItem>
     </Dropdown.Menu>
   </Dropdown.Root>
 );
+
+export const controlledDropdown = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  return (
+    <>
+      <Dropdown.Root
+        controlledOpen={open}
+        setControlledOpen={setOpen}
+        value={value}
+        onValueChange={setValue}
+      >
+        <Dropdown.Trigger>카테고리 선택</Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Title title="Category" />
+          <Dropdown.MenuItem value="Men's Clothing">
+            <Button variant="link" onClick={() => setValue("Men's Clothing")}>
+              Men's Clothing
+            </Button>
+          </Dropdown.MenuItem>
+          <Dropdown.MenuItem value="Women's Clothing">
+            <Button variant="link" onClick={() => setValue("Women's Clothing")}>
+              Women's Clothing
+            </Button>
+          </Dropdown.MenuItem>
+          <Dropdown.MenuItem value="Sneakers">
+            <Button variant="link" onClick={() => setValue("Sneakers")}>
+              Sneakers
+            </Button>
+          </Dropdown.MenuItem>
+          <Dropdown.MenuItem value="Hat">
+            <Button variant="link" onClick={() => setValue("Hat")}>
+              Hat
+            </Button>
+          </Dropdown.MenuItem>
+        </Dropdown.Menu>
+      </Dropdown.Root>
+    </>
+  );
+};
 
 export const ItemWithIcon = () => (
   <Dropdown.Root>
@@ -70,15 +120,31 @@ export const ItemWithIcon = () => (
 
     <Dropdown.Menu>
       <Dropdown.Title title="Category" />
-      <Dropdown.MenuItem icon={<ChevronDown />}>
-        Men's Clothing
+      <Dropdown.MenuItem value="Men's Clothing">
+        <Button variant="link" iconLeft={<ChevronDown />}>
+          Men's Clothing
+        </Button>
       </Dropdown.MenuItem>
-      <Dropdown.MenuItem icon={<ChevronDown />}>
-        Women's Clothing
+      <Dropdown.MenuItem value="Women's Clothing">
+        <Button variant="link" iconLeft={<ChevronDown />}>
+          Women's Clothing
+        </Button>
       </Dropdown.MenuItem>
-      <Dropdown.MenuItem icon={<ChevronDown />}>Sneakers</Dropdown.MenuItem>
-      <Dropdown.MenuItem icon={<ChevronDown />}>Hat</Dropdown.MenuItem>
-      <Dropdown.MenuItem icon={<ChevronDown />}>Kids</Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Sneakers">
+        <Button variant="link" iconLeft={<ChevronDown />}>
+          Sneakers
+        </Button>
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Hat">
+        <Button variant="link" iconLeft={<ChevronDown />}>
+          Hat
+        </Button>
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem value="Kids">
+        <Button variant="link" iconLeft={<ChevronDown />}>
+          Kids
+        </Button>
+      </Dropdown.MenuItem>
     </Dropdown.Menu>
   </Dropdown.Root>
 );
