@@ -1,50 +1,19 @@
-import { createContext, useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useDisableScroll } from "../../hooks/useDisableScroll";
-
-import { ReactNode } from "react";
 import { useCustomContext } from "../../hooks/useCustomContext";
-
-export type RootProps = {
-  children: ReactNode;
-  controlledOpen?: boolean;
-  setControlledOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-};
-export type ModalTriggerProps = {
-  children: ReactNode;
-};
-export type ModalContentProps = {
-  children: ReactNode;
-};
-export type ModalHeaderProps = {
-  children: ReactNode;
-};
-export type ModalTitleProps = {
-  title: string;
-};
-export type ModalDescriptionProps = {
-  description: string;
-};
-export type ModalItemsProps = {
-  children: ReactNode;
-};
-export type ModalFooterProps = {
-  children: ReactNode;
-};
-export type ModalCloseButtonProps = {
-  topRight?: boolean;
-  topLeft?: boolean;
-  bottomRight?: boolean;
-  bottomLeft?: boolean;
-  children: ReactNode;
-};
-
-interface ModalContextType {
-  isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ModalContext = createContext<ModalContextType | null>(null);
+import {
+  RootProps,
+  ModalTriggerProps,
+  ModalContentProps,
+  ModalHeaderProps,
+  ModalCloseButtonProps,
+  ModalTitleProps,
+  ModalDescriptionProps,
+  ModalItemsProps,
+  ModalFooterProps,
+  ModalContext,
+} from "./ModalType";
 
 export const ModalRoot = ({
   children,
@@ -107,10 +76,6 @@ export const ModalContent = ({ children }: ModalContentProps) => {
   );
 };
 
-export const ModalHeader = ({ children }: ModalHeaderProps) => {
-  return <div className="flex flex-col gap-2 w-full">{children}</div>;
-};
-
 export const ModalClose = ({
   topRight,
   topLeft,
@@ -135,6 +100,10 @@ export const ModalClose = ({
       {children}
     </button>
   );
+};
+
+export const ModalHeader = ({ children }: ModalHeaderProps) => {
+  return <div className="flex flex-col gap-2 w-full">{children}</div>;
 };
 
 export const ModalDivider = () => {
