@@ -12,7 +12,8 @@ export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: ButtonVariant;
   color?: ButtonColor;
   radius?: ButtonRadius;
-  icon?: React.ReactNode;
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
   loading?: boolean;
   full?: boolean;
   className?: string;

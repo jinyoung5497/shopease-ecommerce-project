@@ -28,7 +28,7 @@ export default meta; // 메타 데이터 내보내기
 
 export const Basic = () => (
   <Modal.Root>
-    <Modal.Trigger variant="outline">상품 추가</Modal.Trigger>
+    <Modal.Trigger>상품 추가</Modal.Trigger>
     <Modal.Content>
       <Modal.Close topRight>
         <X className="h-5 w-5" />

@@ -159,13 +159,15 @@ const RegisterModal = () => {
         controlledOpen={isModalOpen}
         setControlledOpen={setIsModalOpen}
       >
-        <Modal.Trigger
-          icon={
-            <i className="fi fi-rs-plus-small text-2xl translate-y-[2px]"></i>
-          }
-          variant="outline"
-        >
-          상품 추가
+        <Modal.Trigger>
+          <Button
+            iconLeft={
+              <i className="fi fi-rs-plus-small text-2xl translate-y-[2px]"></i>
+            }
+            variant="outline"
+          >
+            상품 추가
+          </Button>
         </Modal.Trigger>
         <Modal.Content>
           <Modal.Close topRight>

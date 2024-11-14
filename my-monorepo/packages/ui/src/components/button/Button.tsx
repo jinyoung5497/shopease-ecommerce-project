@@ -11,7 +11,8 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
       variant = "solid",
       color = "primary",
       radius = "small",
-      icon,
+      iconLeft,
+      iconRight,
       loading = false,
       full = false,
       children,
@@ -52,8 +53,9 @@ export const Button = React.forwardRef<Ref, ButtonProps>(
               between ? "justify-between" : "justify-center"
             } gap-1`}
           >
-            {icon && icon}
+            {iconLeft && iconLeft}
             {children}
+            {iconRight && iconRight}
           </div>
         )}
       </Component>

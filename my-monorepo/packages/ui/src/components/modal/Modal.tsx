@@ -1,10 +1,8 @@
 import { createContext, useContext, useRef, useState } from "react";
-import { Button } from "../button/Button";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useDisableScroll } from "../../hooks/useDisableScroll";
 
 import { ReactNode } from "react";
-import { ButtonProps } from "../button/ButtonType";
 import { useCustomContext } from "../../hooks/useCustomContext";
 
 export type RootProps = {
@@ -13,8 +11,8 @@ export type RootProps = {
   setControlledOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export type ModalTriggerProps = {
-  rightIcon?: ReactNode;
-} & ButtonProps;
+  children: ReactNode;
+};
 export type ModalContentProps = {
   children: ReactNode;
 };
@@ -44,8 +42,6 @@ export type ModalCloseButtonProps = {
 interface ModalContextType {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  label: string;
-  setLabel: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -56,7 +52,6 @@ export const ModalRoot = ({
   setControlledOpen,
 }: RootProps) => {
   const [open, setOpen] = useState(false);
-  const [label, setLabel] = useState("");
   const isModalOpen = controlledOpen !== undefined ? controlledOpen : open;
   const setIsModalOpen =
     setControlledOpen !== undefined ? setControlledOpen : setOpen;
@@ -66,8 +61,6 @@ export const ModalRoot = ({
       value={{
         isModalOpen,
         setIsModalOpen,
-        label,
-        setLabel,
       }}
     >
       <div>{children}</div>
@@ -75,21 +68,18 @@ export const ModalRoot = ({
   );
 };
 
-export const ModalTrigger = ({ rightIcon, ...rest }: ModalTriggerProps) => {
+export const ModalTrigger = ({ children }: ModalTriggerProps) => {
   const context = useCustomContext(ModalContext);
 
   return (
-    <Button
+    <button
       onClick={(event) => {
         event.preventDefault();
         context.setIsModalOpen(true);
       }}
-      className="flex items-center justify-center"
-      {...rest}
     >
-      {context?.label ? context?.label : rest.children}
-      {rightIcon && rightIcon}
-    </Button>
+      {children}
+    </button>
   );
 };
 
