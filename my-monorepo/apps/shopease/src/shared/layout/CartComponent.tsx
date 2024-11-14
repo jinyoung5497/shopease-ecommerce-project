@@ -36,7 +36,7 @@ const CartComponent = () => {
 
   return (
     <Sheet.Root>
-      <Sheet.Trigger variant="link" asChild>
+      <Sheet.Trigger asChild>
         <Button variant="link">
           <div className="flex gap-1 items-center justify-center right-0 relative">
             {data && data?.length > 0 && isLogin && (

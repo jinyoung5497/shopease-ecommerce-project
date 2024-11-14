@@ -7,6 +7,7 @@ export type RootProps = {
 };
 export type ModalTriggerProps = {
   children: ReactNode;
+  asChild: boolean;
 };
 export type ModalContentProps = {
   children: ReactNode;

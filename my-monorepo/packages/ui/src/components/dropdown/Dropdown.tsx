@@ -2,6 +2,7 @@ import { ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { Button } from "../button/Button";
 import { ButtonProps } from "../button/ButtonType";
 import { useCustomContext } from "../../hooks/useCustomContext";
+import { Slot } from "@radix-ui/react-slot";
 
 const DropdownContext = createContext<{
   open: boolean;
@@ -32,25 +33,21 @@ export const DropdownRoot = ({ children }: RootProps) => {
 };
 
 type DropdownTriggerType = {
-  rightIcon?: ReactNode;
-} & ButtonProps;
-export const DropdownTrigger = ({
-  rightIcon,
-  ...rest
-}: DropdownTriggerType) => {
+  children: ReactNode;
+  asChild?: boolean;
+};
+export const DropdownTrigger = ({ children, asChild }: DropdownTriggerType) => {
   const context = useCustomContext(DropdownContext);
+  const Component = asChild ? Slot : "button";
   return (
-    <Button
+    <Component
       onClick={(event) => {
         context?.setOpen((prev) => !prev);
         event.preventDefault();
       }}
-      className={`min-w-24`}
-      {...rest}
     >
-      {context?.label ? context?.label : rest.children}
-      {rightIcon && <div className="translate-y-1">{rightIcon}</div>}
-    </Button>
+      {context.label ? context.label : children}
+    </Component>
   );
 };
 

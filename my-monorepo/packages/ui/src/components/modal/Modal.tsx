@@ -14,6 +14,7 @@ import {
   ModalFooterProps,
   ModalContext,
 } from "./ModalType";
+import { Slot } from "@radix-ui/react-slot";
 
 export const ModalRoot = ({
   children,
@@ -37,18 +38,18 @@ export const ModalRoot = ({
   );
 };
 
-export const ModalTrigger = ({ children }: ModalTriggerProps) => {
+export const ModalTrigger = ({ children, asChild }: ModalTriggerProps) => {
   const context = useCustomContext(ModalContext);
-
+  const Component = asChild ? Slot : "button";
   return (
-    <button
+    <Component
       onClick={(event) => {
         event.preventDefault();
         context.setIsModalOpen(true);
       }}
     >
       {children}
-    </button>
+    </Component>
   );
 };
 
