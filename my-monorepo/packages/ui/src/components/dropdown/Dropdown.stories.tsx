@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
 import { Dropdown } from "./Dropdown";
 import { ChevronDown } from "lucide-react";
+import { Button } from "../button/Button";
 const meta: Meta = {
   title: "Components/Dropdown",
   tags: ["autodocs"],
@@ -26,7 +27,9 @@ export default meta; // 메타 데이터 내보내기
 
 export const Basic = () => (
   <Dropdown.Root>
-    <Dropdown.Trigger variant="outline">카테고리 선택</Dropdown.Trigger>
+    <Dropdown.Trigger>
+      <Button variant="outline">카테고리 선택</Button>
+    </Dropdown.Trigger>
     <Dropdown.Menu>
       <Dropdown.Title title="Category" />
       <Dropdown.MenuItem>Men's Clothing</Dropdown.MenuItem>
@@ -59,8 +62,10 @@ export const LongList = () => (
 
 export const ItemWithIcon = () => (
   <Dropdown.Root>
-    <Dropdown.Trigger rightIcon={<ChevronDown className="-translate-y-1" />}>
-      카테고리 선택
+    <Dropdown.Trigger>
+      <Button iconRight={<ChevronDown className="-translate-y-1" />}>
+        카테고리 선택
+      </Button>
     </Dropdown.Trigger>
 
     <Dropdown.Menu>
