@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+bundle-visualization.html
 
 # Editor directories and files
 .vscode/*
