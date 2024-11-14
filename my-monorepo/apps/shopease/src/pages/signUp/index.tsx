@@ -175,7 +175,7 @@ const SignUp = () => {
           <div className="text-[12px] text-slate-400">or continue with</div>
 
           <Button
-            icon={<img src={google} alt="google" className="w-4 h-4" />}
+            iconLeft={<img src={google} alt="google" className="w-4 h-4" />}
             full
             radius="full"
             loading={isGoogleLoading}

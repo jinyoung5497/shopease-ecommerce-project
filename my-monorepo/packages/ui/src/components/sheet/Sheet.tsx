@@ -1,16 +1,18 @@
 import { ReactNode, createContext, useRef, useState } from "react";
-import { Button } from "../button/Button";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useDisableScroll } from "../../hooks/useDisableScroll";
-import { ButtonProps } from "../button/ButtonType";
 import styles from "./Sheet.module.css";
 import { useSheetAnimation } from "../../hooks/useSheetAnimation";
 import { useCustomContext } from "../../hooks/useCustomContext";
+import { Slot } from "@radix-ui/react-slot";
 
 export type RootProps = {
   children: ReactNode;
 };
-export type SheetTriggerType = {} & ButtonProps;
+export type SheetTriggerType = {
+  children: ReactNode;
+  asChild?: boolean;
+};
 export type SheetContentProps = {
   children: ReactNode;
 };
@@ -57,18 +59,17 @@ export const SheetRoot = ({ children }: RootProps) => {
   );
 };
 
-export const SheetTrigger = ({ ...rest }: SheetTriggerType) => {
+export const SheetTrigger = ({ children, asChild }: SheetTriggerType) => {
   const context = useCustomContext(SheetContext);
+  const Component = asChild ? Slot : "button";
   return (
-    <Button
+    <Component
       onClick={() => {
         context?.setOpen((prev) => !prev);
       }}
-      className="w-fit flex items-center justify-center"
-      {...rest}
     >
-      {rest.children}
-    </Button>
+      {children}
+    </Component>
   );
 };
 
@@ -98,10 +99,6 @@ export const SheetContent = ({ children }: SheetContentProps) => {
   );
 };
 
-export const SheetHeader = ({ children }: SheetHeaderProps) => {
-  return <div className="flex flex-col gap-2 w-full">{children}</div>;
-};
-
 export const SheetClose = ({
   topRight,
   topLeft,
@@ -123,6 +120,10 @@ export const SheetClose = ({
       {children}
     </button>
   );
+};
+
+export const SheetHeader = ({ children }: SheetHeaderProps) => {
+  return <div className="flex flex-col gap-2 w-full">{children}</div>;
 };
 
 export const SheetDivider = () => {

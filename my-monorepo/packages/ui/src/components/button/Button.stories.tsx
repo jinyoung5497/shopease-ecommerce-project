@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "./Button";
 import { ButtonProps } from "./ButtonType";
+import { LucideAlertTriangle } from "lucide-react";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -68,6 +69,16 @@ export const radius = () => (
     <Button radius="medium">medium</Button>
     <Button radius="large">large</Button>
     <Button radius="full">full</Button>
+  </>
+);
+export const iconLeft = () => (
+  <>
+    <Button iconLeft={<LucideAlertTriangle />}>iconLeft</Button>
+  </>
+);
+export const iconRight = () => (
+  <>
+    <Button iconRight={<LucideAlertTriangle />}>iconRight</Button>
   </>
 );
 

@@ -1,3 +1,4 @@
+import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import React from "react";
 
@@ -49,9 +50,9 @@ export const Toggle = React.forwardRef<HTMLElement, ToggleProps>(
       className,
       ...rest
     },
-    ref
+    ref,
   ) => {
-    const Component = asChild ? "span" : "button"; // asChild를 사용해 요소를 변경할 수 있음
+    const Component = asChild ? Slot : "button"; // asChild를 사용해 요소를 변경할 수 있음
 
     const toggleVariants = cva("", {
       variants: {
@@ -147,5 +148,5 @@ export const Toggle = React.forwardRef<HTMLElement, ToggleProps>(
         {icon && <span className="mr-2">{icon}</span>} {children}
       </Component>
     );
-  }
+  },
 );

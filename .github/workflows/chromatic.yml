@@ -1,5 +1,3 @@
-name: "Chromatic"
-
 on: push
 
 jobs:
@@ -15,10 +13,11 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        # ⚠️ See your package manager's documentation for the correct command to install dependencies in a CI environment.
-        run: npm ci
+        working-directory: my-monorepo/packages/ui # UI 패키지로 이동하여 설치
+        run: npm install
       - name: Run Chromatic
         uses: chromaui/action@latest
         with:
           # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: my-monorepo/packages/ui

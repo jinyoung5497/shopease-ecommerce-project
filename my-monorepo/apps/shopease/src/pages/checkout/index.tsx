@@ -120,12 +120,14 @@ const Checkout = () => {
     <Layout authStatus={authStatusType.BUYER}>
       <div>
         <Modal.Root>
-          <Modal.Trigger
-            variant="link"
-            icon={<ArrowLeft />}
-            className="absolute top-60 left-10"
-          >
-            돌아가기
+          <Modal.Trigger>
+            <Button
+              variant="link"
+              iconLeft={<ArrowLeft />}
+              className="absolute top-60 left-10"
+            >
+              돌아가기
+            </Button>
           </Modal.Trigger>
           <Modal.Content>
             <Modal.Close topRight>
