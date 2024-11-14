@@ -5,44 +5,18 @@ import styles from "./Sheet.module.css";
 import { useSheetAnimation } from "../../hooks/useSheetAnimation";
 import { useCustomContext } from "../../hooks/useCustomContext";
 import { Slot } from "@radix-ui/react-slot";
-
-export type RootProps = {
-  children: ReactNode;
-};
-export type SheetTriggerType = {
-  children: ReactNode;
-  asChild?: boolean;
-};
-export type SheetContentProps = {
-  children: ReactNode;
-};
-export type SheetHeaderProps = {
-  children: ReactNode;
-};
-export type SheetTitleProps = {
-  title: string;
-};
-export type SheetDescriptionProps = {
-  description: string;
-};
-export type SheetItemsProps = {
-  children: ReactNode;
-};
-export type SheetFooterProps = {
-  children: ReactNode;
-};
-export type SheetCloseProps = {
-  topRight?: boolean;
-  topLeft?: boolean;
-  bottomRight?: boolean;
-  bottomLeft?: boolean;
-  children: ReactNode;
-};
-
-const SheetContext = createContext<{
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-} | null>(null);
+import {
+  RootProps,
+  SheetContext,
+  SheetTriggerType,
+  SheetContentProps,
+  SheetCloseProps,
+  SheetHeaderProps,
+  SheetTitleProps,
+  SheetDescriptionProps,
+  SheetItemsProps,
+  SheetFooterProps,
+} from "./SheetType";
 
 export const SheetRoot = ({ children }: RootProps) => {
   const [open, setOpen] = useState(false);

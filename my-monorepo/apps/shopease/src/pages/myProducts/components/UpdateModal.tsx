@@ -190,7 +190,7 @@ const UpdateModal: React.FC<UpdateModalProps> = React.memo(({ id }) => {
         setControlledOpen={setIsModalOpen}
       >
         <Modal.Trigger asChild>
-          <Button variant="link" color="black">
+          <Button variant="link">
             <i className="fi fi-rs-edit text-xl"></i>
           </Button>
         </Modal.Trigger>

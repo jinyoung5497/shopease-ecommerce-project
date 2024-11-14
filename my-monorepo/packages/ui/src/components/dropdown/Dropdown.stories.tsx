@@ -113,9 +113,7 @@ export const controlledDropdown = () => {
 export const ItemWithIcon = () => (
   <Dropdown.Root>
     <Dropdown.Trigger>
-      <Button iconRight={<ChevronDown className="-translate-y-1" />}>
-        카테고리 선택
-      </Button>
+      <Button iconRight={<ChevronDown />}>카테고리 선택</Button>
     </Dropdown.Trigger>
 
     <Dropdown.Menu>

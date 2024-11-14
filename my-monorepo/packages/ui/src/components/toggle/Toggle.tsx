@@ -1,40 +1,8 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import React from "react";
-
-export type ToggleSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
-export type ToggleVariant = "outline" | "ghost";
-export type ToggleColor = "primary" | "blue" | "black" | "red";
-export type ToggleRadius = "none" | "small" | "medium" | "large" | "full";
-
-export interface ToggleProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: boolean;
-  size?: ToggleSize;
-  variant?: ToggleVariant;
-  color?: ToggleColor;
-  radius?: ToggleRadius;
-  icon?: React.ReactNode;
-  isActive?: boolean;
-  className?: string;
-  children: React.ReactNode;
-}
-
-const sizeClass = {
-  xsmall: "px-[7px] py-[1px] text-[12px]",
-  small: "px-[10px] py-[3px] text-[14px]",
-  medium: "px-[12px] py-[5px] text-[16px]",
-  large: "px-[14px] py-[7px] text-[16px]",
-  xlarge: "px-[16px] py-[7px] text-[18px]",
-};
-
-const radiusClass = {
-  none: "rounded-none",
-  small: "rounded-[5px]",
-  medium: "rounded-[8px]",
-  large: "rounded-[12px]",
-  full: "rounded-full",
-};
+import { ToggleProps } from "./ToggleType";
+import { sizeClass, radiusClass } from "./ToggleClass";
 
 export const Toggle = React.forwardRef<HTMLElement, ToggleProps>(
   (

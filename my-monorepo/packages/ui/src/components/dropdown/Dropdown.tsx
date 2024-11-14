@@ -1,23 +1,18 @@
-import { ReactNode, createContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCustomContext } from "../../hooks/useCustomContext";
 import { Slot } from "@radix-ui/react-slot";
 import React from "react";
+import {
+  RootProps,
+  DropdownContext,
+  DropdownTriggerType,
+  DropdownMenuProps,
+  DropdownMenuTitleProps,
+  DropdownMenuItemProps,
+} from "./DropdownType";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useDisableScroll } from "../..//hooks/useDisableScroll";
 
-const DropdownContext = createContext<{
-  value: string | undefined;
-  dropdownOpen: boolean;
-  setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  dropdownValue: string;
-  setDropdownValue: React.Dispatch<React.SetStateAction<string>>;
-} | null>(null);
-
-type RootProps = {
-  children: ReactNode;
-  value?: string;
-  onValueChange?: React.Dispatch<React.SetStateAction<string>>;
-  controlledOpen?: boolean;
-  setControlledOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-};
 export const DropdownRoot = ({
   children,
   value,
@@ -47,10 +42,6 @@ export const DropdownRoot = ({
   );
 };
 
-type DropdownTriggerType = {
-  children: ReactNode;
-  asChild?: boolean;
-};
 export const DropdownTrigger = ({ children, asChild }: DropdownTriggerType) => {
   const context = useCustomContext(DropdownContext);
   const Component = asChild ? Slot : "button";
@@ -75,34 +66,14 @@ export const DropdownTrigger = ({ children, asChild }: DropdownTriggerType) => {
   );
 };
 
-type DropdownMenuProps = {
-  children: ReactNode;
-};
-
 export const DropdownMenu = ({ children }: DropdownMenuProps) => {
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const context = useCustomContext(DropdownContext);
 
-  useEffect(() => {
-    if (context?.dropdownOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [context?.dropdownOpen]);
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (
-      dropdownMenuRef.current &&
-      !dropdownMenuRef.current.contains(e.target as Node)
-    ) {
-      context?.setDropdownOpen(false);
-    }
-  };
+  useOutsideClick(dropdownMenuRef, context?.dropdownOpen, () =>
+    context?.setDropdownOpen(false),
+  );
+  useDisableScroll(context?.dropdownOpen);
 
   if (!context?.dropdownOpen) return null;
   return (
@@ -115,9 +86,6 @@ export const DropdownMenu = ({ children }: DropdownMenuProps) => {
   );
 };
 
-type DropdownMenuTitleProps = {
-  title: string;
-};
 export const DropdownMenuTitle = ({ title }: DropdownMenuTitleProps) => {
   return (
     <div className="mb-1 border-slate-200 border-b-[1px] font-semibold p-1 w-full">
@@ -126,11 +94,6 @@ export const DropdownMenuTitle = ({ title }: DropdownMenuTitleProps) => {
   );
 };
 
-type DropdownMenuItemProps = {
-  children: ReactNode;
-  asChild?: boolean;
-  value: string;
-};
 export const DropdownMenuItem = ({
   children,
   asChild,
