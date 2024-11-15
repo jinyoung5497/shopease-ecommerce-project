@@ -4,7 +4,7 @@ import { useNavigation } from "@/shared/hooks/useNavigation";
 import HomeCategory from "./components/HomeCategory";
 import { Button } from "@repo/ui/button/Button";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 
 const Home = () => {
@@ -13,17 +13,17 @@ const Home = () => {
   const [hasFetched, setHasFetched] = useState(false);
   const scrollToTop = useSmoothScrollToTop();
 
-  const handleFetchNextPage = () => {
+  const handleFetchNextPage = useCallback(() => {
     if (hasNextPage && !hasFetched) {
       fetchNextPage();
       setHasFetched(true);
     }
-  };
+  }, [fetchNextPage, setHasFetched]);
 
-  const handleAllProductsButtonClick = () => {
+  const handleAllProductsButtonClick = useCallback(() => {
     navToCategoryProduct();
     scrollToTop();
-  };
+  }, [navToCategoryProduct, scrollToTop]);
 
   return (
     <Layout>
