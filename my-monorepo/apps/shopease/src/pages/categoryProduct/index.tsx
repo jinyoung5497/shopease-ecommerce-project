@@ -1,7 +1,7 @@
 import HomeButton from "../../shared/layout/HomeButton";
 import { Layout } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
-import FilterButton from "./components/FilterButton";
+import CategoryFilterButton from "./components/CategoryFilterButton";
 import React, { Suspense } from "react";
 import { LoadingSkeleton } from "../../shared/layout/LoadingSkeleton";
 import GetCategoryTitle from "./components/GetCategoryTitle";
@@ -21,7 +21,7 @@ const CategoryProduct = () => {
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
         <GetCategoryTitle />
       </div>
-      <FilterButton />
+      <CategoryFilterButton />
       <Suspense
         fallback={
           <LoadingSkeleton
