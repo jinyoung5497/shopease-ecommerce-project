@@ -7,8 +7,8 @@ import { Suspense, useCallback } from "react";
 import React from "react";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 
-const RenderOrders = React.lazy(
-  () => import("../../features/order/ui/RenderOrder"),
+const AdminRenderOrders = React.lazy(
+  () => import("./components/AdminRenderOrder"),
 );
 
 const Administration = () => {
@@ -45,7 +45,7 @@ const Administration = () => {
           }
         >
           <div className="grid grid-cols-5 gap-4 items-start justify-items-center mx-20 m-20">
-            <RenderOrders data={data} handleSelect={handleSelect} />
+            <AdminRenderOrders data={data} handleSelect={handleSelect} />
           </div>
         </Suspense>
       </div>
