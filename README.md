@@ -14,6 +14,8 @@
 
 [SHOPEASE 배포링크](shopease-ecommerce-project.vercel.app)
 
+[STORYBOOK 배포링크](https://672b14386c9e6d4a0c4ba4be-epvgxdzctl.chromatic.com/?path=/docs/components-button--docs)
+
 ##### 테스트 계정
 
 ##### 아래 로그인정보를 입력하거나 로그인 페이지에 테스터 로그인 버튼이 있습니다.
