@@ -19,7 +19,7 @@ interface UpdateModalProps {
 
 type ProductCategoryType = Product["productCategory"];
 
-const UpdateModal: React.FC<UpdateModalProps> = React.memo(({ id }) => {
+const UpdateModal = React.memo(({ id }: UpdateModalProps) => {
   const { mutate: updateProduct } = useUpdateProduct();
   const { user } = useAuthStore();
   const { data } = useFetchDetailedProduct(id);

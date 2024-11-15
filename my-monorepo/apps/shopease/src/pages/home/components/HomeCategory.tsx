@@ -12,9 +12,7 @@ const HomeCategory = React.memo(() => {
   const { data } = useFetchProducts();
   const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
   const scrollToTop = useSmoothScrollToTop();
-  const CategoryPreviewCards = React.lazy(
-    () => import("./CategoryPreviewCards"),
-  );
+  const HomeCategoryCards = React.lazy(() => import("./HomeCategoryCards"));
 
   const categoryList = [
     "Men's Clothing",
@@ -79,7 +77,7 @@ const HomeCategory = React.memo(() => {
               />
             }
           >
-            <CategoryPreviewCards
+            <HomeCategoryCards
               category={category}
               data={data}
               navToDetailedProduct={navToDetailedProduct}

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-const GetCategoryTitle = () => {
+const useCategoryTitle = () => {
   const [searchParams] = useSearchParams();
 
   const activeFilters = [
@@ -17,7 +17,7 @@ const GetCategoryTitle = () => {
     return "All products";
   } else if (selectedFilters.length === 1) {
     const matchedFilter = activeFilters.find(
-      (filter) => filter.isActive === selectedFilters[0]
+      (filter) => filter.isActive === selectedFilters[0],
     );
     return matchedFilter ? matchedFilter.label : "Unknown Category";
   } else {
@@ -25,4 +25,4 @@ const GetCategoryTitle = () => {
   }
 };
 
-export default GetCategoryTitle;
+export default useCategoryTitle;
