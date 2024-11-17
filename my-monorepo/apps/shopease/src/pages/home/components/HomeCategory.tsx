@@ -1,5 +1,4 @@
 import { pageRoutes } from "@/app/apiRoutes";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@repo/ui/button/Button";
 import { getProductsAPI } from "@/features/product/api/api";
@@ -7,6 +6,7 @@ import useThrottledPrefetch from "@/shared/hooks/useThrottledPrefetch";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 import React, { Suspense, useCallback } from "react";
 import { useSmoothScrollToTop } from "../../../shared/hooks/useSmoothScrollToTop";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const HomeCategory = React.memo(() => {
   const { data } = useFetchProducts();

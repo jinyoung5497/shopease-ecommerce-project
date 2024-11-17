@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect } from "react";
 import { useAddOrder } from "@/features/order/hooks/useAddOrder";
 import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import OrderInfomation from "./components/CheckoutOrderInfomation";
 import SubmitInfomation from "./components/CheckoutSubmitInfomation";
 import * as PortOne from "@portone/browser-sdk/v2";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import CheckoutCancelOrderModal from "./components/CheckoutCancelOrderModal";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),

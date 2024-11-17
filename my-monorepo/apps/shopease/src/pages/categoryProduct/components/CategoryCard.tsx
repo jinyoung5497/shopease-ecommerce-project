@@ -4,9 +4,9 @@ import { Product } from "@/features/product/api";
 import { useCallback, useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import ImageLoading from "@/shared/components/ImageLoading";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const CategoryCard = () => {
   const { data, fetchNextPage, isFetchingNextPage } =

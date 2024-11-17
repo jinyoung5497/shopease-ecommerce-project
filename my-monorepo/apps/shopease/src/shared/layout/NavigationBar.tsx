@@ -1,9 +1,9 @@
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCallback, useEffect } from "react";
 import { Button } from "@repo/ui/button/Button";
 import React from "react";
 import CartComponent from "./CartComponent";
+import { useNavigation } from "../hooks/useNavigation";
 
 const NavigationBar = React.memo(() => {
   const { isLogin, logout, checkLoginStatus, isSeller } = useAuthStore();

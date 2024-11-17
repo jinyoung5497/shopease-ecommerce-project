@@ -5,9 +5,9 @@ import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFe
 import { Product } from "@/features/product/api";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import ImageLoading from "@/shared/components/ImageLoading";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
