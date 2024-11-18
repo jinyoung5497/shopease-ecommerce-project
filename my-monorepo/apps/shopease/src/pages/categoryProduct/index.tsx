@@ -4,7 +4,7 @@ import NavigationBar from "../../shared/layout/NavigationBar";
 import CategoryFilterButton from "./components/CategoryFilterButton";
 import React, { Suspense } from "react";
 import { LoadingSkeleton } from "../../shared/layout/LoadingSkeleton";
-import useCategoryTitle from "./components/useCategoryTitle";
+import useCategoryTitle from "./hooks/useCategoryTitle";
 
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 

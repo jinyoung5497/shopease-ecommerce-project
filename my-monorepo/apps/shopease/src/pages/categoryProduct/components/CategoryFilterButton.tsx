@@ -2,7 +2,7 @@ import { Toggle } from "@repo/ui/toggle/Toggle";
 import { Button } from "@repo/ui/button/Button";
 import { useSearchParams } from "react-router-dom";
 
-const FilterButton = () => {
+const CategoryFilterButton = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedFilters = searchParams.getAll("filter");
@@ -77,4 +77,4 @@ const FilterButton = () => {
   );
 };
 
-export default FilterButton;
+export default CategoryFilterButton;

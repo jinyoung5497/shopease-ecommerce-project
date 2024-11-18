@@ -1,3 +1,3 @@
 export * from "./CategoryCard";
 export * from "./CategoryFilterButton";
-export * from "./useCategoryTitle";
+export * from "../hooks/useCategoryTitle";
