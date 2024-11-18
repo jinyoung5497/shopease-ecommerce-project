@@ -1,27 +1,26 @@
 import HomeButton from "../../shared/layout/HomeButton";
 import { Layout } from "../../shared/layout/Layout";
 import NavigationBar from "../../shared/layout/NavigationBar";
-import FilterButton from "./components/FilterButton";
+import CategoryFilterButton from "./components/CategoryFilterButton";
 import React, { Suspense } from "react";
 import { LoadingSkeleton } from "../../shared/layout/LoadingSkeleton";
-import GetCategoryTitle from "./components/GetCategoryTitle";
+import useCategoryTitle from "./hooks/useCategoryTitle";
 
 const CategoryCard = React.lazy(() => import("./components/CategoryCard"));
 
 const CategoryProduct = () => {
+  const categoryTitle = useCategoryTitle();
   return (
     <Layout>
-      <div>
-        <NavigationBar />
-        <HomeButton style="absolute top-32 left-10" />
-        <div className="flex items-center justify-center w-full h-48 border-b-[1px] border-gray-light">
-          <h1 className="text-primary font-semibold text-[50px]">Categories</h1>
-        </div>
+      <NavigationBar />
+      <HomeButton style="absolute top-32 left-10" />
+      <div className="flex items-center justify-center w-full h-48 border-b-[1px] border-gray-light">
+        <h1 className="text-primary font-semibold text-[50px]">Categories</h1>
       </div>
       <div className="mx-14 my-10 text-4xl font-semibold text-primary">
-        <GetCategoryTitle />
+        {categoryTitle}
       </div>
-      <FilterButton />
+      <CategoryFilterButton />
       <Suspense
         fallback={
           <LoadingSkeleton

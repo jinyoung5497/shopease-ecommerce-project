@@ -1,4 +1,4 @@
-export * from "./RegisterModal";
+export * from "./MyProductsRegisterModal";
 export * from "./MyProductsCard";
-export * from "./UpdateModal";
-export * from "./DeleteModal";
+export * from "./MyProductsUpdateModal";
+export * from "./MyProductsDeleteModal";

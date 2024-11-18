@@ -1,4 +1,4 @@
-import { useNavigation } from "@/shared/hooks/useNavigation";
+import { useNavigation } from "../hooks/useNavigation";
 
 const Footer = () => {
   const { navToHome } = useNavigation();

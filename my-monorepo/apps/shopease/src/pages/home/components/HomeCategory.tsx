@@ -1,5 +1,4 @@
 import { pageRoutes } from "@/app/apiRoutes";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import { useFetchProducts } from "@/features/product/hooks/useFetchProduct";
 import { Button } from "@repo/ui/button/Button";
 import { getProductsAPI } from "@/features/product/api/api";
@@ -7,14 +6,13 @@ import useThrottledPrefetch from "@/shared/hooks/useThrottledPrefetch";
 import { LoadingSkeleton } from "@/shared/layout/LoadingSkeleton";
 import React, { Suspense, useCallback } from "react";
 import { useSmoothScrollToTop } from "../../../shared/hooks/useSmoothScrollToTop";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const HomeCategory = React.memo(() => {
   const { data } = useFetchProducts();
   const { navToFilteredProduct, navToDetailedProduct } = useNavigation();
   const scrollToTop = useSmoothScrollToTop();
-  const CategoryPreviewCards = React.lazy(
-    () => import("./CategoryPreviewCards"),
-  );
+  const HomeCategoryCards = React.lazy(() => import("./HomeCategoryCards"));
 
   const categoryList = [
     "Men's Clothing",
@@ -79,7 +77,7 @@ const HomeCategory = React.memo(() => {
               />
             }
           >
-            <CategoryPreviewCards
+            <HomeCategoryCards
               category={category}
               data={data}
               navToDetailedProduct={navToDetailedProduct}

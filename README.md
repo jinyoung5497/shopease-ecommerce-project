@@ -12,7 +12,7 @@
 
 #### 프로젝트 배포링크
 
-[SHOPEASE 배포링크](shopease-ecommerce-project.vercel.app)
+[SHOPEASE 배포링크](https://shopease-ecommerce-project.vercel.app/)
 
 [STORYBOOK 배포링크](https://672b14386c9e6d4a0c4ba4be-epvgxdzctl.chromatic.com/?path=/docs/components-button--docs)
 
@@ -66,6 +66,44 @@ http://localhost:5173/
 
 <img src="https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=Turborepo&logoColor=white">
 <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=netlify&logoColor=white">
+
+<br/>
+
+## 💭 기술적 의사결정
+
+- **디자인 시스템 구축**: 재사용성과 일관성을 위한 설계 및 도구 활용법
+
+- **모노레포의 필요성과 도입 전략**: 프로젝트 관리 효율성 증가 사례
+
+- 스토리북과 크로마틱 배포 / CI/CD 효율적으로 활용하기 (feat. Github Actions) Chromatic
+
+- 에러 바운더리를 사용한 선언적 에러 핸들링
+
+- 컴파운드 컴포넌트로 재사용성과 가독성 높이기
+
+- 전역상태관리 기준에 대한 고찰
+
+<br/>
+
+## 🔥 성능 최적화
+
+- 이미지 최적화로 이미지 크기 75% 줄이기
+- 랜더링 최적화 React.memo, useCallback, useMemo
+  - LCP 3s -> 1s / TBT 190ms -> 0ms
+- lazy loading과 suspense 코드 스플리팅
+- SPA 프로젝트에서 SEO 개선하기
+
+  <br/>
+
+## 🔫 트러블 슈팅
+
+- 상품 prefetch로 인한 불필요한 네트워크 요청 해결 (throttledPrefetch)
+
+- throttling과 debounce
+
+- deferred component
+
+- 제어 컴포넌트와 비제어 컴포넌트 비교
 
 <br/>
 
@@ -125,44 +163,6 @@ http://localhost:5173/
 > 설계 기준 : 페이지 및 컴포넌트 단위
 
 ![figma_1](https://github.com/user-attachments/assets/8b3204cc-9c2a-4ae6-94ad-ddeee3602bf5)
-
-<br/>
-
-## 🔥 성능 최적화
-
-- 이미지 최적화로 이미지 크기 75% 줄이기
-- 랜더링 최적화 React.memo, useCallback, useMemo
-  - LCP 3s -> 1s / TBT 190ms -> 0ms
-- lazy loading과 suspense 코드 스플리팅
-- SPA 프로젝트에서 SEO 개선하기
-
-  <br/>
-
-## 🔫 트러블 슈팅
-
-- 상품 prefetch로 인한 불필요한 네트워크 요청 해결 (throttledPrefetch)
-
-- throttling과 debounce
-
-- deferred component
-
-- 제어 컴포넌트와 비제어 컴포넌트 비교
-
-<br/>
-
-## 💭 기술적 의사결정
-
-- **디자인 시스템 구축**: 재사용성과 일관성을 위한 설계 및 도구 활용법
-
-- **모노레포의 필요성과 도입 전략**: 프로젝트 관리 효율성 증가 사례
-
-- 스토리북과 크로마틱 배포 / CI/CD 효율적으로 활용하기 (feat. Github Actions) Chromatic
-
-- 에러 바운더리를 사용한 선언적 에러 핸들링
-
-- 컴파운드 컴포넌트로 재사용성과 가독성 높이기
-
-- 전역상태관리 기준에 대한 고찰
 
 <br/>
 

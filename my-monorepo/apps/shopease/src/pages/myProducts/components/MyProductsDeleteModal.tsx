@@ -2,12 +2,13 @@ import { useDeleteProduct } from "@/features/product/hooks/useDeleteProduct";
 import { Modal } from "@repo/ui/modal/Modal";
 import { Button } from "@repo/ui/button/Button";
 import { X } from "lucide-react";
+import React from "react";
 
 interface DeleteModalProps {
   id: string;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
+const DeleteModal = React.memo(({ id }: DeleteModalProps) => {
   const { mutate: deleteProduct } = useDeleteProduct();
 
   const handleDelete = (id: string) => {
@@ -45,6 +46,6 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ id }) => {
       </Modal.Root>
     </div>
   );
-};
+});
 
 export default DeleteModal;

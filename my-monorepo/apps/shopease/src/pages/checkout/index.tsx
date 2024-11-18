@@ -6,15 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect } from "react";
 import { useAddOrder } from "@/features/order/hooks/useAddOrder";
 import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
-import { useNavigation } from "@/shared/hooks/useNavigation";
-import OrderInfomation from "./components/OrderInfomation";
-import SubmitInfomation from "./components/SubmitInfomation";
+import OrderInfomation from "./components/CheckoutOrderInfomation";
+import SubmitInfomation from "./components/CheckoutSubmitInfomation";
 import * as PortOne from "@portone/browser-sdk/v2";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
-import { Modal } from "@repo/ui/modal/Modal";
-import { ArrowLeft, X } from "lucide-react";
-import { Button } from "@repo/ui/button/Button";
+import CheckoutCancelOrderModal from "./components/CheckoutCancelOrderModal";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const orderSchema = z.object({
   name: z.string().min(1, "주문자명을 입력해주세요."),
@@ -118,57 +116,17 @@ const Checkout = () => {
 
   return (
     <Layout authStatus={authStatusType.BUYER}>
-      <div>
-        <Modal.Root>
-          <Modal.Trigger asChild>
-            <Button
-              variant="link"
-              iconLeft={<ArrowLeft />}
-              className="absolute top-60 left-10"
-            >
-              돌아가기
-            </Button>
-          </Modal.Trigger>
-          <Modal.Content>
-            <Modal.Close topRight>
-              <X className="h-5 w-5" />
-            </Modal.Close>
-            <Modal.Header>
-              <Modal.Title title="결제 취소" />
-              <Modal.Description description="결제를 취소하고 홈으로 돌아갑니다." />
-            </Modal.Header>
-            <Modal.Divider />
-            <Modal.Footer>
-              <div className="flex items-center justify-center mt-4">
-                <Button
-                  full
-                  onClick={() => {
-                    data?.map((value) =>
-                      updateQuantity({
-                        productId: value.productId,
-                        quantity: 1,
-                      }),
-                    );
-                    navToHome();
-                  }}
-                >
-                  결제 취소
-                </Button>
-              </div>
-            </Modal.Footer>
-          </Modal.Content>
-        </Modal.Root>
-        <div className="flex items-center justify-center w-full h-48 border-b-[1px] border-gray-light">
-          <h1 className="text-primary font-semibold text-[50px]">Checkout</h1>
-        </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex m-40 relative gap-10 justify-center"
-        >
-          <OrderInfomation data={data} register={register} errors={errors} />
-          <SubmitInfomation totalPrice={totalPrice} />
-        </form>
+      <CheckoutCancelOrderModal data={data} updateQuantity={updateQuantity} />
+      <div className="flex items-center justify-center w-full h-48 border-b-[1px] border-gray-light">
+        <h1 className="text-primary font-semibold text-[50px]">Checkout</h1>
       </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex m-40 relative gap-10 justify-center"
+      >
+        <OrderInfomation data={data} register={register} errors={errors} />
+        <SubmitInfomation totalPrice={totalPrice} />
+      </form>
     </Layout>
   );
 };

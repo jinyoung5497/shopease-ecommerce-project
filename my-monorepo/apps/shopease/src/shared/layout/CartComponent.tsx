@@ -6,9 +6,9 @@ import { useDeleteAllCart } from "@/features/cart/hooks/useDeleteCart";
 import { useUpdateProductQuantity } from "@/features/product/hooks/useUpdateProductQuantity";
 import { useToastStore } from "@/store/toast/useToastStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useNavigation } from "../hooks/useNavigation";
 import { useFetchCart } from "@/features/cart/hooks/useFetchCart";
 import CartItem from "./CartItem";
+import { useNavigation } from "../hooks/useNavigation";
 
 const CartComponent = () => {
   const { mutate: deleteAllCartItems } = useDeleteAllCart();

@@ -1,13 +1,13 @@
-import UpdateModal from "./UpdateModal";
-import DeleteModal from "./DeleteModal";
+import MyProductsUpdateModal from "./MyProductsUpdateModal";
+import MyProductsDeleteModal from "./MyProductsDeleteModal";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useFetchInfiniteProducts } from "@/features/product/hooks/useInfiniteFetchProduct";
 import { Product } from "@/features/product/api";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import { useNavigation } from "@/shared/hooks/useNavigation";
 import ImageLoading from "@/shared/components/ImageLoading";
 import { useSmoothScrollToTop } from "@/shared/hooks/useSmoothScrollToTop";
+import { useNavigation } from "@/shared/hooks/useNavigation";
 
 const MyProductsCard = () => {
   const { user } = useAuthStore();
@@ -43,8 +43,8 @@ const MyProductsCard = () => {
                   key={value.id} // id를 키로 사용합니다.
                   className="flex flex-col gap-1 relative cursor-pointer w-72"
                 >
-                  <UpdateModal id={value.id} />
-                  <DeleteModal id={value.id} />
+                  <MyProductsUpdateModal id={value.id} />
+                  <MyProductsDeleteModal id={value.id} />
                   <div
                     onClick={() => {
                       navToDetailedProduct(value.id);
