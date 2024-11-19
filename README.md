@@ -1,14 +1,15 @@
-# SHOPEASE
+# SHOPEASE: 디자인 시스템과 모노레포 적용
 
 ![shopease](https://github.com/user-attachments/assets/3c215e5f-1fc0-4fa7-88a9-8bbec381783d)
 
 #### 프로젝트 소개
 
-당신의 스타일을 완성하는 모든 패션 아이템을 어디서나 간편하게 쇼핑할 수 있는 커머스 플랫폼입니다.
+디자인 시스템과 모노레포로 구축된 이커머스 플랫폼.
+당신의 스타일을 완성할 모든 패션 아이템을 언제 어디서나 손쉽게 쇼핑하세요.
 
 #### 프로젝트 진행기간
 
-2024.10 ~ 2024.11 (4주)
+2024.10.16 ~ 2024.11.14 (4주)
 
 #### 프로젝트 배포링크
 
@@ -28,30 +29,6 @@
 > ID: testBuyer@gmail.com  
 > PW: Qlalfqjsgh1!
 > <br/>
-
-## 📋 실행방법
-
-1. 레포지토리 복제 후 의존성 설치
-
-```
-$ git clone https://github.com/jinyoung5497/shopease-ecommerce-project.git
-$ cd my-monorepo
-$ cd apps
-$ cd shopease
-$ npm install
-```
-
-2. 개발 서버 가동
-
-```
-$ npm run dev
-```
-
-3. 브라우저에서 실행
-
-```
-http://localhost:5173/
-```
 
 ## 🛠 기술스택
 
@@ -77,11 +54,17 @@ http://localhost:5173/
 
 - 스토리북과 크로마틱 배포 / CI/CD 효율적으로 활용하기 (feat. Github Actions) Chromatic
 
-- 에러 바운더리를 사용한 선언적 에러 핸들링
-
 - 컴파운드 컴포넌트로 재사용성과 가독성 높이기
 
 - 전역상태관리 기준에 대한 고찰
+
+- 제어 컴포넌트와 비제어 컴포넌트 비교
+
+- 비지니스 로직과 뷰 분리
+
+- FSD 폴더 아키텍쳐
+
+- asChild (render delegation 사용하기)
 
 <br/>
 
@@ -91,7 +74,6 @@ http://localhost:5173/
 - 랜더링 최적화 React.memo, useCallback, useMemo
   - LCP 3s -> 1s / TBT 190ms -> 0ms
 - lazy loading과 suspense 코드 스플리팅
-- SPA 프로젝트에서 SEO 개선하기
 
   <br/>
 
@@ -102,8 +84,6 @@ http://localhost:5173/
 - throttling과 debounce
 
 - deferred component
-
-- 제어 컴포넌트와 비제어 컴포넌트 비교
 
 <br/>
 
