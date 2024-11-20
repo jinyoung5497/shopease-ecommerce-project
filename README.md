@@ -83,7 +83,7 @@
 
 - throttling과 debounce
 
-- deferred component
+- layout shift: 로딩 스켈리톤 깜빡임 이슈 deferred component로 해결
 
 <br/>
 
