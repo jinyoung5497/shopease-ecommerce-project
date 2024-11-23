@@ -12,10 +12,10 @@ const meta: Meta = {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "start",
           justifyContent: "center",
           gap: "10px",
-          height: "100%",
+          height: "200px",
         }}
       >
         <Story />

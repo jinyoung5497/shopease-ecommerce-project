@@ -14,7 +14,7 @@ const meta: Meta = {
           alignItems: "center",
           justifyContent: "center",
           gap: "10px",
-          height: "100%",
+          height: "600px",
         }}
       >
         <Story />
@@ -27,7 +27,7 @@ export default meta; // 메타 데이터 내보내기
 
 export const Basic = () => (
   <Sheet.Root>
-    <Sheet.Trigger variant="link">
+    <Sheet.Trigger>
       <ShoppingBasket className="h-5 w-5" />
     </Sheet.Trigger>
     <Sheet.Content>

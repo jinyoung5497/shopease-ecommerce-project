@@ -15,7 +15,7 @@ const meta: Meta = {
           alignItems: "center",
           justifyContent: "center",
           gap: "10px",
-          height: "100%",
+          height: "600px",
         }}
       >
         <Story />
