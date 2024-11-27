@@ -48,42 +48,42 @@
 
 ## 💭 기술적 의사결정
 
-- 디자인 시스템 구축: 재사용성과 일관성을 위한 설계 및 도구 활용법
+- [디자인 시스템 구축: 재사용성과 일관성을 위한 설계 및 도구 활용법](https://velog.io/@jinyoung5497/%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%8F%84%EC%A0%84%EA%B8%B0-%EB%B2%84%ED%8A%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
-- 모노레포의 필요성과 도입 전략: 프로젝트 관리 효율성 증가 사례
+- [모노레포의 필요성과 도입 전략: 프로젝트 관리 효율성 증가 사례](https://velog.io/@jinyoung5497/%EB%AA%A8%EB%85%B8%EB%A0%88%ED%8F%AC%EC%9D%98-%ED%95%84%EC%9A%94%EC%84%B1%EA%B3%BC-%EB%8F%84%EC%9E%85-%EC%A0%84%EB%9E%B5)
 
-- 스토리북과 크로마틱 배포 / CI/CD 효율적으로 활용하기 (feat. Github Actions) Chromatic
+- [스토리북과 크로마틱 배포 / CI/CD 효율적으로 활용하기 (feat. Github Actions) Chromatic](https://velog.io/@jinyoung5497/%EC%8A%A4%ED%86%A0%EB%A6%AC%EB%B6%81%EA%B3%BC-%ED%81%AC%EB%A1%9C%EB%A7%88%ED%8B%B1-%EB%B0%B0%ED%8F%AC%EC%99%80-CICD-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9C%BC%EB%A1%9C-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0-feat.-Github-Actions)
 
-- 컴파운드 컴포넌트로 재사용성과 가독성 높이기
+- [컴파운드 컴포넌트로 재사용성과 가독성 높이기](https://velog.io/@jinyoung5497/%EC%BB%B4%ED%8C%8C%EC%9A%B4%EB%93%9C-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EB%A1%9C-%EC%9E%AC%EC%82%AC%EC%9A%A9%EC%84%B1%EA%B3%BC-%EA%B0%80%EB%8F%85%EC%84%B1-%EB%86%92%EC%9D%B4%EA%B8%B0)
 
-- 전역상태관리 기준에 대한 고찰
+- [전역상태관리 기준에 대한 고찰](https://velog.io/@jinyoung5497/%EC%A0%84%EC%97%AD-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC%EA%B8%B0%EC%A4%80%EC%97%90-%EB%8C%80%ED%95%9C-%EC%83%9D%EA%B0%81)
 
-- 제어 컴포넌트와 비제어 컴포넌트 비교
+- [제어 컴포넌트와 비제어 컴포넌트 비교](https://velog.io/@jinyoung5497/%EC%A0%9C%EC%96%B4-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EC%99%80-%EB%B9%84%EC%A0%9C%EC%96%B4-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
+
+- [asChild 속성으로 render delegation 컴포넌트 구현하기](https://velog.io/@jinyoung5497/asChild-%EC%86%8D%EC%84%B1%EC%9C%BC%EB%A1%9C-render-delegation-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
 
 - 비지니스 로직과 뷰 분리
 
 - FSD 폴더 아키텍쳐
 
-- asChild (render delegation 사용하기)
-
 <br/>
 
 ## 🔥 성능 최적화
 
-- 이미지 최적화로 이미지 크기 75% 줄이기
-- 랜더링 최적화 React.memo, useCallback, useMemo
+- [이미지 최적화로 이미지 크기 96.8% 줄이기](https://velog.io/@jinyoung5497/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B5%9C%EC%A0%81%ED%99%94-%EC%BD%94%EB%93%9C-%EC%8A%A4%ED%94%8C%EB%A6%AC%ED%8C%85-%EB%B2%88%EB%93%A4-%EC%82%AC%EC%9D%B4%EC%A6%88-%EC%B5%9C%EC%A0%81%ED%99%94%EB%A1%9C-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0)
+- [랜더링 최적화 React.memo, useCallback, useMemo](https://velog.io/@jinyoung5497/React.memo-useCallback-useMemo%EC%9C%BC%EB%A1%9C-%EB%A0%8C%EB%8D%94%EB%A7%81-%EC%B5%9C%EC%A0%81%ED%99%94%ED%95%98%EA%B8%B0)
   - LCP 3s -> 1s / TBT 190ms -> 0ms
-- lazy loading과 suspense 코드 스플리팅
+- [lazy loading과 suspense 코드 스플리팅](https://velog.io/@jinyoung5497/Lazy-loading%EA%B3%BC-Suspense%EB%A1%9C-%EC%BD%94%EB%93%9C-%EC%8A%A4%ED%94%8C%EB%A6%AC%ED%8C%85%ED%95%98%EA%B8%B0)
 
   <br/>
 
 ## 🔫 트러블 슈팅
 
-- 상품 prefetch로 인한 불필요한 네트워크 요청 해결 (throttledPrefetch)
+- [상품 prefetch로 인한 불필요한 네트워크 요청 해결 (throttledPrefetch)](https://velog.io/@jinyoung5497/Throttling%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-prefetching-api%EC%9A%94%EC%B2%AD-%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EA%B8%B0)
 
-- throttling과 debounce
+- [Deferred component로 Loading skeleton 화면 깜빡임 이슈 해결](https://velog.io/@jinyoung5497/Loading-skeleton-%EA%B9%9C%EB%B9%A1%EC%9E%84-%EC%9D%B4%EC%8A%88)
 
-- layout shift: 로딩 스켈리톤 깜빡임 이슈 deferred component로 해결
+- [비동기 api 이미지 Layout shift 이슈 Loading skeleton으로 해결](https://velog.io/@jinyoung5497/Layout-shift-%EC%9D%B4%EC%8A%88)
 
 <br/>
 
